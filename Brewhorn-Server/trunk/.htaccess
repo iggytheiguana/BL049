@@ -1,0 +1,4 @@
+RewriteEngine on
+
+RewriteCond $1 !^(index\.php|images|robots\.txt|assets|css|design|media)
+RewriteRule ^(.*)$ /app_data/index.php/$1 [L]
