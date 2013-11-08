@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp" 
+      android:background="@drawable/registration_back">
+    
+    
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#82240A"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:text="Status to share."
+        android:layout_centerHorizontal="true"/>
+    
+    
+    <EditText
+         android:id="@+id/edt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_margin="10dp"
+       android:lines="3"
+        android:paddingLeft="5dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/text_field"/>
+    
+    
+    <Button
+         android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_share"
+        android:layout_below="@+id/edt"
+        />
+    
+
+</RelativeLayout>

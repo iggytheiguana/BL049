@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="Profile The Beer"
+        android:textColor="#82240A"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+    
+    <Button
+           android:id="@+id/info_btn"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="20dp"
+           android:layout_alignParentRight="true"
+           android:layout_marginRight="5dp"
+           android:background="@drawable/btn_info"/>
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rel_bottom"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+          android:background="@drawable/registration_back" 
+        android:layout_marginTop="60dp" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent" >
+
+            <RelativeLayout
+                android:id="@+id/linear_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_centerHorizontal="true"
+               
+                >
+
+                <RelativeLayout
+                    android:id="@+id/ll_seek_bars"
+                    android:layout_width="250dp"
+                    android:layout_height="fill_parent"
+
+                  >
+
+                    <RelativeLayout
+                        android:id="@+id/rel_aroma"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerHorizontal="true" >
+
+                        <TextView
+                            android:id="@+id/aroma_text3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                          android:layout_toLeftOf="@+id/text4"
+                          android:layout_marginRight="30dp"
+                            android:gravity="center"
+                            android:text="3"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/aroma_text4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toLeftOf="@+id/aroma_text5"
+                            android:text="4"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/aroma_text5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                          
+                            android:layout_marginTop="1dp"
+                            android:layout_centerHorizontal="true"
+                           
+                            android:text="5"
+                            android:textColor="#FFFF55"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/aroma_text6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/aroma_text5"
+                            android:text="6"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/aroma_text7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/aroma_text6"
+                            android:gravity="center"
+                            android:text="7"
+                            android:textColor="@android:color/white" />
+                    </RelativeLayout>
+
+                    <SeekBar
+                        android:id="@+id/home_aroma_seek_bar"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/rel_aroma"
+                        android:layout_marginRight="3dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="7dp"
+                        android:paddingRight="5dp"
+                        android:progressDrawable="@drawable/rating_star"
+                        android:thumb="@drawable/slider_handle" />
+
+                    <TextView
+                        android:id="@+id/home_aroma_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="40dp"
+                        android:gravity="center"
+                        android:text="@string/aroma"
+                        android:textColor="@android:color/white" />
+
+                    <TextView
+                        android:id="@+id/home_aroma_edt"
+                        android:layout_width="270dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/home_aroma_txt"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/text_field"
+                        android:hint="@string/aroma"
+                        android:layout_centerHorizontal="true"
+                        android:paddingLeft="5dp"
+                        android:textColor="@android:color/black" />
+
+                    <RelativeLayout
+                        android:id="@+id/rel_sweetness"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="3dp"
+                        android:layout_below="@+id/home_aroma_edt"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp" >
+
+                        <TextView
+                            android:id="@+id/sweet_text3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@+id/sweet_text4"
+                            android:layout_marginRight="30dp"
+                            android:gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:text="3"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/sweet_text4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toLeftOf="@+id/sweet_text5"
+                            android:text="4"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/sweet_text5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                           
+                            android:layout_marginTop="1dp"
+                    android:layout_centerHorizontal="true"
+                            android:text="5"
+                            android:textColor="#FFFF55"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/sweet_text6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/sweet_text5"
+                            android:text="6"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/sweet_text7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/sweet_text6"
+                            android:layout_weight=".3"
+                            android:gravity="center"
+                            android:text="7"
+                            android:textColor="@android:color/white" />
+                    </RelativeLayout>
+
+                    <SeekBar
+                        android:id="@+id/home_sweet_seek_bar"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/rel_sweetness"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                         android:layout_marginRight="3dp"
+                        android:layout_marginLeft="2dp"
+                        android:paddingLeft="7dp"
+                        android:paddingRight="10dp"
+                        android:progressDrawable="@drawable/rating_star"
+                        android:thumb="@drawable/slider_handle" />
+
+                    <TextView
+                        android:id="@+id/home_sweet_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/home_aroma_edt"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="40dp"
+                        android:gravity="center"
+                        android:text="@string/sweet"
+                        android:textColor="@android:color/white" />
+
+                    <TextView
+                        android:id="@+id/home_sweet_edt"
+                        android:layout_width="270dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/home_sweet_txt"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/text_field"
+                        android:hint="@string/sweet"
+                        android:paddingLeft="5dp"
+                         android:layout_centerHorizontal="true"
+                        android:textColor="@android:color/black" />
+
+                    <RelativeLayout
+                        android:id="@+id/rel_bitter"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/home_sweet_edt"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp" 
+                        android:layout_marginRight="5dp">
+
+                        <TextView
+                            android:id="@+id/bitter_text3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_toLeftOf="@+id/bitter_text4"
+                            android:layout_marginRight="30dp"
+                         
+                            android:text="3"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/bitter_text4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toLeftOf="@+id/bitter_text5"
+                            android:text="4"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/bitter_text5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            
+                            android:layout_marginTop="1dp"
+                          android:layout_centerHorizontal="true"
+                            android:text="5"
+                            android:textColor="#FFFF55"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/bitter_text6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/bitter_text5"
+                            android:text="6"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/bitter_text7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/bitter_text6"
+                            android:layout_weight=".3"
+                            android:gravity="center"
+                            android:text="7"
+                            android:textColor="@android:color/white" />
+                    </RelativeLayout>
+
+                    <SeekBar
+                        android:id="@+id/home_bitter_seek_bar"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/rel_bitter"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                         android:layout_marginRight="3dp"
+                        android:layout_marginLeft="2dp"
+                        android:paddingLeft="7dp"
+                        android:paddingRight="10dp"
+                        android:progressDrawable="@drawable/rating_star"
+                        android:thumb="@drawable/slider_handle" />
+
+                    <TextView
+                        android:id="@+id/home_bitter_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/home_sweet_edt"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="40dp"
+                        android:text="@string/bitter"
+                        android:textColor="@android:color/white" />
+
+                    <TextView
+                        android:id="@+id/home_bitter_edt"
+                        android:layout_width="270dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/home_bitter_txt"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/text_field"
+                        android:hint="@string/bitter"
+                        android:paddingLeft="5dp"
+                        android:layout_marginBottom="5dp"
+                         android:layout_centerHorizontal="true"
+                        android:textColor="@android:color/black" />
+
+                    <RelativeLayout
+                        android:id="@+id/rel_malt"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/home_bitter_edt"
+                        android:layout_centerHorizontal="true"
+                        android:visibility="gone" >
+
+                        <TextView
+                            android:id="@+id/malt_text3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="3"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/malt_text4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/malt_text3"
+                            android:text="4"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/malt_text5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_toRightOf="@+id/malt_text4"
+                            android:text="5"
+                            android:textColor="#FFFF55"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/malt_text6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/malt_text5"
+                            android:text="6"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/malt_text7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/malt_text6"
+                            android:layout_weight=".3"
+                            android:gravity="center"
+                            android:text="7"
+                            android:textColor="@android:color/white" />
+                    </RelativeLayout>
+
+                    <SeekBar
+                        android:id="@+id/home_malt_seek_bar"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rel_malt"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:hapticFeedbackEnabled="true"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:progressDrawable="@drawable/rating_star"
+                        android:thumb="@drawable/slider_handle"
+                        android:visibility="gone" />
+
+                    <RelativeLayout
+                        android:id="@+id/rel_yeast"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/home_malt_seek_bar"
+                        android:layout_centerHorizontal="true"
+                        android:visibility="gone" >
+
+                        <TextView
+                            android:id="@+id/yeast_text3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="3"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/yeast_text4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/yeast_text3"
+                            android:text="4"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/yeast_text5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_toRightOf="@+id/yeast_text4"
+                            android:text="5"
+                            android:textColor="#FFFF55"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/yeast_text6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/yeast_text5"
+                            android:text="6"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/yeast_text7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/yeast_text6"
+                            android:layout_weight=".3"
+                            android:gravity="center"
+                            android:text="7"
+                            android:textColor="@android:color/white" />
+                    </RelativeLayout>
+
+                    <SeekBar
+                        android:id="@+id/home_yeast_seek_bar"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rel_yeast"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:progressDrawable="@drawable/rating_star"
+                        android:thumb="@drawable/slider_handle"
+                        android:visibility="gone" />
+
+                    <RelativeLayout
+                        android:id="@+id/rel_mouth"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/home_yeast_seek_bar"
+                        android:layout_centerHorizontal="true"
+                        android:visibility="gone" >
+
+                        <TextView
+                            android:id="@+id/mouth_text3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="3"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/mouth_text4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/mouth_text3"
+                            android:text="4"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/mouth_text5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_toRightOf="@+id/mouth_text4"
+                            android:text="5"
+                            android:textColor="#FFFF55"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/mouth_text6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/mouth_text5"
+                            android:text="6"
+                            android:textColor="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/mouth_text7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@+id/mouth_text6"
+                            android:layout_weight=".3"
+                            android:gravity="center"
+                            android:text="7"
+                            android:textColor="@android:color/white" />
+                    </RelativeLayout>
+
+                    <SeekBar
+                        android:id="@+id/home_mouth_seek_bar"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rel_mouth"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:progressDrawable="@drawable/rating_star"
+                        android:thumb="@drawable/slider_handle"
+                        android:visibility="gone" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/rel_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" 
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <Button
+                android:id="@+id/home_next_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+             
+                android:background="@drawable/next_btn_selector" />
+            
+            
+             <Button
+                android:id="@+id/home_cancel_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+                android:background="@drawable/registration_canel_btn" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

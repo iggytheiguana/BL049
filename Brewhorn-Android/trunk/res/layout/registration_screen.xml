@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   
+    android:scrollbars="none" >
+ 
+       <RelativeLayout 
+         android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:layout_marginTop="20dp"
+      android:padding="10dp"
+       android:background="@drawable/background"
+       > 
+       
+           <TextView
+               android:id="@+id/title_text"
+               android:layout_width="wrap_content"
+               android:layout_centerHorizontal="true"
+               android:layout_height="wrap_content"
+               android:textSize="20sp"
+               android:textColor="#82240A"
+               android:textStyle="bold"
+               android:text="@string/new_user_registration"/>
+           
+           <Button
+               android:id="@+id/btn_instruction"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentRight="true"
+               android:layout_marginTop="2dp"
+               android:background="@drawable/btn_info"/>
+      
+    
+    <ScrollView 
+        android:layout_below="@+id/title_text"
+        
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:layout_marginTop="70dp"
+         android:layout_centerHorizontal="true"
+         android:scrollbars="none"
+         android:layout_above="@+id/registration_registartion_btn">
+    <RelativeLayout
+        
+        android:id="@+id/registration_linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    android:paddingRight="10dp"
+     android:layout_centerHorizontal="true"
+        android:background="@drawable/registration_back"
+        android:paddingBottom="10dp">
+        
+    
+    <EditText
+        android:id="@+id/registration_user_first_name_edt_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:hint="@string/first_name"
+        android:singleLine="true"
+        android:paddingLeft="2dp"
+        android:inputType="textCapSentences"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/text_field"/>
+    
+    
+    
+    <EditText
+        android:id="@+id/registration_user_last_name_edt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+         android:layout_marginRight="10dp"
+        android:hint="@string/last_name"
+        android:singleLine="true"
+         android:paddingLeft="2dp"
+          android:inputType="textCapSentences"
+         android:background="@drawable/text_field"
+        android:layout_below="@+id/registration_user_first_name_edt_new"/>
+    
+    <EditText
+        android:id="@+id/registration_user_name_edt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:hint="@string/user_name"
+        android:singleLine="true"
+         android:layout_marginRight="10dp"
+         android:paddingLeft="2dp"
+         android:background="@drawable/text_field"
+        android:layout_below="@+id/registration_user_last_name_edt"/>
+    
+     <EditText
+        android:id="@+id/registration_password_edt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:hint="@string/pass_word"
+        android:password="true"
+        android:singleLine="true"
+         android:layout_marginRight="10dp"
+         android:paddingLeft="2dp"
+         android:background="@drawable/text_field"
+        android:layout_below="@+id/registration_user_name_edt"
+        />
+     
+     
+     <EditText
+        android:id="@+id/registration_confirm_password_edt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+         android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:hint="@string/confirm_password"
+        android:password="true"
+         android:paddingLeft="2dp"
+         android:background="@drawable/text_field"
+        android:singleLine="true"
+        android:layout_below="@+id/registration_password_edt"/>
+      <EditText
+        android:id="@+id/registration_user_email_edt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+         android:layout_marginRight="10dp"
+         android:paddingLeft="2dp"
+        android:hint="@string/email"
+        android:singleLine="true"
+         android:background="@drawable/text_field"
+        android:layout_below="@+id/registration_confirm_password_edt"/>
+    
+      
+    <EditText
+        android:id="@+id/registration_zip_edt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+         android:layout_marginRight="10dp"
+        android:hint="@string/zip_code"
+        android:singleLine="true"
+        android:inputType="number"
+        android:maxLength="6"
+         android:paddingLeft="2dp"
+         android:background="@drawable/text_field"
+        android:layout_below="@+id/registration_user_email_edt"
+        />
+    
+    
+    <TextView
+        android:id="@+id/registartion_text_exp_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:layout_below="@+id/registration_zip_edt"
+         android:textColor="@android:color/white"
+         android:text="Experience  Level"
+         android:textSize="20dp"
+         android:layout_marginTop="10dp"
+         android:visibility="gone"
+         android:layout_marginLeft="10dp"/>
+    
+    
+    
+    <Button
+        android:id="@+id/registration_spinner"
+          android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/registartion_text_exp_level"
+         android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+         android:layout_marginRight="10dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/dropdown"
+        android:layout_marginBottom="10dp"
+        android:paddingRight="35dp"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="3dp"
+        android:textSize="18sp"
+           android:visibility="gone"
+        android:hint="Experience  Level"
+ />
+    
+    
+    
+    <CheckBox
+        android:id="@+id/chk_terms_conditions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/registration_zip_edt"
+        android:layout_margin="10dp"
+     
+        
+        android:textColor="@android:color/white"
+        android:button="@drawable/chk_box_terms_condition"
+       />
+    
+    <ImageView
+            android:id="@+id/img_terms_conditions"
+       android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/registration_zip_edt"
+        android:layout_toRightOf="@+id/chk_terms_conditions"
+        android:layout_margin="15dp" 
+        android:src="@drawable/terrms_and_conditions"/>
+    
+    </RelativeLayout>
+    
+    </ScrollView>
+    
+    
+    <Button
+			android:id="@+id/registration_registartion_btn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			    
+			android:layout_centerHorizontal="true"
+			
+			android:layout_marginTop="5dp"
+			android:layout_alignParentBottom="true"
+			android:background="@drawable/registeration_save_btn"
+        />
+    
+    
+    
+    
+    </RelativeLayout>
+    
+</RelativeLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="#000000">
+    
+    
+    
+    <ImageView
+        android:id="@+id/image"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/title"
+        android:layout_above="@+id/edt_beer_btn_new"
+        
+        />
+
+    <Button
+        android:id="@+id/edt_beer_btn_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+       android:background="@drawable/btn_edit_beer_profile"
+        android:layout_marginBottom="14dp"
+      android:layout_centerHorizontal="true"
+   />
+
+    <Button
+        android:id="@+id/back_btn_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/btn_back" />
+    
+    <Button
+            android:id="@+id/info_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           android:layout_alignParentRight="true"
+          android:layout_marginRight="5dp"
+            android:background="@drawable/btn_info" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/back_btn_new"
+        android:layout_centerHorizontal="true"
+        android:text="Match"
+        android:textColor="#82240A"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+    
+</RelativeLayout>

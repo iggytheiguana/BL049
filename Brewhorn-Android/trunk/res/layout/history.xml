@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    
+    android:background="@drawable/background">
+    
+    <Button
+        android:id="@+id/cancel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/btn_back" />
+    
+    <TextView
+        android:id="@+id/title"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+         android:layout_marginTop="30dp"
+         android:text="History"
+        android:textColor="#82240A"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:typeface="sans" 
+        android:layout_centerHorizontal="true"/>
+    
+          <ListView
+                android:id="@+id/list_history"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/registration_back"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="#FFFFFF"
+                android:dividerHeight="1dp"
+                android:listSelector="#00000000"
+                android:padding="2dp"
+                android:layout_below="@+id/title"
+                android:scrollbars="none" />
+    
+    
+
+</RelativeLayout>

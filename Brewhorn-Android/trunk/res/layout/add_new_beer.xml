@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@drawable/background" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Add Beer"
+        android:textColor="#82240A"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:layout_above="@+id/bottom_layout"
+        android:layout_below="@+id/title"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="60dp"
+        android:isScrollContainer="false" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" >
+
+            <EditText
+                android:id="@+id/add_beer_brewery_edt_new"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/text_field"
+                android:hint="Brewery"
+                android:paddingLeft="5dp"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/add_beer_name_edt_new"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/text_field"
+                android:hint="Beer Name"
+                android:paddingLeft="5dp"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/add_beer_style_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/dropdown"
+                android:gravity="left|center_vertical"
+                android:hint="Beer style"
+                android:paddingLeft="5dp"
+                android:paddingRight="45dp"
+                android:singleLine="true"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp" >
+
+                <TextView
+                    android:id="@+id/text_abv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:text="ABV%"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/add_beer_abv_edt"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/text_abv"
+                    android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                    android:background="@drawable/text_field"
+                    android:inputType="numberDecimal"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true" />
+                
+                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="30dp"
+                    android:text="IBUs"
+                    android:layout_toLeftOf="@+id/add_beer_ibu_edt"
+             android:layout_marginRight="10dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/add_beer_ibu_edt"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/text_field"
+                    android:inputType="number"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/add_beer_mood_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/dropdown"
+                android:gravity="left|center_vertical"
+                android:hint="Mood"
+                android:paddingLeft="5dp"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/add_beer_venue_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/dropdown"
+                android:gravity="left|center_vertical"
+                android:hint="Venue"
+                android:paddingLeft="5dp"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/add_beer_event_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/dropdown"
+                android:gravity="left|center_vertical"
+                android:hint="Event"
+                android:paddingLeft="5dp"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/add_beer_hype_expectation_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/dropdown"
+                android:gravity="left|center_vertical"
+                android:hint="Hype/Expectation"
+                android:paddingLeft="5dp"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp" >
+
+        <Button
+            android:id="@+id/add_beer_save_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/registeration_save_btn" />
+
+        <Button
+            android:id="@+id/add_beer_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/registration_canel_btn" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_instruction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+   android:layout_alignParentRight="true"
+     
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_info" />
+
+</RelativeLayout>
