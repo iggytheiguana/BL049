@@ -171,6 +171,7 @@
 		9EE823AD17BA794B00E1AE96 /* FbGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE823A817BA794B00E1AE96 /* FbGraph.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9EE823AE17BA794B00E1AE96 /* FbGraphFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE823AA17BA794B00E1AE96 /* FbGraphFile.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9EE823AF17BA794B00E1AE96 /* FbGraphResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE823AC17BA794B00E1AE96 /* FbGraphResponse.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C5ABF1901833D14A00A5CE6F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5ABF18F1833D14A00A5CE6F /* Crashlytics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -386,6 +387,7 @@
 		9EE823AA17BA794B00E1AE96 /* FbGraphFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FbGraphFile.m; sourceTree = "<group>"; };
 		9EE823AB17BA794B00E1AE96 /* FbGraphResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FbGraphResponse.h; sourceTree = "<group>"; };
 		9EE823AC17BA794B00E1AE96 /* FbGraphResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FbGraphResponse.m; sourceTree = "<group>"; };
+		C5ABF18F1833D14A00A5CE6F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -399,6 +401,7 @@
 				9E97958F1766237200787A0F /* SystemConfiguration.framework in Frameworks */,
 				9E979547176622D200787A0F /* UIKit.framework in Frameworks */,
 				9E979549176622D200787A0F /* Foundation.framework in Frameworks */,
+				C5ABF1901833D14A00A5CE6F /* Crashlytics.framework in Frameworks */,
 				9E97954B176622D200787A0F /* CoreGraphics.framework in Frameworks */,
 				9E9A21DA17A7C39C006AE975 /* FacebookSDK.framework in Frameworks */,
 				9E20A5CF17F44BCF008BDF9F /* libFlurry_4.2.3.a in Frameworks */,
@@ -649,6 +652,7 @@
 		9E979545176622D200787A0F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C5ABF18F1833D14A00A5CE6F /* Crashlytics.framework */,
 				9E20A5D017F44C07008BDF9F /* Security.framework */,
 				9E20A5CC17F44BCF008BDF9F /* Flurry */,
 				9E9A21D917A7C39C006AE975 /* FacebookSDK.framework */,
@@ -829,6 +833,7 @@
 				9E97953E176622D200787A0F /* Sources */,
 				9E97953F176622D200787A0F /* Frameworks */,
 				9E979540176622D200787A0F /* Resources */,
+				C5ABF18E1833D11200A5CE6F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -987,6 +992,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		C5ABF18E1833D11200A5CE6F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run b53fcf08df9b183b382153735d57a10862fc5348";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9E97953E176622D200787A0F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1113,11 +1134,12 @@
 		9E979561176622D200787A0F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Netsmartz LLC";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Netsmartz LLC";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jasjeet Gill (3678L3Y396)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jasjeet Gill (3678L3Y396)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"/Users/bobby/Documents/dev/BlueLabelLabs-BL049-Brewhorn/BrewHorn-iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CraftsBeerApp/CraftsBeerApp-Prefix.pch";
@@ -1131,8 +1153,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C2E8CD2A-6B9A-4020-817D-EF411701CB09";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C2E8CD2A-6B9A-4020-817D-EF411701CB09";
+				PROVISIONING_PROFILE = "8B4A0CE8-CC4F-4841-B71D-AD09C9B96549";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
 				WRAPPER_EXTENSION = app;
@@ -1142,11 +1163,12 @@
 		9E979562176622D200787A0F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Netsmartz LLC";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Netsmartz LLC";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Blue Label Solutions LLC";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Blue Label Solutions LLC";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"/Users/bobby/Documents/dev/BlueLabelLabs-BL049-Brewhorn/BrewHorn-iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CraftsBeerApp/CraftsBeerApp-Prefix.pch";
@@ -1160,8 +1182,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C2E8CD2A-6B9A-4020-817D-EF411701CB09";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C2E8CD2A-6B9A-4020-817D-EF411701CB09";
+				PROVISIONING_PROFILE = "637023C0-91B0-4756-9501-1F7A795331BB";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
 				WRAPPER_EXTENSION = app;

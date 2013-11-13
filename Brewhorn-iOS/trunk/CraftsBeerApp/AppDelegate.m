@@ -13,6 +13,7 @@
 #import "Reachability.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "Flurry.h"
+#import <Crashlytics/Crashlytics.h>
 
 // for flurry analytics
 #define YOUR_API_KEY @"3DBRP8MY7DG2Y37SF38Y"
@@ -40,6 +41,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [Crashlytics startWithAPIKey:@"b53fcf08df9b183b382153735d57a10862fc5348"];
+    
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
