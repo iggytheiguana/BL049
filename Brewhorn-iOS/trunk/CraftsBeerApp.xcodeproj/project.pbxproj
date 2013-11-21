@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9E20A5CF17F44BCF008BDF9F /* libFlurry_4.2.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E20A5CE17F44BCF008BDF9F /* libFlurry_4.2.3.a */; };
+		492D9AEF183E36B9009436F9 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 492D9AEE183E36B9009436F9 /* Accounts.framework */; };
+		492D9AF0183E387E009436F9 /* libFlurry_4.2.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E20A5CE17F44BCF008BDF9F /* libFlurry_4.2.3.a */; };
 		9E20A5D117F44C07008BDF9F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E20A5D017F44C07008BDF9F /* Security.framework */; };
 		9E406FA2179FF54F005231F1 /* my_profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E406FA0179FF54F005231F1 /* my_profile.png */; };
 		9E406FA3179FF54F005231F1 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E406FA1179FF54F005231F1 /* share.png */; };
@@ -175,6 +176,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		492D9AEE183E36B9009436F9 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		9E20A5CD17F44BCF008BDF9F /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		9E20A5CE17F44BCF008BDF9F /* libFlurry_4.2.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.2.3.a; sourceTree = "<group>"; };
 		9E20A5D017F44C07008BDF9F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -395,6 +397,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				492D9AF0183E387E009436F9 /* libFlurry_4.2.3.a in Frameworks */,
+				492D9AEF183E36B9009436F9 /* Accounts.framework in Frameworks */,
 				9E20A5D117F44C07008BDF9F /* Security.framework in Frameworks */,
 				9E9A21D017A7A10A006AE975 /* Social.framework in Frameworks */,
 				9E9A21CE17A7A102006AE975 /* Twitter.framework in Frameworks */,
@@ -404,7 +408,6 @@
 				C5ABF1901833D14A00A5CE6F /* Crashlytics.framework in Frameworks */,
 				9E97954B176622D200787A0F /* CoreGraphics.framework in Frameworks */,
 				9E9A21DA17A7C39C006AE975 /* FacebookSDK.framework in Frameworks */,
-				9E20A5CF17F44BCF008BDF9F /* libFlurry_4.2.3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,6 +655,7 @@
 		9E979545176622D200787A0F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				492D9AEE183E36B9009436F9 /* Accounts.framework */,
 				C5ABF18F1833D14A00A5CE6F /* Crashlytics.framework */,
 				9E20A5D017F44C07008BDF9F /* Security.framework */,
 				9E20A5CC17F44BCF008BDF9F /* Flurry */,
@@ -833,7 +837,6 @@
 				9E97953E176622D200787A0F /* Sources */,
 				9E97953F176622D200787A0F /* Frameworks */,
 				9E979540176622D200787A0F /* Resources */,
-				C5ABF18E1833D11200A5CE6F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -992,22 +995,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		C5ABF18E1833D11200A5CE6F /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run b53fcf08df9b183b382153735d57a10862fc5348";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		9E97953E176622D200787A0F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1147,9 +1134,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Flurry-iOS-4.2.3/Flurry\"",
-					"\"$(SRCROOT)/Flurry-iOS-4.2.3/FlurryAds\"",
-					"\"$(SRCROOT)/Flurry\"",
+					"\\\"$(SRCROOT)/Flurry-iOS-4.2.3/Flurry\\\"",
+					"\\\"$(SRCROOT)/Flurry-iOS-4.2.3/FlurryAds\\\"",
+					"\\\"$(SRCROOT)/Flurry\\\"",
+					/Users/Tatvasoft/Desktop/SVN_brewHorn/trunk/Flurry,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1176,9 +1164,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/Flurry-iOS-4.2.3/Flurry\"",
-					"\"$(SRCROOT)/Flurry-iOS-4.2.3/FlurryAds\"",
-					"\"$(SRCROOT)/Flurry\"",
+					"\\\"$(SRCROOT)/Flurry-iOS-4.2.3/Flurry\\\"",
+					"\\\"$(SRCROOT)/Flurry-iOS-4.2.3/FlurryAds\\\"",
+					"\\\"$(SRCROOT)/Flurry\\\"",
+					/Users/Tatvasoft/Desktop/SVN_brewHorn/trunk/Flurry,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
