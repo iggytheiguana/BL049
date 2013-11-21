@@ -1,10 +1,3 @@
-//
-//  userProfileViewController.m
-//  CraftsBeerApp
-//
-//  Created by Mandeep Singh on 01/08/13.
-//  Copyright (c) 2013 Mandeep Singh. All rights reserved.
-//
 
 #import "userProfileViewController.h"
 #import "ASyncURLConnection.h"
@@ -21,7 +14,7 @@
 
 @implementation userProfileViewController
 
-@synthesize txtBeerVal,txtEmail,txtFirstName,txtLastName,txtUserName,txtZip,lblHeader,swchSharing;
+@synthesize txtBeerVal,txtEmail,txtFirstName,txtLastName,txtUserName,txtZip,lblHeader,swchSharingFb,swchSharingTwitter;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -31,31 +24,38 @@
     return self;
 }
 #pragma mark view life cycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
-    if ([[NSUserDefaults standardUserDefaults]integerForKey:@"AutomateSharing"]==1) {
-        [swchSharing setOn:YES];
-    }
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"AutomateSharingFb"])
+        [swchSharingFb setOn:YES];
     else
-    {
-        [swchSharing setOn:NO];
-    }
+        [swchSharingFb setOn:NO];
+    
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"AutomateSharingTwitter"])
+        [swchSharingTwitter setOn:YES];
+    else
+        [swchSharingTwitter setOn:NO];
     
     [applicationDelegate show_LoadingIndicator];
     [self getUserDetails];
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 #pragma mark get user details
--(void)getUserDetails
+
+- (void)getUserDetails
 {
     NSString *strid=[[NSUserDefaults standardUserDefaults]valueForKey:@"user_id"];
     NSString *xmlString=[NSString stringWithFormat:UserProfile_XML,strid];
@@ -86,10 +86,13 @@
     
 }
 #pragma mark Button actions
-- (IBAction)btnInfo:(id)sender {
+
+- (IBAction)btnInfo:(id)sender
+{
     InfoViewController *info=[[InfoViewController alloc]init];
     [self presentViewController:info animated:YES completion:nil];
 }
+
 - (IBAction)btn_Back:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -105,6 +108,16 @@
     editView.strUserName=txtUserName.text;
     editView.strZip=txtZip.text;
     
+    if([[NSUserDefaults standardUserDefaults]boolForKey:@"AutomateSharingFb"])
+        [editView.swchSharingFb setOn:YES];
+    else
+        [editView.swchSharingFb setOn:NO];
+    
+    if([[NSUserDefaults standardUserDefaults]boolForKey:@"AutomateSharingTwitter"])
+        [editView.swchSharingTwitter setOn:YES];
+    else
+        [editView.swchSharingTwitter setOn:NO];
+    
     [self.navigationController pushViewController:editView animated:YES];
 }
 
@@ -114,15 +127,27 @@
     [self.navigationController pushViewController:taste animated:YES];
     return;
 }
-- (IBAction)swchSharing:(id)sender {
+
+- (IBAction)swchSharingFb:(id)sender
+{
+    NSLog(@"fb");
 }
+
+- (IBAction)swchSharingTwitter:(id)sender
+{
+    NSLog(@"twitter");
+}
+
 - (IBAction)ViewHistory:(id)sender
 {
     HistoryViewController *history=[[HistoryViewController alloc]init];
     [self.navigationController pushViewController:history animated:YES];
 }
+
 #pragma mark Memory management
-- (void)viewDidUnload {
+
+- (void)viewDidUnload
+{
     [self setTxtFirstName:nil];
     [self setTxtLastName:nil];
     [self setTxtUserName:nil];
@@ -130,7 +155,9 @@
     [self setTxtEmail:nil];
     [self setTxtZip:nil];
     [self setTxtBeerVal:nil];
-    [self setSwchSharing:nil];
+//    [self setSwchSharing:nil];
+    [self setSwchSharingFb:nil];
+    [self setSwchSharingTwitter:nil];
     [super viewDidUnload];
 }
 @end

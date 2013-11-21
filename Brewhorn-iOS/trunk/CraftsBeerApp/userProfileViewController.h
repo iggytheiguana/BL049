@@ -1,10 +1,3 @@
-//
-//  userProfileViewController.h
-//  CraftsBeerApp
-//
-//  Created by Mandeep Singh on 01/08/13.
-//  Copyright (c) 2013 Mandeep Singh. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 
@@ -18,14 +11,17 @@
 @property (strong, nonatomic) IBOutlet UITextField *txtZip;
 @property (strong, nonatomic) IBOutlet UITextField *txtBeerVal;
 @property (strong, nonatomic) IBOutlet UILabel *lblHeader;
-@property (strong, nonatomic) IBOutlet UISwitch *swchSharing;
+@property (strong, nonatomic) IBOutlet UISwitch *swchSharingFb;
+@property (strong, nonatomic) IBOutlet UISwitch *swchSharingTwitter;
+
 
 - (IBAction)btnInfo:(id)sender;
 
 - (IBAction)btn_Back:(id)sender;
 - (IBAction)btnEdit:(id)sender;
 - (IBAction)btnPreviewTaste:(id)sender;
-- (IBAction)swchSharing:(id)sender;
+- (IBAction)swchSharingFb:(id)sender;
+- (IBAction)swchSharingTwitter:(id)sender;
 - (IBAction)ViewHistory:(id)sender;
 
 @end

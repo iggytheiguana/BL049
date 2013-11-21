@@ -1,17 +1,9 @@
-//
-//  EditUserProfileViewController.h
-//  CraftsBeerApp
-//
-//  Created by Mandeep Singh on 01/08/13.
-//  Copyright (c) 2013 Mandeep Singh. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 
 @interface EditUserProfileViewController : UIViewController
 {
     NSMutableArray *arraySelectBeer;
-
     // for parsing
     NSMutableData *recieveData;
     NSURLConnection *theConnection;
@@ -39,7 +31,9 @@
 @property (strong, nonatomic) NSString *strBeerExperience;
 @property (strong, nonatomic) NSString *strEmail;
 @property (strong, nonatomic) IBOutlet UILabel *lblHeader;
-@property (strong, nonatomic) IBOutlet UISwitch *swchSharing;
+@property (strong, nonatomic) IBOutlet UISwitch *swchSharingFb;
+@property (strong, nonatomic) IBOutlet UISwitch *swchSharingTwitter;
+
 
 
 // button actions
@@ -49,7 +43,8 @@
 - (IBAction)btnResign:(id)sender;
 - (IBAction)CancelBtn:(id)sender;
 - (IBAction)btnDone:(id)sender;
-- (IBAction)swtchSharing:(id)sender;
+- (IBAction)swchSharingFb:(id)sender;
+- (IBAction)swchSharingTwitter:(id)sender;
 - (IBAction)btnChangePassword:(id)sender;
 
 @end

@@ -1,10 +1,3 @@
-//
-//  EditUserProfileViewController.m
-//  CraftsBeerApp
-//
-//  Created by Mandeep Singh on 01/08/13.
-//  Copyright (c) 2013 Mandeep Singh. All rights reserved.
-//
 
 #import "EditUserProfileViewController.h"
 #import "ChangePasswordViewController.h"
@@ -24,7 +17,7 @@
 @synthesize PickerSelectBeer = _PickerSelectBeer;
 @synthesize btnSelectBeer = _btnSelectBeer;
 @synthesize txt,viewTextFields,viewBackground,toolBar;
-@synthesize strBeerExperience,strEmail,strFirstName,strLastName,strUserName,strZip,lblHeader,swchSharing;
+@synthesize strBeerExperience,strEmail,strFirstName,strLastName,strUserName,strZip,lblHeader,swchSharingFb,swchSharingTwitter;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -66,20 +59,26 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
-    if ([[NSUserDefaults standardUserDefaults]integerForKey:@"AutomateSharing"]==1) {
-        [swchSharing setOn:YES];
-    }
+    [super viewWillAppear:animated];
+    
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"AutomateSharingFb"])
+        [swchSharingFb setOn:YES];
     else
-    {
-        [swchSharing setOn:NO];
-    }
+        [swchSharingFb setOn:NO];
+    
+    if([[NSUserDefaults standardUserDefaults]boolForKey:@"AutomateSharingTwitter"])
+        [swchSharingTwitter setOn:YES];
+    else
+        [swchSharingTwitter setOn:NO];
     
     [_btnSelectBeer setTitle:strBeerExperience forState:UIControlStateNormal];
 }
 
 #pragma mark- UItextField delegate methods
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     
@@ -109,6 +108,7 @@
     }
     return YES;
 }
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 
 {
@@ -119,7 +119,9 @@
         self.view.frame=CGRectMake(0, -150, 320, [[UIScreen mainScreen]bounds].size.height);
     }
 }
+
 #pragma mark- touch action
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self resignKeyboard];
@@ -144,7 +146,9 @@
     }
     viewBackground.hidden=YES;
 }
+
 #pragma mark- Button actions
+
 - (IBAction)btnChangePassword:(id)sender
 {
     ChangePasswordViewController *password=[[ChangePasswordViewController alloc]init];
@@ -295,6 +299,28 @@
             if ([strVal integerValue]>0)
             {
                 [applicationDelegate hide_LoadingIndicator];
+                
+                if([swchSharingFb isOn])
+                {
+                    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"AutomateSharingFb"];
+                    [[NSUserDefaults standardUserDefaults]synchronize];
+                }
+                else
+                {
+                    [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"AutomateSharingFb"];
+                    [[NSUserDefaults standardUserDefaults]synchronize];
+                }
+                if([swchSharingTwitter isOn])
+                {
+                    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"AutomateSharingTwitter"];
+                    [[NSUserDefaults standardUserDefaults]synchronize];
+                }
+                else
+                {
+                    [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"AutomateSharingTwitter"];
+                    [[NSUserDefaults standardUserDefaults]synchronize];
+                }
+                [applicationDelegate show_LoadingIndicator];
                 [self.navigationController popViewControllerAnimated:YES];
                 return;
                 
@@ -366,29 +392,70 @@
     [self resignKeyboard];
 }
 
-- (IBAction)swtchSharing:(id)sender
+//- (IBAction)swtchSharing:(id)sender
+//{
+//    if (swchSharing.isOn==NO) {
+//        //  [swchSharing setOn:NO];
+//        [[NSUserDefaults standardUserDefaults]setInteger:2 forKey:@"AutomateSharing"];
+//        [[NSUserDefaults standardUserDefaults]synchronize];
+//    }
+//    else
+//    {
+//        // [swchSharing setOn:YES];
+//        [[NSUserDefaults standardUserDefaults]setInteger:1 forKey:@"AutomateSharing"];
+//        [[NSUserDefaults standardUserDefaults]synchronize];
+//    }
+//}
+
+- (IBAction)swchSharingFb:(id)sender
 {
-    if (swchSharing.isOn==NO) {
-        //  [swchSharing setOn:NO];
-        [[NSUserDefaults standardUserDefaults]setInteger:2 forKey:@"AutomateSharing"];
-        [[NSUserDefaults standardUserDefaults]synchronize];
+    UISwitch *switchShare = (UISwitch *)sender;
+    
+    if ([switchShare isOn])
+    {
+        NSLog(@"now off");
+        //[swchSharingFb setOn:NO];
+//        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"AutomateSharingFb"];
+//        [[NSUserDefaults standardUserDefaults]synchronize];
     }
     else
     {
-        // [swchSharing setOn:YES];
-        [[NSUserDefaults standardUserDefaults]setInteger:1 forKey:@"AutomateSharing"];
-        [[NSUserDefaults standardUserDefaults]synchronize];
+        NSLog(@"NOw on");
+        //        [swchSharingFb setOn:YES];
+//        [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"AutomateSharingFb"];
+//        [[NSUserDefaults standardUserDefaults]synchronize];
     }
 }
+
+- (IBAction)swchSharingTwitter:(id)sender
+{
+    UISwitch *switchShare = (UISwitch *)sender;
+    
+    if([switchShare isOn])
+    {
+        NSLog(@"now off");
+        //        [swchSharingTwitter setOn:NO];
+//        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"AutomateSharingTwitter"];
+//        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
+    else
+    {
+        NSLog(@"NOw on");
+        //        [swchSharingTwitter setOn:YES];
+//        [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"AutomateSharingTwitter"];
+//        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
+}
+
+
 
 #pragma mark Server connection methods
 
 -(void) connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     [recieveData appendData:data];
-    
-    
 }
+
 -(void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
     
     [recieveData setLength:0];
@@ -455,27 +522,33 @@
     [alertView show];
     alertView = nil;
 }
+
 #pragma mark - Pickerview delegate
+
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView;
 {
     return 1;
 }
+
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component;
 {
     return [arraySelectBeer count];
     return YES;
 }
+
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
 {
     return [arraySelectBeer objectAtIndex:row];
     // return YES;
 }
+
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row
       inComponent:(NSInteger)component
 {
     txt=[arraySelectBeer objectAtIndex:row];
     [_btnSelectBeer setTitle:txt forState:UIControlStateNormal];
 }
+
 - (void)selectRow:(NSInteger)row inComponent:(NSInteger)component animated:(BOOL)animated
 {
     [_PickerSelectBeer selectRow:2 inComponent:0 animated:YES];
@@ -485,13 +558,20 @@
 {
     return 300;
 }
+
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
     return 50;
 }
+
 #pragma mark- Memory management actions
-- (void)viewDidUnload {
-    [self setSwchSharing:nil];
+
+- (void)viewDidUnload
+{
+//    [self setSwchSharing:nil];
+    [self setSwchSharingFb:nil];
+    [self setSwchSharingTwitter:nil];
     [super viewDidUnload];
 }
+
 @end

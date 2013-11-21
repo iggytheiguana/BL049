@@ -1,10 +1,3 @@
-//
-//  TestScreen2ViewController.m
-//  CraftsBeerApp
-//
-//  Created by Mandeep Singh on 03/08/13.
-//  Copyright (c) 2013 Mandeep Singh. All rights reserved.
-//
 
 #import "TestScreen2ViewController.h"
 #import "JSON.h"
@@ -28,6 +21,7 @@
 @synthesize lblBitter3,lblBitter4,lblBitter5,lblBitter6,lblBitter7,lblSweet3,lblSweet4,lblSweet5,lblSweet6,lblSweet7,chkUser,array;
 @synthesize strAr,strBi,strSw,strid,btnBitter,btnSweet,btnAroma,txtAr,txtBi,txtSw,txtTexture,btnTexture,scrlView,switchYeast,lblHeader,lblHeader1;
 @synthesize fbGraph;
+@synthesize accountStore , facebookAccount,twitterAccount;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,6 +31,7 @@
     }
     return self;
 }
+
 - (void)viewDidLoad
 {
     
@@ -70,8 +65,6 @@
     arrayBitterValue=[[NSMutableArray alloc]init];
     arraySweetValue=[[NSMutableArray alloc]init];
     arrayTextureValue=[[NSMutableArray alloc]init];
-    
-    
     
     sliderAroma.minimumTrackTintColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"slider_red.png"]];
     sliderBitter.minimumTrackTintColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"slider_red.png"]];
@@ -141,18 +134,47 @@
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSString *strBrName=[NSString stringWithFormat:@"#%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"Beername"]];
+    NSString *strBrwName=[NSString stringWithFormat:@"#%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"Breweryname"]];
+    strBrName=[strBrName stringByReplacingOccurrencesOfString:@" " withString:@""];
+    strBrwName=[strBrwName stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    if (strBrwName.length<2 || [strBrwName isEqualToString:@"#(null)"]) {
+        strBrwName=@"";
+    }
+    if (strBrName.length<2 || [strBrName isEqualToString:@"#(null)"]) {
+        strBrName=@"";
+    }
+    
+    //    NSString *strText=[NSString stringWithFormat:@"I just profiled %@ %@ with @brewhornbeerapp.#brewhorn#craftbeer",strBrwName,strBrName];
+    NSString *strText=[NSString stringWithFormat:@"I just profiled %@ %@ with @BrewHornBeerApp.#brewhorn",strBrwName,strBrName];
+    
+    if (strBrName.length==0 && strBrwName.length==0) {
+        strText=[NSString stringWithFormat:@"@brewhornbeerapp.#brewhorn#craftbeer"];
+    }
+    
+    someTweet = strText;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 #pragma mark Button actions
+
 - (IBAction)btnAroma:(id)sender
 {
     chkArray=1;
     viewArray.hidden=NO;
     [tblArray reloadData];
 }
+
 - (IBAction)btnDone:(id)sender
 {
     int i;
@@ -384,8 +406,9 @@
 {
     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Would you like to add optional parameters." message:@"" delegate:self cancelButtonTitle:@"Save" otherButtonTitles:@"Proceed", nil];
     [alert show];
-    return;
+    // return;
 }
+
 -(void)saveData
 {
     
@@ -484,8 +507,22 @@
         }
         if ([serRslt integerValue]>0)
         {
-            if ([[NSUserDefaults standardUserDefaults]integerForKey:@"AutomateSharing"]==1) {
-                [self btnFb];
+            if ([[NSUserDefaults standardUserDefaults]boolForKey:@"AutomateSharingFb"] && [[NSUserDefaults standardUserDefaults]boolForKey:@"AutomateSharingTwitter"])
+            {
+                //                [self btnFb];
+                [applicationDelegate show_LoadingIndicator];
+                [self performSelector:@selector(shareOnFbAction:) withObject:someTweet afterDelay:0.0];
+                [self performSelector:@selector(shareOnTwitter:) withObject:someTweet afterDelay:3.0];
+            }
+            else if ([[NSUserDefaults standardUserDefaults]boolForKey:@"AutomateSharingFb"])
+            {
+                [applicationDelegate show_LoadingIndicator];
+                [self performSelector:@selector(shareOnFbAction:) withObject:someTweet afterDelay:0.0];
+            }
+            else if ([[NSUserDefaults standardUserDefaults]boolForKey:@"AutomateSharingTwitter"])
+            {
+                [applicationDelegate show_LoadingIndicator];
+                [self performSelector:@selector(shareOnTwitter:) withObject:someTweet afterDelay:0.0];
             }
             else
             {
@@ -493,6 +530,7 @@
                 [self.navigationController pushViewController:home animated:NO];
             }
             //  [self.navigationController popViewControllerAnimated:YES];
+            
             [applicationDelegate hide_LoadingIndicator];
         }
         else if([serRslt integerValue]== -1)
@@ -516,12 +554,181 @@
         serRslt = nil;
     }
 }
+
 - (IBAction)btnCancel:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)viewDidUnload {
+#pragma mark Fb Twitter sharing
+
+- (IBAction)shareOnFbAction:(id)sender
+{
+    accountStore = [[ACAccountStore alloc]init];
+    ACAccountType *facebookAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
+    
+    NSString *appId=@"589751437754650";
+    NSArray * permissions = @[@"publish_stream", @"publish_actions",@"email",@"status_update"];
+    
+    //    NSArray * permissions = @[@"publish_stream", @"publish_actions",@"email"];
+    //    NSArray * permissions = @[@"email"];
+    //  NSArray *permissions=[NSArray arrayWithObjects:@"email",@"user_location",@"user_hometown",@"user_birthday", nil];
+    NSMutableDictionary *options = [[NSMutableDictionary alloc]initWithObjectsAndKeys:appId,ACFacebookAppIdKey,permissions,ACFacebookPermissionsKey,ACFacebookAudienceFriends,ACFacebookAudienceKey, nil];
+    
+    [accountStore requestAccessToAccountsWithType:facebookAccountType options:options completion:^(BOOL granted , NSError *error)
+     {
+         if(granted)
+         {
+             [applicationDelegate hide_LoadingIndicator];
+             NSArray *readPermissions=@[@"read_stream",@"read_friendlists"];
+             [options setObject:readPermissions forKey:ACFacebookPermissionsKey];
+             [accountStore requestAccessToAccountsWithType:facebookAccountType options:options completion:^(BOOL granted , NSError *error)
+              {
+                  if(granted && error == nil)
+                  {
+                      NSArray *accounts = [accountStore accountsWithAccountType:facebookAccountType];
+                      self.facebookAccount =[accounts lastObject];
+                      
+                      NSDictionary *parameters=@{@"message": sender};
+                      NSURL *feedURL = [NSURL URLWithString:@"https://graph.facebook.com/me/feed"];
+                      
+                      SLRequest *feedRequest = [SLRequest requestForServiceType:SLServiceTypeFacebook requestMethod:SLRequestMethodPOST URL:feedURL parameters:parameters];
+                      feedRequest.account=self.facebookAccount;
+                      [feedRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse , NSError *error)
+                       {
+                           if(responseData)
+                           {
+                               fb=YES;
+                               NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:&error];
+                               
+                               if(![[dict objectForKey:@"id"] length])
+                               {
+                                   NSLog(@"%@",dict);
+                                   [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Error while Facebook Sharing" waitUntilDone:YES];
+                               }
+                               else
+                               {
+                                   NSLog(@"%@",dict);
+                                   [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Post successfully updated on Facebook" waitUntilDone:YES];
+                               }
+                           }
+                           else
+                           {
+                               NSLog(@"Error is %@",[error localizedDescription]);
+                               [self performSelectorOnMainThread:@selector(alertPost:) withObject:[error localizedDescription] waitUntilDone:YES];
+                           }
+                       }];
+                  }
+                  else
+                  {
+                      NSLog(@"Error is %@",[error localizedDescription]);
+                      [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Error while Facebook Sharing" waitUntilDone:YES];
+                  }
+              }];
+             NSArray *accounts = [accountStore accountsWithAccountType:facebookAccountType];
+             self.facebookAccount = [accounts lastObject];
+         }
+         else
+         {
+             NSLog(@"Error is : %@",error.localizedDescription);
+             [self performSelectorOnMainThread:@selector(alertPost:) withObject:error.localizedDescription waitUntilDone:YES];
+         }
+     }];
+}
+
+-(void)shareOnTwitter :(NSString *)text
+{
+    accountStore = [[ACAccountStore alloc] init];
+    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier: ACAccountTypeIdentifierTwitter];
+    
+    [accountStore requestAccessToAccountsWithType:accountType options:nil completion:^(BOOL granted, NSError *error)
+     {
+         if (granted)
+         {
+             [applicationDelegate hide_LoadingIndicator];
+             NSArray *arrayOfAccounts = [self.accountStore accountsWithAccountType:accountType];
+             if ([arrayOfAccounts count] > 0)
+             {
+                 self.twitterAccount = [arrayOfAccounts lastObject];
+                 
+                 NSDictionary *message = @{@"status":someTweet};
+                 
+                 NSURL *requestURL = [NSURL
+                                      URLWithString:@"http://api.twitter.com/1/statuses/update.json"];
+                 
+                 SLRequest *postRequest = [SLRequest
+                                           requestForServiceType:SLServiceTypeTwitter
+                                           requestMethod:SLRequestMethodPOST
+                                           URL:requestURL parameters:message];
+                 
+                 
+                 postRequest.account = self.twitterAccount;
+                 
+                 [postRequest performRequestWithHandler:^(NSData *responseData,
+                                                          NSHTTPURLResponse *urlResponse, NSError *error)
+                  {
+                      if (responseData) {
+                          NSMutableDictionary  *dict = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:&error];
+                          
+                          if (![dict objectForKey:@"id"])
+                          {
+                              NSLog(@"%@",dict);
+                              [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Error while twitter sharing" waitUntilDone:YES];
+                          }
+                          else
+                          {
+                              NSLog(@"%@",dict);
+                              [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Post successfully updated on twitter" waitUntilDone:YES];
+                          }
+                      }
+                      else
+                      {
+                          [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Error while twitter sharing" waitUntilDone:YES];
+                      }
+                      
+                  }];
+             }
+         }
+         else
+         {
+             [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Please allow BrewHorn to access your Twitter account" waitUntilDone:YES];
+         }
+     }];
+}
+
+- (void)alertPost : (NSString *)object
+{
+    [applicationDelegate show_LoadingIndicator];
+    if(fb)
+    {
+        [[[[iToast makeText:object] setGravity:iToastGravityTop offsetLeft:0 offsetTop:[[UIScreen mainScreen]bounds].size.height-140] setDuration:2000] show:iToastTypeNotice];
+    }
+    else
+    {
+        [[[[iToast makeText:object] setGravity:iToastGravityTop offsetLeft:0 offsetTop:[[UIScreen mainScreen]bounds].size.height-160] setDuration:2000] show:iToastTypeNotice];
+    }
+    for (UIViewController* viewController in self.navigationController.viewControllers)
+    {
+        
+        if ([viewController isKindOfClass:[HomeViewController class]] )
+        {
+            HomeViewController *home = (HomeViewController*)viewController;
+            [self.navigationController popToViewController:home animated:YES];
+        }
+    }
+}
+
+- (void)showAlertWithMessage:(NSString *)object
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Alert!" message:object delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    alert.tag=2;
+    [alert show];
+}
+
+#pragma mark Memory management
+
+- (void)viewDidUnload
+{
     [self setTblArray:nil];
     [self setViewArray:nil];
     [self setTxtBitter:nil];
@@ -535,10 +742,13 @@
     [self setBtnSweet:nil];
     [super viewDidUnload];
 }
+
 #pragma mark- AlertView delegate methods
+
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex==1) {
+    if (buttonIndex==1)
+    {
         if ([swch integerValue]==0) {
             strYeast=@"0";
         }
@@ -581,6 +791,20 @@
             ShareScreenViewController *home=[[ShareScreenViewController alloc]init];
             home.chkSkip=1;
             [self.navigationController pushViewController:home animated:NO];
+        }
+        else if (alertView.tag==2)
+        {
+            //            HomeViewController *home=[[HomeViewController alloc]init];
+            //            [self.navigationController pushViewController:home animated:NO];
+            
+            for (UIViewController* viewController in self.navigationController.viewControllers) {
+                
+                if ([viewController isKindOfClass:[HomeViewController class]] ) {
+                    HomeViewController *home = (HomeViewController*)viewController;
+                    [self.navigationController popToViewController:home animated:YES];
+                }
+            }
+            
         }
         else
         {
@@ -754,11 +978,16 @@
     }
     NSLog(@"the array val is %@",arrayAromaValue);
 }
+
 #pragma mark share with facebook
+
 - (void)btnFb
 {
     NSString *strBrName=[NSString stringWithFormat:@"#%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"Beername"]];
     NSString *strBrwName=[NSString stringWithFormat:@"#%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"Breweryname"]];
+    strBrName=[strBrName stringByReplacingOccurrencesOfString:@" " withString:@""];
+    strBrwName=[strBrwName stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
     if (strBrwName.length<2 || [strBrwName isEqualToString:@"#(null)"]) {
         strBrwName=@"";
     }
@@ -767,10 +996,12 @@
     }
     
     NSString *strText=[NSString stringWithFormat:@"I just profiled %@ %@ with @brewhornbeerapp.#brewhorn#craftbeer",strBrwName,strBrName];
-    if (strBrName.length==0 && strBrwName.length==0) {
+    if (strBrName.length==0 && strBrwName.length==0)
+    {
         strText=[NSString stringWithFormat:@"@brewhornbeerapp.#brewhorn#craftbeer"];
     }
-    NSString *someTweet = strText;
+    someTweet = strText;
+    
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
     {
         SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];

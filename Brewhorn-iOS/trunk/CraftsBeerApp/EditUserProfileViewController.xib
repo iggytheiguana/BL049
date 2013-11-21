@@ -8,7 +8,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EditUserProfileViewController">
             <connections>
                 <outlet property="lblHeader" destination="12" id="90"/>
-                <outlet property="swchSharing" destination="93" id="95"/>
+                <outlet property="swchSharingFb" destination="93" id="wwK-U0-XiW"/>
+                <outlet property="swchSharingTwitter" destination="LhY-ds-SFg" id="IdH-rz-tZr"/>
                 <outlet property="txtEmail" destination="20" id="71"/>
                 <outlet property="txtFirstName" destination="15" id="70"/>
                 <outlet property="txtUserName" destination="17" id="69"/>
@@ -32,7 +33,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="40">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="460.00000000000006"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <state key="normal" title="Button">
@@ -196,7 +197,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="460.00000000000006"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                     <state key="normal">
@@ -284,7 +285,7 @@
                             </connections>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="63">
-                            <rect key="frame" x="10" y="248" width="230" height="29"/>
+                            <rect key="frame" x="10" y="261" width="230" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <state key="normal" image="btn_change_password.png">
@@ -298,18 +299,32 @@
                                 <action selector="btnChangePassword:" destination="-1" eventType="touchUpInside" id="65"/>
                             </connections>
                         </button>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Automate sharing" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="92">
-                            <rect key="frame" x="10" y="196" width="128" height="38"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Autoshare to Facebook" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="92">
+                            <rect key="frame" x="10" y="227" width="162" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="93">
-                            <rect key="frame" x="163" y="199" width="51" height="31"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Autoshare to Twitter" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FdV-GX-t9h">
+                            <rect key="frame" x="10" y="194" width="170" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="LhY-ds-SFg">
+                            <rect key="frame" x="168" y="190" width="51" height="31"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <connections>
-                                <action selector="swtchSharing:" destination="-1" eventType="valueChanged" id="94"/>
+                                <action selector="swchSharingTwitter:" destination="-1" eventType="valueChanged" id="vYK-0e-RLr"/>
+                            </connections>
+                        </switch>
+                        <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="93">
+                            <rect key="frame" x="169" y="223" width="51" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <connections>
+                                <action selector="swchSharingFb:" destination="-1" eventType="valueChanged" id="wOg-qy-JLu"/>
                             </connections>
                         </switch>
                     </subviews>
@@ -353,13 +368,30 @@
     </objects>
     <resources>
         <image name="bg.png" width="640" height="960"/>
+        <image name="bg.png" width="640" height="960"/>
         <image name="btn_cancel.png" width="248" height="104"/>
+        <image name="btn_cancel.png" width="248" height="104"/>
+        <image name="btn_cancel_hover.png" width="248" height="104"/>
         <image name="btn_cancel_hover.png" width="248" height="104"/>
         <image name="btn_change_password.png" width="416" height="62"/>
         <image name="btn_change_password_hover.png" width="416" height="62"/>
         <image name="btn_save.png" width="248" height="104"/>
+        <image name="btn_save.png" width="248" height="104"/>
+        <image name="btn_save_hover.png" width="248" height="104"/>
         <image name="btn_save_hover.png" width="248" height="104"/>
         <image name="text_field.png" width="441" height="63"/>
+        <image name="text_field.png" width="441" height="63"/>
+        <image name="text_field.png" width="441" height="63"/>
+        <image name="text_field.png" width="441" height="63"/>
+        <image name="text_field.png" width="441" height="63"/>
+        <image name="text_field.png" width="441" height="63"/>
+        <image name="text_field.png" width="441" height="63"/>
+        <image name="text_field.png" width="441" height="63"/>
+        <image name="text_field.png" width="441" height="63"/>
+        <image name="text_field.png" width="441" height="63"/>
+        <image name="text_field.png" width="441" height="63"/>
+        <image name="text_field.png" width="441" height="63"/>
+        <image name="text_field_bg.png" width="470" height="470"/>
         <image name="text_field_bg.png" width="470" height="470"/>
         <image name="text_field_dropdown.png" width="442" height="63"/>
     </resources>

@@ -1,10 +1,3 @@
-//
-//  RegisterViewController.h
-//  CraftBeer
-//
-//  Created by Mandeep Singh on 07/06/13.
-//  Copyright (c) 2013 Mandeep Singh. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 
@@ -37,6 +30,8 @@
 @property (strong, nonatomic) IBOutlet UIPickerView *pickerStyle;
 @property (strong, nonatomic) IBOutlet UILabel *lblHeader;
 @property (strong, nonatomic) IBOutlet UIButton *btnChkMark;
+@property (strong, nonatomic) IBOutlet UISwitch *swchSharingFb;
+@property (strong, nonatomic) IBOutlet UISwitch *swchSharingTwitter;
 
 #pragma mark button methods
 - (IBAction)btnBack:(id)sender;
@@ -48,6 +43,8 @@
 - (IBAction)btnInfo:(id)sender;
 - (IBAction)btnTermsAndConditions:(id)sender;
 - (IBAction)BtnCheck:(id)sender;
+- (IBAction)swchSharingFb:(id)sender;
+- (IBAction)swchSharingTwitter:(id)sender;
 
 
 @end

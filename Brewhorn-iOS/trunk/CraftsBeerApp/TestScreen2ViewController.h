@@ -1,10 +1,3 @@
-//
-//  TestScreen2ViewController.h
-//  CraftsBeerApp
-//
-//  Created by Mandeep Singh on 03/08/13.
-//  Copyright (c) 2013 Mandeep Singh. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
@@ -20,12 +13,12 @@
     NSMutableArray *arraySweetValue;
     NSMutableArray *arrayTextureTable;
     NSMutableArray *arrayTextureValue;
-
+    
     NSString *strMalt;
     NSString *strYeast;
     NSString *strMouthfeel;
     NSString *strTexture;
-
+    
     float valAroma;
     float valSweet;
     float valBitter;
@@ -43,6 +36,9 @@
     int chkArray;
     
     NSString *swch;
+    NSString *someTweet;
+    
+    BOOL fb;
 }
 @property (strong, nonatomic) IBOutlet UITableView *tblArray;
 @property (strong, nonatomic) IBOutlet UIView *viewArray;
@@ -90,6 +86,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblHeader;
 
 @property (retain, nonatomic) FbGraph *fbGraph;
+@property (nonatomic, strong) ACAccountStore *accountStore;
+@property (nonatomic, retain) ACAccount *facebookAccount;
+@property (nonatomic, retain) ACAccount *twitterAccount;
 
 - (IBAction)btnAroma:(id)sender;
 - (IBAction)btnDone:(id)sender;
@@ -106,5 +105,8 @@
 - (IBAction)malt:(id)sender;
 - (IBAction)yeast:(id)sender;
 - (IBAction)mouth:(id)sender;
+
+- (IBAction)shareOnFbAction:(id)sender;
+- (void)shareOnTwitter: (NSString *)text;
 
 @end

@@ -1,10 +1,3 @@
-//
-//  RegisterViewController.m
-//  CraftBeer
-//
-//  Created by Mandeep Singh on 07/06/13.
-//  Copyright (c) 2013 Mandeep Singh. All rights reserved.
-//
 
 #import "RegisterViewController.h"
 #import "BeerDetails1ViewController.h"
@@ -27,7 +20,7 @@
 @synthesize txtZip = _txtZip;
 @synthesize PickerSelectBeer = _PickerSelectBeer;
 @synthesize btnSelectBeer = _btnSelectBeer;
-@synthesize txt,viewTextFields,viewBackground,toolBar,lblHeader,btnChkMark;
+@synthesize txt,viewTextFields,viewBackground,toolBar,lblHeader,btnChkMark,swchSharingFb,swchSharingTwitter;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,7 +30,9 @@
     }
     return self;
 }
+
 #pragma mark view life cycle
+
 - (void)viewDidLoad
 {
     btnTerms=2;
@@ -57,6 +52,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [_btnSelectBeer setTitle:@"Experience Level" forState:UIControlStateNormal];
@@ -68,7 +64,9 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 #pragma mark- UItextField delegate methods
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     
@@ -98,6 +96,7 @@
     }
     return YES;
 }
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 
 {
@@ -114,13 +113,16 @@
         self.view.frame=CGRectMake(0, -200, 320, [[UIScreen mainScreen]bounds].size.height);
     }
 }
+
 #pragma mark- touch action
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self resignKeyboard];
 }
 
 #pragma mark- Button actions
+
 -(void)resignKeyboard
 {
     [_txtConfirmPassword resignFirstResponder];
@@ -142,6 +144,7 @@
     viewBackground.hidden=YES;
 }
 #pragma mark- Button actions
+
 - (IBAction)btnBack:(id)sender
 {
     [self resignKeyboard];
@@ -333,6 +336,27 @@
             {
                 [applicationDelegate hide_LoadingIndicator];
                 
+                if([swchSharingFb isOn])
+                {
+                    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"AutomateSharingFb"];
+                    [[NSUserDefaults standardUserDefaults]synchronize];
+                }
+                else
+                {
+                    [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"AutomateSharingFb"];
+                    [[NSUserDefaults standardUserDefaults]synchronize];
+                }
+                if([swchSharingTwitter isOn])
+                {
+                    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"AutomateSharingTwitter"];
+                    [[NSUserDefaults standardUserDefaults]synchronize];
+                }
+                else
+                {
+                    [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"AutomateSharingTwitter"];
+                    [[NSUserDefaults standardUserDefaults]synchronize];
+                }
+                
                 [[NSUserDefaults standardUserDefaults]setValue:strVal forKey:@"user_id"];
                 [[NSUserDefaults standardUserDefaults]synchronize];
                 
@@ -349,7 +373,6 @@
                 _txtUserName.text=@"";
                 _txtZip.text=@"";
                 _tztLastName.text=@"";
-                
                 
                 return;
                 
@@ -451,18 +474,57 @@
     }
 }
 
+- (IBAction)swchSharingFb:(id)sender
+{
+    UISwitch *switchShare = (UISwitch *)sender;
+    
+    if ([switchShare isOn])
+    {
+        NSLog(@"now off");
+        //[swchSharingFb setOn:NO];
+//        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"AutomateSharingFb"];
+//        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
+    else
+    {
+        NSLog(@"NOw on");
+//        [swchSharingFb setOn:YES];
+//        [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"AutomateSharingFb"];
+//        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
+}
+
+- (IBAction)swchSharingTwitter:(id)sender
+{
+     UISwitch *switchShare = (UISwitch *)sender;
+    
+    if([switchShare isOn])
+    {
+        NSLog(@"now off");
+//        [swchSharingTwitter setOn:NO];
+//        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"AutomateSharingTwitter"];
+//        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
+    else
+    {
+        NSLog(@"now on");
+//        [swchSharingTwitter setOn:YES];
+//        [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"AutomateSharingTwitter"];
+//        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
+}
+
 #pragma mark Server connection methods
 
 -(void) connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     [recieveData appendData:data];
-    
-    
+
 }
+
 -(void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
     
     [recieveData setLength:0];
-    
 }
 
 -(void) connectionDidFinishLoading:(NSURLConnection *)connection
@@ -510,6 +572,7 @@
     }
     serRslt = nil;
 }
+
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     [applicationDelegate hide_LoadingIndicator];
@@ -521,21 +584,27 @@
     [alertView show];
     alertView = nil;
 }
+
 #pragma mark - Pickerview delegate
+
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView;
 {
     return 1;
 }
+
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component;
 {
     return [arraySelectBeer count];
     return YES;
 }
+
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
 {
     return [arraySelectBeer objectAtIndex:row];
     // return YES;
 }
+
+
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row
       inComponent:(NSInteger)component
 {
@@ -560,6 +629,7 @@
     // setLocation.text=[distance objectAtIndex:0];
     [_btnSelectBeer setTitle:txt forState:UIControlStateNormal];
 }
+
 - (void)selectRow:(NSInteger)row inComponent:(NSInteger)component animated:(BOOL)animated
 {
     [_PickerSelectBeer selectRow:2 inComponent:0 animated:YES];
@@ -569,12 +639,15 @@
 {
     return 300;
 }
+
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
     return 50;
 }
 
-- (void)viewDidUnload {
+
+- (void)viewDidUnload
+{
     [self setViewBackground:nil];
     [self setViewTextFields:nil];
     [self setToolBar:nil];
@@ -582,4 +655,5 @@
     [self setBtnChkMark:nil];
     [super viewDidUnload];
 }
+
 @end

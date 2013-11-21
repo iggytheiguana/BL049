@@ -1,14 +1,8 @@
-//
-//  BeerDetails2ViewController.h
-//  CraftsBeerApp
-//
-//  Created by Mandeep Singh on 11/06/13.
-//  Copyright (c) 2013 Mandeep Singh. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "FbGraph.h"
+#import <Social/Social.h>
 
 @interface BeerDetails2ViewController : UIViewController<UIActionSheetDelegate,UIPickerViewDelegate,UIPickerViewDataSource,FBLoginViewDelegate>
 {
@@ -21,11 +15,11 @@
     NSMutableArray *arraySweetValue;
     NSMutableArray *arrayAdditiveValue;
     NSMutableArray *arrayDiscriptorValue;
-
+    
     int chkArray;
     int chkDiscriptor;
     int chkTable;
-
+    
     NSString *strStyleOldValue;
     NSString *strSelectDescriptor;
     UIActionSheet *actionSheet;
@@ -39,7 +33,7 @@
     NSMutableArray *arrayFruitBeer;
     
     NSMutableArray *arrayDiscriptorDetails;
-
+    
     int componentValue;
     
     float valSour;
@@ -63,7 +57,12 @@
     NSString *strSour;
     NSString *strAddictive;
     NSString *strBooziness;
+    
+    NSString *someTweet;
+    
+    BOOL fb;
 }
+
 @property (strong, nonatomic) IBOutlet UILabel *lblTop;
 @property (strong, nonatomic) IBOutlet UILabel *lblHeader;
 @property (strong, nonatomic) IBOutlet UILabel *lblHeader1;
@@ -129,6 +128,11 @@
 @property (strong, nonatomic) IBOutlet UIView *viewNew;
 
 @property (retain, nonatomic) FbGraph *fbGraph;
+
+@property (nonatomic, strong) ACAccountStore *accountStore;
+@property (nonatomic, retain) ACAccount *facebookAccount;
+@property (nonatomic, retain) ACAccount *twitterAccount;
+
 
 - (IBAction)switch_Booziness:(id)sender;
 - (IBAction)switch_sour:(id)sender;
