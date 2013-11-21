@@ -660,7 +660,7 @@
             
             if ([serRslt integerValue]>0)
             {
-                [applicationDelegate hide_LoadingIndicator];
+               
                 NSArray *arrayBeerDet2=[[NSArray alloc]initWithObjects:valAroma,valSweet,valBitter,valMalt,valYeast,valMouthFeel,strSour,strAddictive,strBooziness,@"1",@"1",@"1", nil];
                 NSLog(@"the result in arrayBeerDet2 = %@",arrayBeerDet2);
                 [[NSUserDefaults standardUserDefaults]setObject:arrayBeerDet2 forKey:@"arrayDetails"];
@@ -671,24 +671,25 @@
             }
             else if([serRslt integerValue]== -1)
             {
-                [applicationDelegate hide_LoadingIndicator];
+                
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"User has already added his taste." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             }
             else if([serRslt integerValue]== -2)
             {
-                [applicationDelegate hide_LoadingIndicator];
+               
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"Server Issue." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             }
             else if([serRslt integerValue]== -3)
             {
-                [applicationDelegate hide_LoadingIndicator];
+              
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"In-valid User." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             }
             
             serRslt = nil;
+              [applicationDelegate hide_LoadingIndicator];
         }
         else
         {
@@ -1371,7 +1372,7 @@
     
     NSString *key =@"589751437754650";
     
-    NSArray * permissions = @[@"publish_stream", @"publish_actions",@"email",@"status_update"];
+    NSArray * permissions = @[@"publish_stream", @"publish_actions"];
     //    NSArray * permissions = @[@"email"];
     
     NSMutableDictionary *options = [[NSMutableDictionary alloc] initWithObjectsAndKeys:key, ACFacebookAppIdKey, permissions, ACFacebookPermissionsKey, ACFacebookAudienceOnlyMe, ACFacebookAudienceKey, nil];
@@ -1381,11 +1382,9 @@
      {
          if (granted)
          {
-             NSArray *readPermissions = @[@"read_stream", @"read_friendlists"];
-             [options setObject:readPermissions forKey: ACFacebookPermissionsKey];
+            
              
-             [self.accountStore requestAccessToAccountsWithType:facebookAccountType options:options completion:^(BOOL granted, NSError *error)
-              {
+             
                   if(granted && error == nil)
                   {
                       NSArray *accounts = [self.accountStore accountsWithAccountType:facebookAccountType];
@@ -1424,7 +1423,9 @@
                            }
                            else
                            {
-                               NSLog(@"Error is %@",[error localizedDescription]);
+                              
+                                   NSLog(@"Facebook Sharing Error is %@",[error localizedDescription]);
+                               
                                [self performSelectorOnMainThread:@selector(alertPost:) withObject:[error localizedDescription] waitUntilDone:YES];
                            }
                        }];
@@ -1435,7 +1436,7 @@
                       NSLog(@"Error is %@",[error localizedDescription]);
                       [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Error while facebook sharing." waitUntilDone:YES];
                   }
-              }];
+             
              
              NSArray *accounts = [self.accountStore accountsWithAccountType:facebookAccountType];
              self.facebookAccount = [accounts lastObject];
@@ -1487,6 +1488,11 @@
                       {
                           NSMutableDictionary  *dict = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:&error];
                           
+                          if (error != nil)
+                          {
+                              NSLog(@"%@Twitter Sharing Error %@",[error localizedDescription]);
+                          }
+                          
                           if (![dict objectForKey:@"id"])
                           {
                               [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Error while twitter sharing" waitUntilDone:YES];
@@ -1500,6 +1506,10 @@
                       }
                       else
                       {
+                          if (error != nil)
+                          {
+                              NSLog(@"%@Twitter Sharing Error %@",[error localizedDescription]);
+                          }
                           [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Error while twitter sharing" waitUntilDone:YES];
                           
                       }

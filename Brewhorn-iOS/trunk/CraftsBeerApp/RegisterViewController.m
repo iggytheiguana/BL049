@@ -5,6 +5,8 @@
 #import "RegisterInfoViewController.h"
 #import "Termd&ConditionsViewController.h"
 #import "JSON.h"
+#import "Constant.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface RegisterViewController ()
 
@@ -340,6 +342,8 @@
                 {
                     [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"AutomateSharingFb"];
                     [[NSUserDefaults standardUserDefaults]synchronize];
+                    
+                    [self requestFbBasicPermission];
                 }
                 else
                 {
@@ -383,25 +387,26 @@
             }
             else  if ([strVal integerValue]==-3)
             {
-                [applicationDelegate hide_LoadingIndicator];
+            
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Sign Up" message:@"Username already exist." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
                 
             }
             else  if ([strVal integerValue]==-1)
             {
-                [applicationDelegate hide_LoadingIndicator];
+  
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Sign Up" message:@"Email already exists" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
                 
             }
             else if ([strVal integerValue]==-2)
             {
-                [applicationDelegate hide_LoadingIndicator];
+              
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Sign Up" message:@"Server error." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
                 
             }
+              [applicationDelegate hide_LoadingIndicator];
             serRslt = nil;
             
         }
@@ -421,6 +426,27 @@
     }
 }
 
+- (void) requestFbBasicPermission
+{
+    ACAccountStore* accountStore = [[ACAccountStore alloc]init];
+    ACAccountType* facebookAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
+    NSArray* permissions = @[@"email"];
+    NSMutableDictionary *options = [[NSMutableDictionary alloc]initWithObjectsAndKeys:kFACEBOOKAPPID,ACFacebookAppIdKey,permissions,ACFacebookPermissionsKey,ACFacebookAudienceFriends,ACFacebookAudienceKey, nil];
+    
+    [accountStore requestAccessToAccountsWithType:facebookAccountType options:options completion:^(BOOL granted , NSError *error)
+     {
+         if (granted)
+         {
+             NSLog(@"Facebook Access Granted");
+         }
+         else
+         {
+             NSLog(@"Error is : %@",error.localizedDescription);
+         }
+     }
+     ];
+    
+}
 - (IBAction)btnResign:(id)sender
 {
     [self resignKeyboard];

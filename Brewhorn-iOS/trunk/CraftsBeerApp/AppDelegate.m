@@ -14,6 +14,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "Flurry.h"
 #import <Crashlytics/Crashlytics.h>
+#import "TestFlight.h"
 
 // for flurry analytics
 #define YOUR_API_KEY @"3DBRP8MY7DG2Y37SF38Y"
@@ -41,6 +42,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [TestFlight takeOff:@"58476152-f78a-4005-b3b0-5182b3a51eb2"];
     [Crashlytics startWithAPIKey:@"b53fcf08df9b183b382153735d57a10862fc5348"];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];

@@ -2,23 +2,26 @@
 #ifndef CraftsBeerApp_h
 #define CraftsBeerApp_h
 
+
+#define kFACEBOOKAPPID  @"589751437754650"
 ///Internet & Server Error
 #ifdef LOCAL
-#define kLoginServerUrl @"http://localhost/index.php/webserviceController/userLogin"
+#define kLoginServerUrl @"http://192.168.1.4/BrewHorn-Server/index.php/webserviceController/userLogin"
 // home screen
-#define kBrreUrl @"http://localhost/index.php/webserviceController/searchBeer"
-#define kUserProfile @"http://localhost/index.php/webserviceController/userProfile"
-#define kEditUserProfile @"http://localhost/index.php/webserviceController/editUserProfile"
-#define kUserTaste @"http://localhost/index.php/webserviceController/userTasteProfile"
-#define kNewBeerTaste @"http://localhost/index.php/webserviceController/addBeerProfile"
-#define kEditUserBeerTaste @"http://localhost/index.php/webserviceController/editUserTasteProfile"
-#define kEditBeer @"http://localhost/index.php/webserviceController/editUserBeer"
-#define kGetBeerDetails @"http://localhost/index.php/webserviceController/getBeerProfile?beerId=%@"
-#define kAddBeer @"http://localhost/index.php/webserviceController/addUserBeer"
-#define kChangePassword @"http://localhost/index.php/webserviceController/changePassword"
-#define kHistory @"http://localhost/index.php/webserviceController/beerHistory"
-#define  kRegServerUrl @"http://localhost/index.php/webserviceController/userRegistration"
-#define kFrgtPswdServerUrl @"http://localhost/index.php/webserviceController/forgotPassword"
+#define kBrreUrl @"http://192.168.1.4/BrewHorn-Server/index.php/webserviceController/searchBeer"
+#define kUserProfile @"http://192.168.1.4/BrewHorn-Server/index.php/webserviceController/userProfile"
+#define kEditUserProfile @"http://192.168.1.4/BrewHorn-Server/index.php/webserviceController/editUserProfile"
+#define kUserTaste @"http://192.168.1.4/BrewHorn-Server/index.php/webserviceController/userTasteProfile"
+#define kNewBeerTaste @"http://192.168.1.4/BrewHorn-Server/index.php/webserviceController/addBeerProfile"
+#define kEditBeerProfile @"http://192.168.1.4/BrewHorn-Server/index.php/webserviceController/editBeerProfile"
+#define kEditUserBeerTaste @"http://192.168.1.4/BrewHorn-Server/index.php/webserviceController/editUserTasteProfile"
+#define kEditBeer @"http://192.168.1.4/BrewHorn-Server/index.php/webserviceController/editUserBeer"
+#define kGetBeerDetails @"http://192.168.1.4/BrewHorn-Server/index.php/webserviceController/getBeerProfile?beerId=%@"
+#define kAddBeer @"http://192.168.1.4/BrewHorn-Server/index.php/webserviceController/addUserBeer"
+#define kChangePassword @"http://192.168.1.4/BrewHorn-Server/index.php/webserviceController/changePassword"
+#define kHistory @"http://192.168.1.4/BrewHorn-Server/index.php/webserviceController/beerHistory"
+#define  kRegServerUrl @"http://192.168.1.4/BrewHorn-Server/index.php/webserviceController/userRegistration"
+#define kFrgtPswdServerUrl @"http://192.168.1.4/BrewHorn-Server/index.php/webserviceController/forgotPassword"
 
 #else
 #define kLoginServerUrl @"http://brewhorn.com/app_data/webserviceController/userLogin"
@@ -30,6 +33,7 @@
 #define kNewBeerTaste @"http://brewhorn.com/app_data/webserviceController/addBeerProfile"
 #define kEditUserBeerTaste @"http://brewhorn.com/app_data/webserviceController/editUserTasteProfile"
 #define kEditBeer @"http://brewhorn.com/app_data/webserviceController/editUserBeer"
+#define kEditBeerProfile @"http://brewhorn.com/app_data/webserviceController/editBeerProfile"
 #define kGetBeerDetails @"http://brewhorn.com/app_data/webserviceController/getBeerProfile?beerId=%@"
 #define kAddBeer @"http://brewhorn.com/app_data/webserviceController/addUserBeer"
 #define kChangePassword @"http://brewhorn.com/app_data/webserviceController/changePassword"

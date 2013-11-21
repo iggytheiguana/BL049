@@ -62,7 +62,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="text_field.png" id="73">
-                            <rect key="frame" x="10" y="5.99999999390407" width="230" height="27"/>
+                            <rect key="frame" x="10" y="5.9999999944582463" width="230" height="27"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="text_field.png" id="74">
@@ -90,7 +90,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" minimumFontSize="17" id="7">
-                            <rect key="frame" x="15" y="5.99999999390407" width="220" height="27"/>
+                            <rect key="frame" x="15" y="5.9999999944582463" width="220" height="27"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="next"/>
@@ -272,12 +272,6 @@
         <image name="btn_save.png" width="248" height="104"/>
         <image name="btn_save_hover.png" width="248" height="104"/>
         <image name="terrms_and_conditions.png" width="225" height="23"/>
-        <image name="text_field.png" width="441" height="63"/>
-        <image name="text_field.png" width="441" height="63"/>
-        <image name="text_field.png" width="441" height="63"/>
-        <image name="text_field.png" width="441" height="63"/>
-        <image name="text_field.png" width="441" height="63"/>
-        <image name="text_field.png" width="441" height="63"/>
         <image name="text_field.png" width="441" height="63"/>
         <image name="text_field_bg.png" width="470" height="470"/>
         <image name="unchecked.png" width="33" height="33"/>

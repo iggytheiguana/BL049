@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		492D9AEF183E36B9009436F9 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 492D9AEE183E36B9009436F9 /* Accounts.framework */; };
-		492D9AF0183E387E009436F9 /* libFlurry_4.2.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E20A5CE17F44BCF008BDF9F /* libFlurry_4.2.3.a */; };
 		9E20A5D117F44C07008BDF9F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E20A5D017F44C07008BDF9F /* Security.framework */; };
 		9E406FA2179FF54F005231F1 /* my_profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E406FA0179FF54F005231F1 /* my_profile.png */; };
 		9E406FA3179FF54F005231F1 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E406FA1179FF54F005231F1 /* share.png */; };
@@ -172,6 +171,9 @@
 		9EE823AD17BA794B00E1AE96 /* FbGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE823A817BA794B00E1AE96 /* FbGraph.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9EE823AE17BA794B00E1AE96 /* FbGraphFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE823AA17BA794B00E1AE96 /* FbGraphFile.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9EE823AF17BA794B00E1AE96 /* FbGraphResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE823AC17BA794B00E1AE96 /* FbGraphResponse.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C5272A26183E5430009C0E8B /* libFlurry_4.2.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E20A5CE17F44BCF008BDF9F /* libFlurry_4.2.3.a */; };
+		C5652296183E840400A55D6B /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5652292183E840400A55D6B /* libTestFlight.a */; };
+		C5652298183E842200A55D6B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C5652297183E842200A55D6B /* libz.dylib */; };
 		C5ABF1901833D14A00A5CE6F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5ABF18F1833D14A00A5CE6F /* Crashlytics.framework */; };
 /* End PBXBuildFile section */
 
@@ -389,6 +391,11 @@
 		9EE823AA17BA794B00E1AE96 /* FbGraphFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FbGraphFile.m; sourceTree = "<group>"; };
 		9EE823AB17BA794B00E1AE96 /* FbGraphResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FbGraphResponse.h; sourceTree = "<group>"; };
 		9EE823AC17BA794B00E1AE96 /* FbGraphResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FbGraphResponse.m; sourceTree = "<group>"; };
+		C5652292183E840400A55D6B /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		C5652293183E840400A55D6B /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		C5652294183E840400A55D6B /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		C5652295183E840400A55D6B /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		C5652297183E842200A55D6B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		C5ABF18F1833D14A00A5CE6F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -397,9 +404,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				492D9AF0183E387E009436F9 /* libFlurry_4.2.3.a in Frameworks */,
+				C5652298183E842200A55D6B /* libz.dylib in Frameworks */,
+				C5272A26183E5430009C0E8B /* libFlurry_4.2.3.a in Frameworks */,
 				492D9AEF183E36B9009436F9 /* Accounts.framework in Frameworks */,
 				9E20A5D117F44C07008BDF9F /* Security.framework in Frameworks */,
+				C5652296183E840400A55D6B /* libTestFlight.a in Frameworks */,
 				9E9A21D017A7A10A006AE975 /* Social.framework in Frameworks */,
 				9E9A21CE17A7A102006AE975 /* Twitter.framework in Frameworks */,
 				9E97958F1766237200787A0F /* SystemConfiguration.framework in Frameworks */,
@@ -655,6 +664,7 @@
 		9E979545176622D200787A0F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C5652297183E842200A55D6B /* libz.dylib */,
 				492D9AEE183E36B9009436F9 /* Accounts.framework */,
 				C5ABF18F1833D14A00A5CE6F /* Crashlytics.framework */,
 				9E20A5D017F44C07008BDF9F /* Security.framework */,
@@ -694,6 +704,7 @@
 		9E97954D176622D200787A0F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C5652291183E83D700A55D6B /* TestFlight SDK */,
 				9E949C87179815E60091262F /* Default-568h@2x.png */,
 				9E949C85179815DC0091262F /* Default@2x.png */,
 				9E949C83179815D00091262F /* Default.png */,
@@ -825,6 +836,17 @@
 				9EE823AC17BA794B00E1AE96 /* FbGraphResponse.m */,
 			);
 			name = FBGraph;
+			sourceTree = "<group>";
+		};
+		C5652291183E83D700A55D6B /* TestFlight SDK */ = {
+			isa = PBXGroup;
+			children = (
+				C5652292183E840400A55D6B /* libTestFlight.a */,
+				C5652293183E840400A55D6B /* TestFlight.h */,
+				C5652294183E840400A55D6B /* TestFlight+AsyncLogging.h */,
+				C5652295183E840400A55D6B /* TestFlight+ManualSessions.h */,
+			);
+			name = "TestFlight SDK";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1134,10 +1156,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/Flurry-iOS-4.2.3/Flurry\\\"",
-					"\\\"$(SRCROOT)/Flurry-iOS-4.2.3/FlurryAds\\\"",
-					"\\\"$(SRCROOT)/Flurry\\\"",
+					"\\\\\\\\\\\\\\\"$(SRCROOT)/Flurry-iOS-4.2.3/Flurry\\\\\\\\\\\\\\\"",
+					"\\\\\\\\\\\\\\\"$(SRCROOT)/Flurry-iOS-4.2.3/FlurryAds\\\\\\\\\\\\\\\"",
+					"\\\\\\\\\\\\\\\"$(SRCROOT)/Flurry\\\\\\\\\\\\\\\"",
 					/Users/Tatvasoft/Desktop/SVN_brewHorn/trunk/Flurry,
+					"/Users/bobby/Documents/dev/BlueLabelLabs-BL049-Brewhorn/BrewHorn-iOS/Flurry",
+					"/Users/bobby/Documents/dev/BlueLabelLabs-BL049-Brewhorn/BrewHorn-iOS/CraftsBeerApp",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1164,10 +1188,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/Flurry-iOS-4.2.3/Flurry\\\"",
-					"\\\"$(SRCROOT)/Flurry-iOS-4.2.3/FlurryAds\\\"",
-					"\\\"$(SRCROOT)/Flurry\\\"",
+					"\\\\\\\\\\\\\\\"$(SRCROOT)/Flurry-iOS-4.2.3/Flurry\\\\\\\\\\\\\\\"",
+					"\\\\\\\\\\\\\\\"$(SRCROOT)/Flurry-iOS-4.2.3/FlurryAds\\\\\\\\\\\\\\\"",
+					"\\\\\\\\\\\\\\\"$(SRCROOT)/Flurry\\\\\\\\\\\\\\\"",
 					/Users/Tatvasoft/Desktop/SVN_brewHorn/trunk/Flurry,
+					"/Users/bobby/Documents/dev/BlueLabelLabs-BL049-Brewhorn/BrewHorn-iOS/Flurry",
+					"/Users/bobby/Documents/dev/BlueLabelLabs-BL049-Brewhorn/BrewHorn-iOS/CraftsBeerApp",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";

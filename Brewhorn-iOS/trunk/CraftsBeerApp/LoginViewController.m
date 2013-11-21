@@ -164,21 +164,22 @@
                 [self.navigationController pushViewController:homeView animated:YES];
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Functionality Pending" message:@"Sucessfully login." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 //  [alert show];
-                [applicationDelegate hide_LoadingIndicator];
+             
             }
             else if([[dict valueForKey:@"userLogin"] integerValue]== -1)
             {
-                [applicationDelegate hide_LoadingIndicator];
+             
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Login" message:@"Failure" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             }
             else if([[dict valueForKey:@"userLogin"] integerValue]== -2)
             {
-                [applicationDelegate hide_LoadingIndicator];
+             
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Login" message:@"Server error." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             }
             serRslt = nil;
+               [applicationDelegate hide_LoadingIndicator];
             
         }
         else

@@ -2,6 +2,8 @@
 #import "EditUserProfileViewController.h"
 #import "ChangePasswordViewController.h"
 #import "JSON.h"
+#import "Constant.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface EditUserProfileViewController ()
 
@@ -298,12 +300,14 @@
             NSString *strVal=[NSString stringWithFormat:@"%@",[dictReg objectForKey:@"editUserProfile"]];
             if ([strVal integerValue]>0)
             {
-                [applicationDelegate hide_LoadingIndicator];
                 
+                  [applicationDelegate show_LoadingIndicator];
                 if([swchSharingFb isOn])
                 {
                     [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"AutomateSharingFb"];
                     [[NSUserDefaults standardUserDefaults]synchronize];
+                    
+                    [self requestFbBasicPermission];
                 }
                 else
                 {
@@ -320,38 +324,39 @@
                     [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"AutomateSharingTwitter"];
                     [[NSUserDefaults standardUserDefaults]synchronize];
                 }
-                [applicationDelegate show_LoadingIndicator];
+              [applicationDelegate hide_LoadingIndicator];
                 [self.navigationController popViewControllerAnimated:YES];
                 return;
                 
             }
             else  if ([strVal integerValue]==-3)
             {
-                [applicationDelegate hide_LoadingIndicator];
+          
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"" message:@"Username already exists." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
                 
             }
             else  if ([strVal integerValue]==-1)
             {
-                [applicationDelegate hide_LoadingIndicator];
+    
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"" message:@"User doesn't exists." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
                 
             }
             else if ([strVal integerValue]==-2)
             {
-                [applicationDelegate hide_LoadingIndicator];
+          
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"" message:@"Server error." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
                 
             }
             else if ([strVal integerValue]==-4)
             {
-                [applicationDelegate hide_LoadingIndicator];
+               
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"" message:@"Email address exists." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             }
+             [applicationDelegate hide_LoadingIndicator];
             serRslt = nil;
         }
         else
@@ -365,6 +370,28 @@
             alertViewNetwrk = nil;
         }
     }
+}
+
+- (void) requestFbBasicPermission
+{
+    ACAccountStore* accountStore = [[ACAccountStore alloc]init];
+    ACAccountType* facebookAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
+    NSArray* permissions = @[@"email"];
+    NSMutableDictionary *options = [[NSMutableDictionary alloc]initWithObjectsAndKeys:kFACEBOOKAPPID,ACFacebookAppIdKey,permissions,ACFacebookPermissionsKey,ACFacebookAudienceFriends,ACFacebookAudienceKey, nil];
+    
+    [accountStore requestAccessToAccountsWithType:facebookAccountType options:options completion:^(BOOL granted , NSError *error)
+     {
+         if (granted)
+         {
+             NSLog(@"Facebook Access Granted");
+         }
+         else
+         {
+             NSLog(@"Error is : %@",error.localizedDescription);
+         }
+     }
+     ];
+    
 }
 
 - (IBAction)btnResign:(id)sender

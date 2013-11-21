@@ -179,29 +179,29 @@
                 
                 if ([serRslt integerValue]>0)
                 {
-                    [applicationDelegate hide_LoadingIndicator];
+                  
                     UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"Profile Saved." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alert show];
                 }
                 else if([serRslt integerValue]== -1)
                 {
-                    [applicationDelegate hide_LoadingIndicator];
+                
                     UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"User has already added his taste." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alert show];
                 }
                 else if([serRslt integerValue]== -2)
                 {
-                    [applicationDelegate hide_LoadingIndicator];
+                
                     UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"Server Issue." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alert show];
                 }
                 else if([serRslt integerValue]== -3)
                 {
-                    [applicationDelegate hide_LoadingIndicator];
+                  
                     UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"In-valid User." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alert show];
                 }
-                
+                  [applicationDelegate hide_LoadingIndicator];
                 serRslt = nil;
             }
             else
@@ -233,7 +233,7 @@
                 
                 if ([serRslt integerValue]>0)
                 {
-                    [applicationDelegate hide_LoadingIndicator];
+                  
                     UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"Profile Saved." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alert show];
                     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
@@ -241,23 +241,23 @@
                 }
                 else if([serRslt integerValue]== -1)
                 {
-                    [applicationDelegate hide_LoadingIndicator];
+                   
                     UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"In-valid Beer." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alert show];
                 }
                 else if([serRslt integerValue]== -2)
                 {
-                    [applicationDelegate hide_LoadingIndicator];
+                 
                     UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"Server Issue." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alert show];
                 }
                 else if([serRslt integerValue]== -3)
                 {
-                    [applicationDelegate hide_LoadingIndicator];
+                    
                     UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"In-valid User." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alert show];
                 }
-                
+                [applicationDelegate hide_LoadingIndicator];
                 serRslt = nil;
             }
         }
@@ -310,7 +310,7 @@
             
             if ([serRslt integerValue]>0)
             {
-                [applicationDelegate hide_LoadingIndicator];
+                
                 NSArray *arrayBeerDet2=[[NSArray alloc]initWithObjects:valAroma,valSweet,valBitter,valMalt,valYeast,valMouthFeel,[NSString stringWithFormat:@"%i",(int)valSour],[NSString stringWithFormat:@"%i",(int)valAdditive],[NSString stringWithFormat:@"%i",(int)valBooziness], nil];
                 
                 // [[NSUserDefaults standardUserDefaults]setObject:arrayBeerDet2 forKey:@"arrayDetails"];
@@ -320,23 +320,23 @@
             }
             else if([serRslt integerValue]== -1)
             {
-                [applicationDelegate hide_LoadingIndicator];
+               
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"User has already added his taste." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             }
             else if([serRslt integerValue]== -2)
             {
-                [applicationDelegate hide_LoadingIndicator];
+               
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"Server Issue." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             }
             else if([serRslt integerValue]== -3)
             {
-                [applicationDelegate hide_LoadingIndicator];
+              
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"In-valid User." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             }
-            
+              [applicationDelegate hide_LoadingIndicator];
             serRslt = nil;
         }
         else
@@ -368,29 +368,29 @@
             
             if ([serRslt integerValue]>0)
             {
-                [applicationDelegate hide_LoadingIndicator];
+              
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"Profile Saved." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             }
             else if([serRslt integerValue]== -1)
             {
-                [applicationDelegate hide_LoadingIndicator];
+             
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"In-valid Beer." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             }
             else if([serRslt integerValue]== -2)
             {
-                [applicationDelegate hide_LoadingIndicator];
+                
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"Server Issue." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             }
             else if([serRslt integerValue]== -3)
             {
-                [applicationDelegate hide_LoadingIndicator];
+               
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"In-valid User." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             }
-            
+             [applicationDelegate hide_LoadingIndicator];
             serRslt = nil;
         }
     }

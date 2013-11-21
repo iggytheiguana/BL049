@@ -144,7 +144,7 @@
                             </connections>
                         </button>
                         <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="71">
-                            <rect key="frame" x="175" y="15" width="51" height="31"/>
+                            <rect key="frame" x="175" y="15.000000003673533" width="51" height="31"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <connections>
                                 <action selector="switch_sour:" destination="-1" eventType="valueChanged" id="80"/>
@@ -247,7 +247,7 @@
                             </connections>
                         </button>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Comments" minimumFontSize="17" id="91">
-                            <rect key="frame" x="13" y="226" width="235" height="38"/>
+                            <rect key="frame" x="13" y="226.00000000000003" width="235" height="38"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -257,7 +257,7 @@
                             </connections>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="127">
-                            <rect key="frame" x="13" y="226" width="235" height="38"/>
+                            <rect key="frame" x="13" y="226.00000000000003" width="235" height="38"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <state key="normal">

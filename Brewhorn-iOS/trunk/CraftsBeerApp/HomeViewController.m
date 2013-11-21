@@ -47,10 +47,19 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     tblBeer.hidden=YES;
     lblHints.hidden=NO;
     [txtBeerName resignFirstResponder];
     txtBeerName.text=@"";
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+     [applicationDelegate hide_LoadingIndicator];
 }
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {

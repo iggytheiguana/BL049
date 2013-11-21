@@ -609,29 +609,29 @@
             if ([serRslt integerValue]>0)
             {
                 [self.navigationController popViewControllerAnimated:YES];
-                [applicationDelegate hide_LoadingIndicator];
+           
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"Profile Saved." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             }
             else if([serRslt integerValue]== -1)
             {
-                [applicationDelegate hide_LoadingIndicator];
+          
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"In-valid Beer." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             }
             else if([serRslt integerValue]== -2)
             {
-                [applicationDelegate hide_LoadingIndicator];
+              
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"Server Issue." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             }
             else if([serRslt integerValue]== -3)
             {
-                [applicationDelegate hide_LoadingIndicator];
+                
                 UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert!" message:@"In-valid User." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             }
-            
+            [applicationDelegate hide_LoadingIndicator];
             serRslt = nil;
         }
     }

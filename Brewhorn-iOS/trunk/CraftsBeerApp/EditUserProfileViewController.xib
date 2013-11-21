@@ -368,30 +368,13 @@
     </objects>
     <resources>
         <image name="bg.png" width="640" height="960"/>
-        <image name="bg.png" width="640" height="960"/>
         <image name="btn_cancel.png" width="248" height="104"/>
-        <image name="btn_cancel.png" width="248" height="104"/>
-        <image name="btn_cancel_hover.png" width="248" height="104"/>
         <image name="btn_cancel_hover.png" width="248" height="104"/>
         <image name="btn_change_password.png" width="416" height="62"/>
         <image name="btn_change_password_hover.png" width="416" height="62"/>
         <image name="btn_save.png" width="248" height="104"/>
-        <image name="btn_save.png" width="248" height="104"/>
-        <image name="btn_save_hover.png" width="248" height="104"/>
         <image name="btn_save_hover.png" width="248" height="104"/>
         <image name="text_field.png" width="441" height="63"/>
-        <image name="text_field.png" width="441" height="63"/>
-        <image name="text_field.png" width="441" height="63"/>
-        <image name="text_field.png" width="441" height="63"/>
-        <image name="text_field.png" width="441" height="63"/>
-        <image name="text_field.png" width="441" height="63"/>
-        <image name="text_field.png" width="441" height="63"/>
-        <image name="text_field.png" width="441" height="63"/>
-        <image name="text_field.png" width="441" height="63"/>
-        <image name="text_field.png" width="441" height="63"/>
-        <image name="text_field.png" width="441" height="63"/>
-        <image name="text_field.png" width="441" height="63"/>
-        <image name="text_field_bg.png" width="470" height="470"/>
         <image name="text_field_bg.png" width="470" height="470"/>
         <image name="text_field_dropdown.png" width="442" height="63"/>
     </resources>
