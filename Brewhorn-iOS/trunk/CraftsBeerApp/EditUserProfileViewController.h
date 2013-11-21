@@ -11,7 +11,7 @@
 @interface EditUserProfileViewController : UIViewController
 {
     NSMutableArray *arraySelectBeer;
-    sa
+
     // for parsing
     NSMutableData *recieveData;
     NSURLConnection *theConnection;
