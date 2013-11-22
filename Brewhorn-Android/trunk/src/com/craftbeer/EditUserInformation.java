@@ -16,12 +16,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.craftbeer.constants.Constants;
 import com.craftbeer.httpcall.HttpHit;
 import com.craftbeer.httpcall.HttpListener;
 import com.craftbeer.utility.CheckInternetConnectivity;
@@ -42,7 +41,8 @@ public class EditUserInformation extends Activity implements HttpListener {
 	private Button _changePasswordBtn, _btnSave, _btnCancel;
 	private Button _spinner;
 	
-	private CheckBox chk_box_automated_sharing;
+	private CheckBox chk_box_automated_sharing_facebook;
+	private CheckBox chk_box_automated_sharing_twitter;
 
 	// string array to show drinker level
 
@@ -104,6 +104,20 @@ public class EditUserInformation extends Activity implements HttpListener {
 				else {
 					
 					//server hit
+					
+					SharedPreferences.Editor editor = sharedPreference.edit();
+					if (chk_box_automated_sharing_facebook.isChecked()) {
+						editor.putBoolean(Constants.AUTO_SHARE_FACEBOOK, true);
+					} else {
+						editor.putBoolean(Constants.AUTO_SHARE_FACEBOOK, false);
+					}
+
+					if (chk_box_automated_sharing_twitter.isChecked()) {
+						editor.putBoolean(Constants.AUTO_SHARE_TWITTER, true);
+					} else {
+						editor.putBoolean(Constants.AUTO_SHARE_TWITTER, false);
+					}
+					editor.commit();
 
 					String REGISTARTION_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><editUserProfile><userId><![CDATA["
 							+ bundle.getString("userId")
@@ -152,31 +166,52 @@ public class EditUserInformation extends Activity implements HttpListener {
 		bundle = getIntent().getExtras();
 		sharedPreference=PreferenceManager.getDefaultSharedPreferences(EditUserInformation.this);
 		
-		chk_box_automated_sharing=(CheckBox)findViewById(R.id.automate_sharing_toggle);
+		// facebook		
+		chk_box_automated_sharing_facebook =(CheckBox)findViewById(R.id.automate_sharing_toggle_facebook);
+		chk_box_automated_sharing_twitter =(CheckBox)findViewById(R.id.automate_sharing_toggle_twitter);
 		
-		if(sharedPreference.getBoolean("AUTO_SHARE",false)){
-			chk_box_automated_sharing.setChecked(true);
-		
+		if(sharedPreference.getBoolean(Constants.AUTO_SHARE_FACEBOOK,false)){
+			chk_box_automated_sharing_facebook.setChecked(true);
 		}else{
-			chk_box_automated_sharing.setChecked(false);
+			chk_box_automated_sharing_facebook.setChecked(false);
 		}
-		chk_box_automated_sharing.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
+		
+		if(sharedPreference.getBoolean(Constants.AUTO_SHARE_TWITTER,false)){
+			chk_box_automated_sharing_twitter.setChecked(true);
+		}else{
+			chk_box_automated_sharing_twitter.setChecked(false);
+		}
+		
+		/*
+		chk_box_automated_sharing_facebook.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				// TODO Auto-generated method stub
-			
 				SharedPreferences.Editor editor=sharedPreference.edit();
-				if(isChecked){
-					
-					
-					editor.putBoolean("AUTO_SHARE",true);
+				if(isChecked){					
+					editor.putBoolean(Url.AUTO_SHARE_FACEBOOK,true);
 				}else{
-					editor.putBoolean("AUTO_SHARE",false);
+					editor.putBoolean(Url.AUTO_SHARE_FACEBOOK,false);
 				}
 				editor.commit();
 			}
 		});
+		
+		// Twitter		
+	
+			
+				chk_box_automated_sharing_twitter.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+						SharedPreferences.Editor editor=sharedPreference.edit();
+						if(isChecked){					
+							editor.putBoolean(Url.AUTO_SHARE_TWITTER,true);
+						}else{
+							editor.putBoolean(Url.AUTO_SHARE_TWITTER,false);
+						}
+						editor.commit();
+					}
+				});
+				*/
 
 		_firstNameEdt = (EditText) findViewById(R.id.registration_user_first_name_edt_new);
 		_lastNameEdt = (EditText) findViewById(R.id.registration_user_last_name_edt);

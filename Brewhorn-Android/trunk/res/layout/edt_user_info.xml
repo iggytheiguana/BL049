@@ -141,40 +141,61 @@
                     android:textSize="18sp"
                     android:visibility="gone" />
 
-                <Button
+       
+
+               
+
+                <TextView
+                    android:id="@+id/automate_sharing_text_twitter"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/registration_zip_edt"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Autoshare to Twitter"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+
+                <CheckBox
+                    android:id="@+id/automate_sharing_toggle_twitter"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/registration_zip_edt"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/automate_sharing_text_twitter"
+                    android:button="@drawable/toggle_btn_on_off" />
+
+                <TextView
+                    android:id="@+id/automate_sharing_text_facebook"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/automate_sharing_text_twitter"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Autoshare to Facebook"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+
+                <CheckBox
+                    android:id="@+id/automate_sharing_toggle_facebook"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/automate_sharing_toggle_twitter"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/automate_sharing_text_facebook"
+                    android:button="@drawable/toggle_btn_on_off" />
+                         <Button
                     android:id="@+id/registration_change_password"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                  android:layout_alignParentBottom="true"
-                   
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/automate_sharing_text_facebook"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:layout_below="@+id/automate_sharing_text"
                     android:background="@drawable/change_password_selector" />
-
-                
-                  <TextView
-                    android:id="@+id/automate_sharing_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                     android:layout_below="@+id/registration_zip_edt"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Automate Sharing"
-              
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                  />
-                <CheckBox
-                    android:id="@+id/automate_sharing_toggle"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                   android:layout_marginTop="10dp"
-                   android:layout_marginLeft="40dp"
-                    android:layout_below="@+id/registration_zip_edt"
-                android:layout_toRightOf="@+id/automate_sharing_text"
-                    android:button="@drawable/toggle_btn_on_off" 
-                   />
+                         
             </RelativeLayout>
         </ScrollView>
 

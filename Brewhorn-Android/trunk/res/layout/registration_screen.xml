@@ -153,6 +153,47 @@
         android:layout_below="@+id/registration_user_email_edt"
         />
     
+        <TextView
+                    android:id="@+id/automate_sharing_text_twitter_reg"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/registration_zip_edt"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Autoshare to Twitter"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+
+                <CheckBox
+                    android:id="@+id/automate_sharing_toggle_twitter_reg"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/registration_zip_edt"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/automate_sharing_text_twitter_reg"
+                    android:button="@drawable/toggle_btn_on_off" />
+
+                <TextView
+                    android:id="@+id/automate_sharing_text_facebook_reg"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/automate_sharing_text_twitter_reg"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Autoshare to Facebook"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+
+                <CheckBox
+                    android:id="@+id/automate_sharing_toggle_facebook_reg"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/automate_sharing_toggle_twitter_reg"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/automate_sharing_text_facebook_reg"
+                    android:button="@drawable/toggle_btn_on_off" />
     
     <TextView
         android:id="@+id/registartion_text_exp_level"
@@ -193,10 +234,8 @@
         android:id="@+id/chk_terms_conditions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/registration_zip_edt"
+        android:layout_below="@+id/automate_sharing_toggle_facebook_reg"
         android:layout_margin="10dp"
-     
-        
         android:textColor="@android:color/white"
         android:button="@drawable/chk_box_terms_condition"
        />
@@ -205,9 +244,9 @@
             android:id="@+id/img_terms_conditions"
        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/registration_zip_edt"
+        android:layout_below="@+id/automate_sharing_toggle_facebook_reg"
         android:layout_toRightOf="@+id/chk_terms_conditions"
-        android:layout_margin="15dp" 
+        android:layout_marginTop="15dp" 
         android:src="@drawable/terrms_and_conditions"/>
     
     </RelativeLayout>

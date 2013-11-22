@@ -71,11 +71,12 @@ Context context;
 	}
 	@Override
 	protected void onPostExecute(Void result) {
-		if (!strresponse.equalsIgnoreCase("")) {
+		if (strresponse != null && !strresponse.equalsIgnoreCase("")) {
 			httpListener.onResponse(strresponse);
 			mDialog.dismiss();
 		} else {
 			Log.e("error", ":::error");
+			mDialog.dismiss();
 		}
 		super.onPostExecute(result);
 	}

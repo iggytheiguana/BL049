@@ -1,23 +1,27 @@
 package com.craftbeer;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 
 import org.json.JSONObject;
 
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
+import twitter4j.auth.RequestToken;
+import twitter4j.conf.ConfigurationBuilder;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,27 +40,22 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.craftbeer.constants.Constants;
 import com.craftbeer.httpcall.HttpHit;
 import com.craftbeer.httpcall.HttpListener;
 import com.craftbeer.utility.CheckInternetConnectivity;
 import com.craftbeer.utility.Url;
+import com.facebook.FacebookRequestError;
 import com.facebook.LoggingBehavior;
 import com.facebook.Request;
-import com.facebook.Request.Callback;
 import com.facebook.Response;
 import com.facebook.Session;
-import com.facebook.Session.StatusCallback;
 import com.facebook.SessionState;
 import com.facebook.Settings;
+import com.facebook.model.GraphObject;
 import com.flurry.android.FlurryAgent;
 import com.model.MODEL_AROMA;
 
-/**
- * 
- * @author arvind.agarwal this class helps in profiling a beer taste params
- *         malt,yeast,mouthfeel
- * 
- */
 public class AddBeerProfile1 extends Activity implements OnClickListener,
 		OnSeekBarChangeListener, HttpListener {
 
@@ -67,12 +66,6 @@ public class AddBeerProfile1 extends Activity implements OnClickListener,
 	private SettingAdapterMouth adapterMouth;
 	private SettingAdapterTexture adapterTexture;
 
-	private static final List<String> PERMISSIONS = Arrays
-			.asList("publish_actions");
-	Session session;
-
-	private com.facebook.Session.StatusCallback statusCallback = new SessionStatusCallback();
-	String sharingMessage = "";
 	public static Activity activity;
 
 	private Dialog dialog;
@@ -139,6 +132,18 @@ public class AddBeerProfile1 extends Activity implements OnClickListener,
 	private String comment6 = "The beer's taste was somewhat more than you prefer";
 	private String comment7 = "The beer's taste was much more than you prefer";
 
+	// Twitter
+	private static Twitter twitter;
+	private static RequestToken requestToken;
+	private AccessToken accessToken;
+	private Handler messageHandler = null;
+	static String stringMain = null;
+	public static final int REQUEST_TWITTER_LOGIN = 111;
+	
+	// Facebook
+	private Session.StatusCallback statusCallback = new SessionStatusCallback();
+	private Session.StatusCallback statusCallbackLogin = new statusCallbackLogin();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -197,22 +202,8 @@ public class AddBeerProfile1 extends Activity implements OnClickListener,
 		initialize();
 
 		Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
-		// getting active session of facebook login
-		session = Session.getActiveSession();
-		if (session == null) {
-			if (savedInstanceState != null) {
-				session = Session.restoreSession(this, null, statusCallback,
-						savedInstanceState);
-			}
-			if (session == null) {
-				session = new Session(this);
-			}
-			Session.setActiveSession(session);
-			if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) {
-				session.openForRead(new Session.OpenRequest(this)
-						.setCallback(statusCallback));
-			}
-		}
+		
+		initFacebookSession(savedInstanceState);
 
 	}
 
@@ -762,60 +753,32 @@ public class AddBeerProfile1 extends Activity implements OnClickListener,
 					Toast.makeText(AddBeerProfile1.this, _response,
 							Toast.LENGTH_LONG).show();
 
-					/*
-					 * alert();
-					 */
-					if(preferences.getBoolean("AUTO_SHARE", false)){
-						
-						
-						
-						String stringMain = "I just profiled #"
-								+ preferences.getString("BREWERY_NAME", "").replaceAll(" ", "") + " #"
-								+ preferences.getString("PROFILED_BEER_NAME", "").replaceAll(" ","")
-								+ " with @brewhornbeerapp.#brewhorn #craftbeer";
-						
-					String tweetUrl=""	;
-						try {
-							tweetUrl = "https://twitter.com/intent/tweet?text= "
-									+ URLEncoder.encode(stringMain, "UTF-8");
-						} catch (UnsupportedEncodingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						
-						
-
-						Uri uri = Uri.parse(tweetUrl);
-						startActivity(new Intent(Intent.ACTION_VIEW, uri));
-						
-						finish();
-						AddBeerProfile.addBeerProfile.finish();
-			/*		if (session != null && session.isOpened()) {
-						sharingMessage = "I just profiled #"
+					if (preferences.getBoolean(Constants.AUTO_SHARE_TWITTER,
+							false)) {
+						Constants.ShowProgress(this);
+						stringMain = "I just profiled  #"
 								+ preferences.getString("BREWERY_NAME", "")
 										.replaceAll(" ", "")
 								+ " #"
 								+ preferences.getString("PROFILED_BEER_NAME",
 										"").replaceAll(" ", "")
-								+ " with @brewhornbeerapp.#brewhorn #craftbeer";
-
-						Request request = Request.newStatusUpdateRequest(
-								session, sharingMessage, new Callback() {
-
-									@Override
-									public void onCompleted(Response response) {
-										// TODO Auto-generated method stub
-										
-										showAlertFacebook();
-										
-									}
-								});
-						request.executeAsync();
+								+ " with @BrewHornBeerApp. #brewhorn ";
+						Log.e("sendTweet", ":" + stringMain);
+						sendTweet(stringMain);
+					} else if (preferences.getBoolean(
+							Constants.AUTO_SHARE_FACEBOOK, false)) {
+						Constants.ShowProgress(this);
+						stringMain = "I just profiled  #"
+								+ preferences.getString("BREWERY_NAME", "")
+										.replaceAll(" ", "")
+								+ " #"
+								+ preferences.getString("PROFILED_BEER_NAME",
+										"").replaceAll(" ", "")
+								+ " with @BrewHornBeerApp. #brewhorn ";
+						Log.e("Post Facebook", ":loginToFacebook");
+						loginToFacebook();
 
 					} else {
-						onClickLogin();
-					}*/
-					}else{
 						finish();
 						AddBeerProfile.addBeerProfile.finish();
 					}
@@ -1487,26 +1450,9 @@ public class AddBeerProfile1 extends Activity implements OnClickListener,
 				AddBeerProfile1.this);
 		builder.setMessage(message);
 		builder.setPositiveButton("Dismiss", null);
-
 		builder.show();
-
 	}
 
-	protected void onStart() {
-		super.onStart();
-		Session.getActiveSession().addCallback(statusCallback);
-
-		FlurryAgent.onStartSession(this,
-				com.craftbeer.constants.Constants.FLURRY_KEY);
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		FlurryAgent.onEndSession(this);
-		Session.getActiveSession().removeCallback(statusCallback);
-
-	}
 
 	private void alert() {
 
@@ -1529,126 +1475,484 @@ public class AddBeerProfile1 extends Activity implements OnClickListener,
 		builder.show();
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		
-		
-		
-		/*Session.getActiveSession().onActivityResult(this, requestCode,
-				resultCode, data);
+	//
+	//
+	// private boolean isSubsetOf(Collection<String> subset,
+	// Collection<String> superset) {
+	// for (String string : subset) {
+	// if (!superset.contains(string)) {
+	// return false;
+	// }
+	// }
+	// return true;
+	// }
+	//
+	// private void onClickLogin() {
+	// Session session = Session.getActiveSession();
+	// if (!session.isOpened() && !session.isClosed()) {
+	// session.openForRead(new Session.OpenRequest(AddBeerProfile1.this)
+	// .setCallback(new StatusCallback() {
+	//
+	// @Override
+	// public void call(Session session, SessionState state,
+	// Exception exception) {
+	// // TODO Auto-generated method stub
+	//
+	// if (session.isOpened()) {
+	//
+	// sharingMessage = "I just profiled #"
+	// + preferences.getString("BREWERY_NAME",
+	// "").replaceAll(" ", "")
+	// + " #"
+	// + preferences.getString(
+	// "PROFILED_BEER_NAME", "")
+	// .replaceAll(" ", "")
+	// + " with @brewhornbeerapp.#brewhorn #craftbeer";
+	//
+	// Request request = Request
+	// .newStatusUpdateRequest(session,
+	// sharingMessage, new Callback() {
+	//
+	// @Override
+	// public void onCompleted(
+	// Response response) {
+	// // TODO Auto-generated
+	// // method stub
+	// showAlertFacebook();
+	// }
+	// });
+	// request.executeAsync();
+	// }
+	//
+	// }
+	// }));
+	// } else {
+	// Session.openActiveSession(this, true, new StatusCallback() {
+	//
+	// @Override
+	// public void call(Session session, SessionState state,
+	// Exception exception) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	// });
+	// }
+	// }
+	//
+	// private class SessionStatusCallback implements Session.StatusCallback {
+	// @Override
+	// public void call(Session session, SessionState state,
+	// Exception exception) {
+	//
+	// }
+	// }
+	//
+	// private void showAlertFacebook() {
+	//
+	// AlertDialog.Builder alert = new AlertDialog.Builder(
+	// AddBeerProfile1.this);
+	// alert.setMessage("You have successfully posted on Facebook");
+	// alert.setPositiveButton("Dismiss", new DialogInterface.OnClickListener()
+	// {
+	//
+	// @Override
+	// public void onClick(DialogInterface dialog, int which) {
+	// // TODO Auto-generated method stub
+	//
+	// finish();
+	// AddBeerProfile.addBeerProfile.finish();
+	//
+	// }
+	// });
+	// alert.show();
+	//
+	// }
 
-		session = Session.getActiveSession();
+	// Facebook and Twitter Integration
 
-		if (session.isOpened()) {
-
-			// Check for publish permissions
-			List<String> permissions = session.getPermissions();
-			if (!isSubsetOf(PERMISSIONS, permissions)) {
-
-				Session.NewPermissionsRequest newPermissionsRequest = new Session.NewPermissionsRequest(
-						this, PERMISSIONS);
-
-				session.requestNewPublishPermissions(newPermissionsRequest);
-
-				return;
-			}
-		}else  if(session.isClosed()){
-			
-			finish();
-			AddBeerProfile.addBeerProfile.finish();
-			
-		}
-*/
+	private void closeActivity() {
+		Constants.DismissProgress();
+		finish();
+		AddBeerProfile.addBeerProfile.finish();
 	}
 
-	private boolean isSubsetOf(Collection<String> subset,
-			Collection<String> superset) {
-		for (String string : subset) {
-			if (!superset.contains(string)) {
-				return false;
+
+	// Twitter Integration
+
+	private void checTwitterLogin(Uri uri) {
+		if (!isTwitterLoggedInAlready()) {
+			if (uri != null) {
+			} else {
+				uri = getIntent().getData();
 			}
-		}
-		return true;
-	}
-
-	private void onClickLogin() {
-		Session session = Session.getActiveSession();
-		if (!session.isOpened() && !session.isClosed()) {
-			session.openForRead(new Session.OpenRequest(AddBeerProfile1.this)
-					.setCallback(new StatusCallback() {
-
+			if (uri != null
+					&& uri.toString()
+							.startsWith(Constants.TWITTER_CALLBACK_URL)) {
+				// oAuth verifier
+				final String verifier = uri
+						.getQueryParameter(Constants.URL_TWITTER_OAUTH_VERIFIER);
+				try {
+					Thread thread = new Thread(new Runnable() {
 						@Override
-						public void call(Session session, SessionState state,
-								Exception exception) {
-							// TODO Auto-generated method stub
-
-							if (session.isOpened()) {
-
-								sharingMessage = "I just profiled #"
-										+ preferences.getString("BREWERY_NAME",
-												"").replaceAll(" ", "")
-										+ " #"
-										+ preferences.getString(
-												"PROFILED_BEER_NAME", "")
-												.replaceAll(" ", "")
-										+ " with @brewhornbeerapp.#brewhorn #craftbeer";
-
-								Request request = Request
-										.newStatusUpdateRequest(session,
-												sharingMessage, new Callback() {
-
-													@Override
-													public void onCompleted(
-															Response response) {
-														// TODO Auto-generated
-														// method stub
-														showAlertFacebook();
-													}
-												});
-								request.executeAsync();
+						public void run() {
+							try {
+								// Get the access token
+								accessToken = twitter.getOAuthAccessToken(
+										requestToken, verifier);
+								// Shared Preferences
+								Editor e = preferences.edit();
+								e.putString(Constants.PREF_KEY_OAUTH_TOKEN,
+										accessToken.getToken());
+								e.putString(Constants.PREF_KEY_OAUTH_SECRET,
+										accessToken.getTokenSecret());
+								// Store login status - true
+								e.putBoolean(Constants.PREF_KEY_TWITTER_LOGIN,
+										true);
+								e.commit(); // save changes
+								Log.e("Twitter OAuth Token",
+										"> " + accessToken.getToken());
+								messageHandler.sendEmptyMessage(0);
+							} catch (Exception e) {
+								e.printStackTrace();
+								if (!isFacebookShare()) {
+									Constants.DismissProgress();
+								}
 							}
-
 						}
-					}));
-		} else {
-			Session.openActiveSession(this, true, new StatusCallback() {
+					});
+					thread.start();
+					messageHandler = new Handler() {
+						public void handleMessage(Message message) {
+							super.handleMessage(message);
+							new updateTwitterStatus().execute(stringMain);
+						}
+					};
+				} catch (Exception e) {
+					Log.e("Twitter Login Error", "> " + e.getMessage());
+					e.printStackTrace();
+					if (!isFacebookShare()) {
+						Constants.DismissProgress();
+					}
+				}
+			}
+		}
+	}
 
+	private void sendTweet(String msg) {
+		// Check if Internet present
+		if (!CheckInternetConnectivity
+				.checkinternetconnection(AddBeerProfile1.this)) {
+			Log.d("sendTweet  ",
+					"Please connect to working Internet connection");
+			closeActivity();
+			return;
+		}
+
+		if (!isTwitterLoggedInAlready()) {
+			Thread thread = new Thread(new Runnable() {
 				@Override
-				public void call(Session session, SessionState state,
-						Exception exception) {
-					// TODO Auto-generated method stub
+				public void run() {
+					try {
+						ConfigurationBuilder builder = new ConfigurationBuilder();
+						builder.setOAuthConsumerKey(Constants.TWITTER_CONSUMER_KEY);
+						builder.setOAuthConsumerSecret(Constants.TWITTER_CONSUMER_SECRET);
+						twitter4j.conf.Configuration configuration = builder
+								.build();
+						TwitterFactory factory = new TwitterFactory(
+								configuration);
+						twitter = factory.getInstance();
+						requestToken = twitter
+								.getOAuthRequestToken(Constants.TWITTER_CALLBACK_URL);
 
+						messageHandler.sendEmptyMessage(0);
+					} catch (Exception e) {
+						e.printStackTrace();
+						  if(!isFacebookShare())
+						    {
+						    	   closeActivity();
+						    }
+					}
 				}
 			});
+			thread.start();
+			messageHandler = new Handler() {
+				public void handleMessage(Message message) {
+					super.handleMessage(message);
+					Intent intent = new Intent(AddBeerProfile1.this,
+							TwitterLoginWebviewActivity.class);
+					intent.putExtra("URL",
+							(String) requestToken.getAuthenticationURL());
+					startActivityForResult(intent, REQUEST_TWITTER_LOGIN);
+				}
+			};
+		} else {
+			Log.d("Tweet login ", "Already Logged In");
+			new updateTwitterStatus().execute(msg);
+		}
+	}
+
+	/**
+	 * Function to update status
+	 * */
+	class updateTwitterStatus extends AsyncTask<String, String, String> {
+		boolean statusOk = false;
+		String message = null;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+		}
+
+		protected String doInBackground(String... args) {
+			Log.d("Tweet Text", "> " + args[0]);
+			String status = args[0];
+			try {
+				ConfigurationBuilder builder = new ConfigurationBuilder();
+				builder.setOAuthConsumerKey(Constants.TWITTER_CONSUMER_KEY);
+				builder.setOAuthConsumerSecret(Constants.TWITTER_CONSUMER_SECRET);
+				// Access Token
+				String access_token = preferences.getString(
+						Constants.PREF_KEY_OAUTH_TOKEN, "");
+				// Access Token Secret
+				String access_token_secret = preferences.getString(
+						Constants.PREF_KEY_OAUTH_SECRET, "");
+				AccessToken accessToken = new AccessToken(access_token,
+						access_token_secret);
+				Twitter twitter = new TwitterFactory(builder.build())
+						.getInstance(accessToken);
+				// Only Single Tweet
+				twitter4j.Status response = twitter.updateStatus(status);
+				Log.d("Status", "> " + response.getText());
+				statusOk = true;
+			} catch (TwitterException e) {
+				// Error in updating status
+				Log.e("Twitter Update Error", e.getMessage());
+				message = e.getMessage();
+				statusOk = false;
+				closeActivity();
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		/**
+		 * After completing background task Dismiss the progress dialog and show
+		 * the data in UI Always use runOnUiThread(new Runnable()) to update UI
+		 * from background thread, otherwise you will get error
+		 * **/
+		protected void onPostExecute(String file_url) {
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					if (statusOk) {
+						Toast.makeText(getApplicationContext(),
+								"Message tweeted successfully !",
+								Toast.LENGTH_LONG).show();
+						Log.e("", "Message tweeted successfully !");
+						if (!isFacebookShare()) {
+							closeActivity();
+						}
+					} else {
+						if (!isFacebookShare()) {
+							if (message != null) {
+								Log.e("Twiiter", ":" + message);
+							}
+							closeActivity();
+						}
+					}
+				}
+			});
+		}
+	}
+
+	/**
+	 * Check user already logged in your application using twitter Login flag is
+	 * fetched from Shared Preferences
+	 * */
+	private boolean isTwitterLoggedInAlready() {
+		return preferences.getBoolean(Constants.PREF_KEY_TWITTER_LOGIN, false);
+	}
+
+	// facebook
+	private boolean isFacebookShare() {
+		if (preferences.getBoolean(Constants.AUTO_SHARE_FACEBOOK, false)) {
+			Log.e("Post loginToFacebook ", ":Facebook");
+			loginToFacebook();		
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private void loginToFacebook() {
+		Session session = Session.getActiveSession();
+		if (!session.isOpened() && !session.isClosed()) {
+			session.openForRead(new Session.OpenRequest(this)
+					.setCallback(statusCallbackLogin));
+		} else {
+			Session.openActiveSession(this, true, statusCallbackLogin);
+		}
+	}
+
+	private void initFacebookSession(Bundle savedInstanceState) 
+	{
+		Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
+		Session session = Session.getActiveSession();
+		if (session == null) 
+		{
+			if (savedInstanceState != null) {
+				session = Session.restoreSession(this, null, statusCallback,
+						savedInstanceState);
+			}
+			if (session == null) {
+				session = new Session(this);
+			}
+			Session.setActiveSession(session);
+			if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) 
+			{
+				session.openForRead(new Session.OpenRequest(this)
+						.setCallback(statusCallback));
+			}
 		}
 	}
 
 	private class SessionStatusCallback implements Session.StatusCallback {
 		@Override
 		public void call(Session session, SessionState state,
-				Exception exception) {
+				Exception exception) {			
+		}
+	}
 
+	private class statusCallbackLogin implements Session.StatusCallback {
+		@Override
+		public void call(Session session, SessionState state,
+				Exception exception) {
+			Log.e("statusCallbackLogin session", ":" + session);
+			if (session.isOpened()) 
+			{
+				performPublish();
+			}
+		
+			else  if (state.equals(SessionState.CLOSED_LOGIN_FAILED))
+			{
+			        	Log.e("Clear", ": Session"  );
+			            session.closeAndClearTokenInformation();
+			            Toast.makeText(getApplicationContext(), "Failed to post",Toast.LENGTH_LONG).show();
+			            closeActivity();
+			}
 		}
 	}
 	
-	private void showAlertFacebook() {
-
-		AlertDialog.Builder alert = new AlertDialog.Builder(
-				AddBeerProfile1.this);
-		alert.setMessage("You have successfully posted on Facebook");
-		alert.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
-				
-				finish();
-				AddBeerProfile.addBeerProfile.finish();
-				
-			}
-		});
-		alert.show();
-
+	@Override
+	public void onStart() {
+		super.onStart();
+		Session.getActiveSession().addCallback(statusCallback);
+		FlurryAgent.onStartSession(this,
+				com.craftbeer.constants.Constants.FLURRY_KEY);
 	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		Session.getActiveSession().removeCallback(statusCallback);
+		FlurryAgent.onEndSession(this);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		Log.e("requestCode", ":" + requestCode);
+		Log.e("resultCode", ":" + resultCode);
+		if (requestCode == REQUEST_TWITTER_LOGIN) {
+			if (resultCode == RESULT_OK) {
+				checTwitterLogin(Uri.parse(data.getStringExtra("URL")));
+			}
+		} else {
+			if(resultCode == RESULT_OK)
+			{
+			Session.getActiveSession().onActivityResult(this, requestCode,
+					resultCode, data);
+			}
+			else
+			{
+				Session session = Session.getActiveSession();
+		        if (!session.isClosed()) {
+		        	Log.e("Clear", ": Session"  );
+		            session.closeAndClearTokenInformation();
+		        }
+				closeActivity();
+			}
+		}
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		Session session = Session.getActiveSession();
+		Session.saveSession(session, outState);
+	}
+
+	private boolean hasPublishPermission() {
+		Session session = Session.getActiveSession();
+		return session != null
+				&& session.getPermissions().contains("publish_actions");
+	}
+
+	private void performPublish() {
+
+		Session session = Session.getActiveSession();
+		if (session != null) {
+			if (hasPublishPermission()) {
+				Log.e("performPublish ", " :  postStatusUpdate");
+				postStatusUpdate();
+				return;
+			} else if (session.isOpened()) {
+				session.requestNewPublishPermissions(new Session.NewPermissionsRequest(
+						this, Constants.PERMISSION));
+				return;
+			}
+		}
+	}
+
+	private void postStatusUpdate() {
+		if (hasPublishPermission()) {
+			Request request = Request.newStatusUpdateRequest(
+					Session.getActiveSession(), stringMain,
+					new Request.Callback() {
+						@Override
+						public void onCompleted(Response response) {
+							showPublishResult(stringMain,
+									response.getGraphObject(),
+									response.getError());
+						}
+					});
+			request.executeAsync();
+		} else {
+			Log.e("Not Idea", "Not Idea");
+		}
+	}
+
+	private interface GraphObjectWithId extends GraphObject {
+		String getId();
+	}
+
+	private void showPublishResult(String message, GraphObject result,
+			FacebookRequestError error) {
+		String alertMessage = null;
+		if (error == null) {
+			String id = result.cast(GraphObjectWithId.class).getId();
+			// alertMessage = getString(R.string.successfully_posted_post,
+			// message, id);
+			alertMessage = "Message posted to your facebook wall successfully !";
+		} else {
+			alertMessage = error.getErrorMessage();
+		}
+		Toast.makeText(getApplicationContext(), alertMessage, Toast.LENGTH_LONG)
+				.show();
+		closeActivity();
+	}
+
+
+
+
 }

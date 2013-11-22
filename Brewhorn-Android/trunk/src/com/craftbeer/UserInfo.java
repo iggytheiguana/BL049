@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.craftbeer.constants.Constants;
 import com.craftbeer.httpcall.HttpHit;
 import com.craftbeer.httpcall.HttpListener;
 import com.craftbeer.utility.CheckInternetConnectivity;
@@ -40,7 +41,8 @@ public class UserInfo extends Activity implements HttpListener ,OnClickListener{
 	//object of bundle
 	Bundle bundle;
 
-	private CheckBox checkBoxAutoShare;
+	private CheckBox automate_sharing_toggle_twitter;
+	private CheckBox automate_sharing_toggle_facebook;
 	
 	public static Activity activity;
 	@Override
@@ -85,7 +87,8 @@ public class UserInfo extends Activity implements HttpListener ,OnClickListener{
 		
 		bundle=getIntent().getExtras();
 		
-		checkBoxAutoShare=(CheckBox)findViewById(R.id.automate_toggle);
+		automate_sharing_toggle_twitter=(CheckBox)findViewById(R.id.automate_sharing_toggle_twitter);
+		automate_sharing_toggle_facebook=(CheckBox)findViewById(R.id.automate_sharing_toggle_facebook);
 
 		_firstNameTxt = (TextView) findViewById(R.id.user_info_first_name_txt_1);
 		_lastNameTxt = (TextView) findViewById(R.id.user_info_last_name_txt_1);
@@ -110,14 +113,23 @@ public class UserInfo extends Activity implements HttpListener ,OnClickListener{
 		// TODO Auto-generated method stub
 		super.onResume();
 		
-		if(sharedPreference.getBoolean("AUTO_SHARE",false)){
-			checkBoxAutoShare.setChecked(true);
-			checkBoxAutoShare.setClickable(false);
+		if(sharedPreference.getBoolean(Constants.AUTO_SHARE_FACEBOOK,false))
+		{
+			automate_sharing_toggle_facebook.setChecked(true);
+			automate_sharing_toggle_facebook.setClickable(false);
 		}else{
-			checkBoxAutoShare.setChecked(false);
-			checkBoxAutoShare.setClickable(false);
+			automate_sharing_toggle_facebook.setChecked(false);
+			automate_sharing_toggle_facebook.setClickable(false);
 		}
 		
+		if(sharedPreference.getBoolean(Constants.AUTO_SHARE_TWITTER,false))
+		{
+			automate_sharing_toggle_twitter.setChecked(true);
+			automate_sharing_toggle_twitter.setClickable(false);
+		}else{
+			automate_sharing_toggle_twitter.setChecked(false);
+			automate_sharing_toggle_twitter.setClickable(false);
+		}
 		
 		if (!CheckInternetConnectivity
 				.checkinternetconnection(UserInfo.this)) {
