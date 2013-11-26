@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');  
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * 
@@ -12,11 +12,7 @@ class webserviceController extends CI_Controller {
 		$this->load->database();
 		$this->load->model('webservicemodel');
 	}
-	/**
-	 *
-	 *	Function to register a new user in the application
-	 *
-	 **/
+	
 	function userRegistration(){
 		
 		$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"; 
@@ -29,8 +25,10 @@ class webserviceController extends CI_Controller {
 		$xml .= "<zipcode><![CDATA[140103]]></zipcode>"; 
 		$xml .= "<drinkerLevel><![CDATA[My Own Level]]></drinkerLevel>"; 
 		$xml .= "</userRegistration>";
-		
+		//echo $xml;exit;
 		global $HTTP_RAW_POST_DATA;
+		
+		//$HTTP_RAW_POST_DATA = utf8_encode($HTTP_RAW_POST_DATA);
 		
 		$loadElement = simplexml_load_string($HTTP_RAW_POST_DATA, 'SimpleXMLElement', LIBXML_NOCDATA); 	//Interprets a string of XML into an object
 		
@@ -41,26 +39,20 @@ class webserviceController extends CI_Controller {
 		else
 		{
 			$firstName = trim($loadElement->firstName);					//Load element data into variable
-			$lastName = trim($loadElement->lastName);					//Load element data into variable
+			$lastName = trim($loadElement->lastName);						//Load element data into variable
 			$username = trim($loadElement->username);					//Load element data into variable
-			$email = trim($loadElement->email);							//Load element data into variable
-			$password = trim($loadElement->password);					//Load element data into variable
-			$zipcode = trim($loadElement->zipcode);						//Load element data into variable
-			$drinkerLevel = trim($loadElement->drinkerLevel);			//Load element data into variable
+			$email = trim($loadElement->email);					//Load element data into variable
+			$password = trim($loadElement->password);				//Load element data into variable
+			$zipcode = trim($loadElement->zipcode);				//Load element data into variable
+			$drinkerLevel = trim($loadElement->drinkerLevel);				//Load element data into variable
 			
 			$response=$this->webservicemodel->userRegistration($firstName,$lastName,$username,$email,$password,$zipcode,$drinkerLevel);//Model Function call 
 			
-			echo $response;	// return response to mobile.
+			echo $response;								// return response to mobile.
 			die;
 		}
-	}//ef
+	}
 	
-	
-	/** 
-	 *
-	 *	Function for user Login 
-	 *
-	 **/
 	function userLogin(){
 		
 		$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"; 
@@ -68,9 +60,9 @@ class webserviceController extends CI_Controller {
 		$xml .= "<username><![CDATA[kapilss]]></username>"; 
 		$xml .= "<password><![CDATA[123456789]]></password>"; 
 		$xml .= "</userLogin>";
-		
+		//echo $xml;exit;
 		global $HTTP_RAW_POST_DATA;
-		
+		//$HTTP_RAW_POST_DATA = utf8_encode($HTTP_RAW_POST_DATA);
 		$loadElement = simplexml_load_string($HTTP_RAW_POST_DATA, 'SimpleXMLElement', LIBXML_NOCDATA); 	//Interprets a string of XML into an object
 		
 		if(!is_object($loadElement))
@@ -86,14 +78,8 @@ class webserviceController extends CI_Controller {
 			echo $response;								// return response to mobile.
 			die;
 		}
-	}//ef
+	}
 	
-	
-	/**
-	 *
-	 *	Function to retrieve the user passowrd. In this if user forget his passord then  the same password will send to his email address.
-	 *
-	 **/
 	function forgotPassword(){
 		
 		$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"; 
@@ -102,7 +88,7 @@ class webserviceController extends CI_Controller {
 		$xml .= "</forgotPassword>";
 		//echo $xml;exit;
 		global $HTTP_RAW_POST_DATA;
-		
+		//$HTTP_RAW_POST_DATA = utf8_encode($HTTP_RAW_POST_DATA);
 		$loadElement = simplexml_load_string($HTTP_RAW_POST_DATA, 'SimpleXMLElement', LIBXML_NOCDATA); 	//Interprets a string of XML into an object
 		
 		if(!is_object($loadElement))
@@ -117,14 +103,8 @@ class webserviceController extends CI_Controller {
 			echo $response;								// return response to mobile.
 			die;
 		}
-	}//ef
+	}
 	
-	/***
-	 **
-	 **	Function to save user taste profile
-	 ** @params aroma,sweet,bitter,malt,yeast,mouthFeel,sour,additive,booziness,sour_status,additive_status,booziness_status,yeast_status
-	 **
-	 ***/
 	function userTasteProfile(){
 		$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"; 
 		$xml .= "<userTasteProfile>";
@@ -145,7 +125,7 @@ class webserviceController extends CI_Controller {
 		$xml .= "</userTasteProfile>";
 		//echo $xml;exit;
 		global $HTTP_RAW_POST_DATA;
-
+		//$HTTP_RAW_POST_DATA = utf8_encode($HTTP_RAW_POST_DATA);
 		$loadElement = simplexml_load_string($HTTP_RAW_POST_DATA, 'SimpleXMLElement', LIBXML_NOCDATA); 	//Interprets a string of XML into an object
 		
 		if(!is_object($loadElement))
@@ -173,16 +153,8 @@ class webserviceController extends CI_Controller {
 			echo $response;								// return response to mobile.
 			die;
 		}
-	}//ef
+	}
 	
-	
-	/***
-	 **
-	 **	Function to edit user taste profile
-	 ** @params aroma,sweet,bitter,malt,yeast,mouthFeel,sour,additive,booziness,sour_status,additive_status,booziness_status,yeast_status
-	 **
-	 ***/
-	 
 	function editUserTasteProfile(){
 		$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"; 
 		$xml .= "<editUserTasteProfile>";
@@ -202,9 +174,10 @@ class webserviceController extends CI_Controller {
 		$xml .= "<yeast_status><![CDATA[1]]></yeast_status>"; 
 		$xml .= "</editUserTasteProfile>";
 		
+		/* $rahi = '<?xml version="1.0" encoding="UTF-8" ?><editUserTasteProfile><beerId><![CDATA[8]]></beerId><userId><![CDATA[8]]></userId><aroma><![CDATA[3]]></aroma><sweet><![CDATA[5]]></sweet><bitter><![CDATA[7]]></bitter><malt><![CDATA[4]]></malt><yeast><![CDATA[3]]></yeast><mouthFeel><![CDATA[3]]></mouthFeel><sour><![CDATA[5]]></sour><additive><![CDATA[3]]></additive><booziness><![CDATA[4]]></booziness><sour_status><![CDATA[1]]></sour_status><additive_status><![CDATA[1]]></additive_status><booziness_status><![CDATA[1]]></booziness_status></editUserTasteProfile>'; */
 		
 		global $HTTP_RAW_POST_DATA;
-		
+		//$HTTP_RAW_POST_DATA = utf8_encode($HTTP_RAW_POST_DATA);
 		$loadElement = simplexml_load_string($HTTP_RAW_POST_DATA, 'SimpleXMLElement', LIBXML_NOCDATA); 	//Interprets a string of XML into an object
 		
 		if(!is_object($loadElement))
@@ -234,12 +207,6 @@ class webserviceController extends CI_Controller {
 		}
 	}
 	
-	/***
-	 **
-	 **	Function to add user beer
-	 ** @params brewery,beerName,beerStyle,abv,ibu,mood,venue,event,hype
-	 **
-	 ***/
 	function addUserBeer(){
 		$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"; 
 		$xml .= "<addUserBeer>";
@@ -256,7 +223,8 @@ class webserviceController extends CI_Controller {
 		$xml .= "</addUserBeer>";
 		//echo $xml;exit;
 		global $HTTP_RAW_POST_DATA;
-		
+		//$HTTP_RAW_POST_DATA = utf8_encode($HTTP_RAW_POST_DATA);
+		/* $xml = utf8_encode($xml); */
 		$loadElement = simplexml_load_string($HTTP_RAW_POST_DATA, 'SimpleXMLElement', LIBXML_NOCDATA); 	//Interprets a string of XML into an object
 		
 		if(!is_object($loadElement))
@@ -280,14 +248,7 @@ class webserviceController extends CI_Controller {
 			echo $response;								// return response to mobile.
 			die;
 		}
-	}//ef
-	
-	/***
-	 **
-	 **	Function to edit user beer
-	 ** @params brewery,beerName,beerStyle,abv,ibu,mood,venue,event,hype
-	 **
-	 ***/
+	}
 	
 	function editUserBeer(){
 		$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"; 
@@ -306,7 +267,7 @@ class webserviceController extends CI_Controller {
 		$xml .= "</editUserBeer>";
 		//echo $xml;exit;
 		global $HTTP_RAW_POST_DATA;
-		
+		//$HTTP_RAW_POST_DATA = utf8_encode($HTTP_RAW_POST_DATA);
 		$loadElement = simplexml_load_string($HTTP_RAW_POST_DATA, 'SimpleXMLElement', LIBXML_NOCDATA); 	//Interprets a string of XML into an object
 		
 		if(!is_object($loadElement))
@@ -331,15 +292,8 @@ class webserviceController extends CI_Controller {
 			echo $response;								// return response to mobile.
 			die;
 		}
-	}//ef
+	}
 	
-	
-	/***
-	 **
-	 **	Function to add user beer taste profile
-	 ** @params aroma,sweet,bitter,malt,yeast,mouthFeel,sour,additive,booziness,sour_status,additive_status,booziness_status,yeast_status
-	 **
-	 ***/
 	function addBeerProfile(){
 		$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"; 
 		$xml .= "<addBeerProfile>";
@@ -366,9 +320,9 @@ class webserviceController extends CI_Controller {
 		$xml .= "<booziness_cmt1><![CDATA[1]]></booziness_cmt1>"; 
 		$xml .= "<mouthFeel_cmt1><![CDATA[1]]></mouthFeel_cmt1>"; 
 		$xml .= "</addBeerProfile>";
-
+		//echo $xml;exit;
 		global $HTTP_RAW_POST_DATA;
-
+		//$HTTP_RAW_POST_DATA = utf8_encode($HTTP_RAW_POST_DATA);
 		$loadElement = simplexml_load_string($HTTP_RAW_POST_DATA, 'SimpleXMLElement', LIBXML_NOCDATA); 	//Interprets a string of XML into an object
 		
 		if(!is_object($loadElement)){
@@ -402,15 +356,8 @@ class webserviceController extends CI_Controller {
 			echo $response;								// return response to mobile.
 			die;
 		}
-	}//ef
+	}
 	
-	
-	/***
-	 **
-	 **	Function to edit user beer taste profile
-	 ** @params aroma,sweet,bitter,malt,yeast,mouthFeel,sour,additive,booziness,sour_status,additive_status,booziness_status,yeast_status
-	 **
-	 ***/
 	function editBeerProfile(){
 		$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"; 
 		$xml .= "<editBeerProfile>";
@@ -439,13 +386,13 @@ class webserviceController extends CI_Controller {
 		$xml .= "</editBeerProfile>";
 		
 		global $HTTP_RAW_POST_DATA;
-
+		//$HTTP_RAW_POST_DATA = utf8_encode($HTTP_RAW_POST_DATA);
 		$loadElement = simplexml_load_string($HTTP_RAW_POST_DATA, 'SimpleXMLElement', LIBXML_NOCDATA); 	//Interprets a string of XML into an object
 		
 		if(!is_object($loadElement)){
 			echo json_encode(array("editBeerProfile"=>"-2"));
 		}else{
-
+		//echo "<pre>";print_R($loadElement);
 			$beerId = trim($loadElement->beerId);					//Load element data into variable
 			$userId = trim($loadElement->userId);					//Load element data into variable
 			$aroma = trim($loadElement->aroma);						//Load element data into variable
@@ -474,36 +421,24 @@ class webserviceController extends CI_Controller {
 			echo $response;								// return response to mobile.
 			die;
 		}
-	}//ef
+	}
 	
-	/***
-	 **
-	 **	Function to get Beer Profile correspond to beer Id
-	 **
-	 ***/
-	 
 	Function getBeerProfile($beerId=NULL){
 		$beerId = $_GET['beerId'];
 		$response=$this->webservicemodel->getBeerProfile($beerId);//Model Function call 
 		echo $response;								// return response to mobile.
 		die;
-	}//ef
+	}
 	
-	
-	/***
-	 **
-	 **	Function to search beer
-	 **
-	 ***/
 	Function searchBeer(){
 		$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"; 
 		$xml .= "<searchBeer>";
 		$xml .= "<userId><![CDATA[2]]></userId>"; 
 		$xml .= "<beerName><![CDATA[Mad River]]></beerName>"; 
 		$xml .= "</searchBeer>";
+		//echo $xml;exit;
 		
 		global $HTTP_RAW_POST_DATA;
-		
 		$loadElement = simplexml_load_string($HTTP_RAW_POST_DATA, 'SimpleXMLElement', LIBXML_NOCDATA); 	//Interprets a string of XML into an object
 		
 		if(!is_object($loadElement)){
@@ -517,23 +452,19 @@ class webserviceController extends CI_Controller {
 		}
 	}
 	
-	/***
-	 **
-	 ** function to get user taste profile 
-	 **
-	 ***/
 	Function getUserTasteProfile($userId=NULL){
 		$userId = $_GET['userId'];
 		$response=$this->webservicemodel->getUserTasteProfile($userId);//Model Function call 
 		echo $response;								// return response to mobile.
 		die;
-	}//ef
+	}
 	
-	/***
-	 **
-	 ** function to get user Profile
-	 **
-	 ***/
+	Function recommentBeer($userId=NULL){
+		$userId = $_GET['userId'];
+		$response=$this->webservicemodel->recommentBeer($userId);//Model Function call 
+		echo $response;								// return response to mobile.
+		die;
+	}
 	
 	Function userProfile(){
 		$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"; 
@@ -541,11 +472,9 @@ class webserviceController extends CI_Controller {
 		$xml .= "<userId><![CDATA[1]]></userId>"; 
 		$xml .= "<type><![CDATA[2]]></type>"; 
 		$xml .= "</userProfile>";
-
+		//echo $xml;exit;
 		global $HTTP_RAW_POST_DATA;
-		
 		$HTTP_RAW_POST_DATA = utf8_encode($HTTP_RAW_POST_DATA);
-		
 		$loadElement = simplexml_load_string($HTTP_RAW_POST_DATA, 'SimpleXMLElement', LIBXML_NOCDATA); 	//Interprets a string of XML into an object
 		
 		if(!is_object($loadElement))
@@ -562,12 +491,6 @@ class webserviceController extends CI_Controller {
 		}
 	}
 	
-	/***
-	 **
-	 ** function to edit user Profile
-	 **
-	 ***/
-	
 	Function editUserProfile(){
 		$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"; 
 		$xml .= "<editUserProfile>";
@@ -579,9 +502,9 @@ class webserviceController extends CI_Controller {
 		$xml .= "<email><![CDATA[cgg@g.com]]></email>"; 
 		$xml .= "<username><![CDATA[qwerty]]></username>"; 
 		$xml .= "</editUserProfile>";
-
+		//echo $xml;exit;
 		global $HTTP_RAW_POST_DATA;
-
+		//$HTTP_RAW_POST_DATA = utf8_encode($HTTP_RAW_POST_DATA);
 		$loadElement = simplexml_load_string($HTTP_RAW_POST_DATA, 'SimpleXMLElement', LIBXML_NOCDATA); 	//Interprets a string of XML into an object
 		
 		if(!is_object($loadElement))
@@ -602,7 +525,7 @@ class webserviceController extends CI_Controller {
 			echo $response;								// return response to mobile.
 			die;
 		}
-	}//ef
+	}
 	
 	/**
 	 *	Function to change User Profile Password.
@@ -615,9 +538,9 @@ class webserviceController extends CI_Controller {
 		$xml .= "<password><![CDATA[12345678]]></password>"; 
 		$xml .= "<newPassword><![CDATA[123456789]]></newPassword>"; 
 		$xml .= "</changePassword>";
-
+		//echo $xml;exit;
 		global $HTTP_RAW_POST_DATA;
-
+		//$HTTP_RAW_POST_DATA = utf8_encode($HTTP_RAW_POST_DATA);
 		$loadElement = simplexml_load_string($HTTP_RAW_POST_DATA, 'SimpleXMLElement', LIBXML_NOCDATA); 	//Interprets a string of XML into an object
 		
 		if(!is_object($loadElement))
@@ -633,7 +556,7 @@ class webserviceController extends CI_Controller {
 			echo $response;								// return response to mobile.
 			die;
 		}
-	}//ef
+	}
 	
 	/**
 	 *	Function to get User Beer History.
@@ -644,9 +567,9 @@ class webserviceController extends CI_Controller {
 		$xml .= "<beerHistory>";
 		$xml .= "<userId><![CDATA[9]]></userId>"; 
 		$xml .= "</beerHistory>";
-
+		//echo $xml;exit;
 		global $HTTP_RAW_POST_DATA;
-
+		//$HTTP_RAW_POST_DATA = utf8_encode($HTTP_RAW_POST_DATA);
 		$loadElement = simplexml_load_string($HTTP_RAW_POST_DATA, 'SimpleXMLElement', LIBXML_NOCDATA); 	//Interprets a string of XML into an object
 		
 		if(!is_object($loadElement))
@@ -663,5 +586,225 @@ class webserviceController extends CI_Controller {
 		}
 	}
 	
-	
+	Function testXML(){
+		$xml = '<?xml version="1.0" encoding="UTF-8" ?><addUserBeer><userId><![CDATA[16]]></userId><brewery><![CDATA[ëk]]></brewery><beerName><![CDATA[ëk]]></beerName><beerStyle><![CDATA[]]></beerStyle><abv><![CDATA[]]></abv><ibu><![CDATA[]]></ibu><mood><![CDATA[]]></mood><venue><![CDATA[]]></venue><event><![CDATA[]]></event><hype><![CDATA[]]></hype></addUserBeer>';
+		//echo $xml;exit;
+		//$xmlq = utf8_encode($xml);
+		//echo $xmlq;die;
+		
+		$stories = '<?xml version="1.0" encoding="ISO-8859-1" ?><addUserBeer><userId><![CDATA[2]]></userId><brewery><![CDATA[]]></brewery><beerName><![CDATA[áéúíÁÉÍÓÚüÜüÜñÑ¿¡¼½º]]></beerName><beerStyle><![CDATA[]]></beerStyle><abv><![CDATA[]]></abv><ibu><![CDATA[]]></ibu><mood><![CDATA[]]></mood><venue><![CDATA[]]></venue><event><![CDATA[]]></event><hype><![CDATA[]]></hype></addUserBeer>';
+		$loadElement = simplexml_load_string($stories, 'SimpleXMLElement', LIBXML_NOCDATA); 
+		
+		print_R($loadElement);die;
+		global $HTTP_RAW_POST_DATA;
+		//$HTTP_RAW_POST_DATA = utf8_encode($HTTP_RAW_POST_DATA);
+		$loadElement = simplexml_load_string($HTTP_RAW_POST_DATA, 'SimpleXMLElement', LIBXML_NOCDATA); 	//Interprets a string of XML into an object
+		echo "<pre>";print_R($loadElement);die;
+		if(!is_object($loadElement))
+		{
+			echo json_encode(array("changePassword"=>"-2"));
+		}
+		else
+		{
+			$userId = trim($loadElement->userId);									//Load element data into variable
+			$password = trim($loadElement->password);					//Load element data into variable
+			$newPassword = trim($loadElement->newPassword);					//Load element data into variable
+			$response=$this->webservicemodel->changePassword($userId,$password,$newPassword);//Model Function call 
+			echo $response;								// return response to mobile.
+			die;
+		}
+	}
+
+    Function BreweryDBWebHooks(){
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            throw new Exception('This must be accessed via POST');
+        }
+
+        $apiKey = '75ca1c53de40741205e76c8c3a7464c7'; // your BreweryDB API key
+
+        // checks to make sure that the request was actually sent from the BreweryDB API
+        $isValidRequest = sha1($apiKey . $_GET['nonce']) == $_GET['key'];
+//        $isValidRequest = true;
+        if ($isValidRequest) {
+
+            // this will be one of beer, brewery, location, guild, or event
+            $attribute = $_POST['attribute'];
+            if($attribute == 'beer'){           //go inside only attribute is beer otherwise ignored
+
+
+                $attributeId = $_POST['attributeId'];
+
+                // Either insert, delete, or edit
+                $action = $_POST['action'];
+
+                // The subaction that was taken on the attribute. Either 'none' or various other options like 'socialaccount-update' or 'beer-add'
+                $subAction = isset($_POST['subAction'])?$_POST['subAction']:'';
+
+                // The ID of the sub-attribute that was changed.
+                //This will only be present if the subAction field is also set.
+                //So if a social account was added to a brewery, the subAttributeId will be the ID of the new social account.
+                $subAttributeId = isset($_POST['subAttributeId'])?$_POST['subAttributeId']:'';
+
+                // Timestamp that the change was integrated
+                $timestamp = $_POST['timestamp'];
+                $post_data = serialize($_POST);
+                $brewery_data = $this->webservicemodel->BreweryDBWebHooksInsert($attribute,$attributeId,$action,$subAction,$subAttributeId,$timestamp,$post_data);
+                //echo 'Inserted record id:'.$brewery_data;
+
+
+                //$action equal to insert or edit
+                if(($action == 'insert') || ($action == 'edit')){
+
+                      //insert beer into userbeer and beer table
+                      if($action == 'insert'){
+                      //get beer data from brewerydb
+                        $url_beer = 'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&format=php&withBreweries=Y';
+                        $result_allbeer = $this->get_web_page($url_beer);
+                        if($result_allbeer['message'] == 'Request Successful'){
+                            if($result_allbeer['data']){
+                                $beerdata = $result_allbeer['data'];
+                                $this->webservicemodel->InsertUpdateBeer($beerdata,$timestamp,$action);
+                            }
+                        }
+                      }
+
+
+
+                      //Edit case for beer attribute only
+                      if(($action == 'edit') && ($subAction == 'none')){
+                        //get beer data from brewerydb
+                        $url_beer = 'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&format=php&withBreweries=Y';
+                        $result_allbeer = $this->get_web_page($url_beer);
+                        if($result_allbeer['message'] == 'Request Successful'){
+                            if($result_allbeer['data']){
+                            //update beer and userbeertable
+                            $beerdata = $result_allbeer['data'];
+                                $this->webservicemodel->InsertUpdateBeer($beerdata,$timestamp,$action);
+                            }
+                        }
+                      }
+                      //edit case for related attribute
+                      if(($action == 'edit') && ($subAction != 'none')){
+
+                          //devide subaction into two varialbe
+                          //1)subaction type is brewery,ingredient,socialaccount and 2)related action for subaction is insert,edit,delete
+                          $subAction_array = explode('-',$subAction);
+                          $subAction_type = $subAction_array[0];
+                          $subAction_typeAction = $subAction_array[1];
+                          if($subAction_type == 'brewery'){
+                              //get beer data from brewerydb
+                              $url_beer = 'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&format=php&withBreweries=Y';
+                              $result_allbeer = $this->get_web_page($url_beer);
+                              if($result_allbeer['message'] == 'Request Successful'){
+                                  if($result_allbeer['data']){
+
+                                    if(($subAction_typeAction == 'insert') || ($subAction_typeAction == 'edit')){
+                                        //insert update case for beerbrewery table
+                                        $beerdata = $result_allbeer['data'];
+                                        $this->webservicemodel->InsertUpdateBeerBrewery($beerdata,$subAttributeId,$timestamp,$subAction_typeAction);
+                                    }
+                                 }
+                               }
+
+                              if($subAction_typeAction == 'delete'){
+                              //nothing
+                              }
+                          }
+
+                          if($subAction_type == 'socialaccount'){
+                              //get data from brewery db for socialaccount
+                              $url_socialaccount =  'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&withBreweries=Y&withSocialAccounts=Y&format=php';
+                              $result_socialaccount = $this->get_web_page($url_socialaccount);
+                              if(($subAction_typeAction == 'insert') || ($subAction_typeAction == 'edit')){
+                                if($result_socialaccount['message'] == 'Request Successful'){
+
+                                  //Insert update case for socialmediaacct table
+                                  $beerdata = $result_socialaccount['data'];
+                                  $this->webservicemodel->InsertUpdateSocialMediaAcct($beerdata,$subAttributeId,$subAction_typeAction,$timestamp);
+                                }
+                              }
+                              if($subAction_typeAction == 'delete'){
+                                  //Delete case for socialmediaacct table
+                                  if($result_socialaccount['message'] == 'Request Successful'){
+
+                                    //Insert update case for socialmediaacct table
+                                    $beerdata = $result_socialaccount['data'];
+                                    $this->webservicemodel->DeleteSocialMediaAcct($beerdata,$subAttributeId);
+                                  }
+                              }
+                          }
+
+                          if($subAction_type == 'ingredient'){
+                              if($subAction_typeAction == 'insert'){
+                                  //get data for ingredient from brewery db database
+                                  $url_ingredient =  'http://api.brewerydb.com/v2/beer/'.$attributeId.'/ingredients/?key='.$apiKey.'&format=php';
+                                  $result_ingredient = $this->get_web_page($url_ingredient);
+                                  if($result_ingredient['message'] == 'Request Successful'){
+                                      $ingredientdata = $result_ingredient['data'];
+                                      //insert into beeringredient table
+                                      $this->webservicemodel->InsertIngredient($ingredientdata,$attributeId,$subAttributeId,$timestamp);
+                                  }
+
+                              }
+                              if($subAction_typeAction == 'delete'){
+                                  //delete case for beeringredient table
+                                  $this->webservicemodel->DeleteIngredient($attributeId,$subAttributeId);
+                              }
+                          }
+
+                    }
+
+
+
+
+                }
+                //$action equal to delete
+                if($action == 'delete'){
+
+                }
+                 // echo 'Script run successfully';
+
+
+                // Now you can take whatever action you need based
+                // on the information you received
+
+                // The best practice is to put this data in a queue
+                // somewhere locally for you to process it in an
+                // asynchronous manner so you don't get your webhoook
+                // disabled because it takes too long to respond.
+            }
+
+        } else {
+            throw new Exception('Key was not valid');
+        }
+    }
+
+
+
+
+    function get_web_page($url) {
+        $options = array(CURLOPT_RETURNTRANSFER => true, // return web page
+        CURLOPT_HEADER => false, // don't return headers
+        CURLOPT_FOLLOWLOCATION => true, // follow redirects
+        CURLOPT_ENCODING => "", // handle all encodings
+        CURLOPT_USERAGENT => "", // who am i
+        CURLOPT_AUTOREFERER => true, // set referer on redirect
+        CURLOPT_CONNECTTIMEOUT => 120, // timeout on connect
+        CURLOPT_TIMEOUT => 120, // timeout on response
+        CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
+        );
+        $ch = curl_init($url);
+        curl_setopt_array($ch, $options);
+        $content = curl_exec($ch);
+        $err = curl_errno($ch);
+        $errmsg = curl_error($ch);
+        $header = curl_getinfo($ch);
+		curl_close($ch);
+
+        $array = unserialize($content);
+		//echo "<pre>";print_R($array);die;
+        return $array;
+    }
+
 }

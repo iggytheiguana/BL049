@@ -141,12 +141,7 @@ class webservicemodel extends CI_Model {
 		endif;
 	}
 	
-	/***
-	 **
-	 **	Function to save user taste profile
-	 ** @params aroma,sweet,bitter,malt,yeast,mouthFeel,sour,additive,booziness,sour_status,additive_status,booziness_status,yeast_status
-	 **
-	 ***/
+	
 	function userTasteProfile($userId,$aroma,$sweet,$bitter,$malt,$yeast,$mouthFeel,$sour,$additive,$booziness,$sour_status,$additive_status,$booziness_status,$yeast_status){
 		$validateUser = $this->db->select()->where('id',$userId)->from('userRegistration')->get()->num_rows();
 		if($validateUser > 0):
@@ -178,12 +173,7 @@ class webservicemodel extends CI_Model {
 			return json_encode(array("userTasteProfile"=>"-3"));
 		endif;
 	}
-	/***
-	 **
-	 **	Function to edit user taste profile
-	 ** @params aroma,sweet,bitter,malt,yeast,mouthFeel,sour,additive,booziness,sour_status,additive_status,booziness_status,yeast_status
-	 **
-	 ***/
+	
 	function editUserTasteProfile($userId,$aroma,$sweet,$bitter,$malt,$yeast,$mouthFeel,$sour,$additive,$booziness,$sour_status,$additive_status,$booziness_status,$yeast_status){
 	
 		$validateUser = $this->db->select()->where('id',$userId)->from('userRegistration')->get()->num_rows();
@@ -216,12 +206,7 @@ class webservicemodel extends CI_Model {
 			return json_encode(array("editUserTasteProfile"=>"-3"));
 		endif;
 	}
-	/***
-	 **
-	 **	Function to add user beer
-	 ** @params brewery,beerName,beerStyle,abv,ibu,mood,venue,event,hype
-	 **
-	 ***/
+	
 	Function addUserBeer($userId,$brewery,$beerName,$beerStyle,$abv,$ibu,$mood,$venue,$event,$hype){
 		$validateUser = $this->db->select()->where('id',$userId)->from('userRegistration')->get()->num_rows();
 		if($validateUser > 0):
@@ -285,12 +270,6 @@ class webservicemodel extends CI_Model {
 			return json_encode(array("addUserBeer"=>"-3"));
 		endif;
 	}
-	/***
-	 **
-	 **	Function to edit user beer
-	 ** @params brewery,beerName,beerStyle,abv,ibu,mood,venue,event,hype
-	 **
-	 ***/
 	
 	Function editUserBeer($beerId,$userId,$brewery,$beerName,$beerStyle,$abv,$ibu,$mood,$venue,$event,$hype){
 		$validateUser = $this->db->select()->where('id',$beerId)->from('userBeer')->get()->num_rows();
@@ -314,12 +293,7 @@ class webservicemodel extends CI_Model {
 			return json_encode(array("editUserBeer"=>"-3"));
 		endif;
 	}
-	/***
-	 **
-	 **	Function to add user beer taste profile
-	 ** @params aroma,sweet,bitter,malt,yeast,mouthFeel,sour,additive,booziness,sour_status,additive_status,booziness_status,yeast_status
-	 **
-	 ***/
+	
 	Function addBeerProfile($beerId,$userId,$aroma,$sweet,$bitter,$malt,$yeast,$mouthFeel,$sour,$additive,$booziness,$aroma_cmt,$sweet_cmt,$bitter_cmt,$malt_cmt,$yeast_cmt,$mouthFeel_cmt,$sour_cmt,$additive_cmt,$booziness_cmt,$booziness_cmt1,$mouthFeel_cmt1){
 		$validateUser = $this->db->select()->where('id',$userId)->from('userRegistration')->get()->num_rows();
 		if($validateUser > 0):
@@ -370,12 +344,7 @@ class webservicemodel extends CI_Model {
 			return json_encode(array("addBeerProfile"=>"-3"));
 		endif;
 	}
-	/***
-	 **
-	 **	Function to edit user beer taste profile
-	 ** @params aroma,sweet,bitter,malt,yeast,mouthFeel,sour,additive,booziness,sour_status,additive_status,booziness_status,yeast_status
-	 **
-	 ***/
+	
 	Function editBeerProfile($beerId,$userId,$aroma,$sweet,$bitter,$malt,$yeast,$mouthFeel,$sour,$additive,$booziness,$aroma_cmt,$sweet_cmt,$bitter_cmt,$malt_cmt,$yeast_cmt,$mouthFeel_cmt,$sour_cmt,$additive_cmt,$booziness_cmt,$booziness_cmt1,$mouthFeel_cmt1){
 		$validateUser = $this->db->select()->where('id',$userId)->from('userRegistration')->get()->num_rows();
 		if($validateUser > 0):
@@ -482,11 +451,7 @@ class webservicemodel extends CI_Model {
 			return json_encode(array("editBeerProfile"=>"-3"));
 		endif;
 	}
-	/***
-	 **
-	 **	Function to get Beer Profile correspond to beer Id
-	 **
-	 ***/
+	
 	Function getBeerProfile($beerId){
 		$validateBeer = $this->db->select()->where('id',$beerId)->from('userBeer')->get()->row_array();
 		if($validateBeer):
@@ -506,12 +471,7 @@ class webservicemodel extends CI_Model {
 		endif;
 	}
 	
-	/***
-	 **
-	 **	Function to search beer either with brewery name or beer name
-	 ** If Beer taste parameters is exactly matched with user taste profile then the beer percentage would be 100% if all the parameters of user taste is less/greater than 1 with beer taste profile then the percentage would be 66%. if all the parameters of user taste is less/greater than 2 with beer taste profile then the percentage would be 33%
-	 **
-	 ***/
+	
 	function searchBeer($userId,$beerName){
 		
 		
@@ -581,13 +541,61 @@ class webservicemodel extends CI_Model {
 				endif;
 				
 				$validateBeerProfile = $this->db->select()->where('beerId',$beerId)->from('beerProfile')->get()->row_array();
-
+				//echo "<pre>";print_r($validateBeerProfile);
 				if($validateBeerProfile):
 				
 					$query = $this->db->query("select s.userId,s.brewery,s.beerName,s.beerStyle,s.abv,s.ibu,s.mood,s.venue,s.event,s.hype,bp.aroma,bp.sweet,bp.bitter,bp.malt,bp.yeast,bp.mouthFeel,bp.sour,bp.additive,bp.booziness from userBeer s left join beerProfile bp on s.id=bp.beerId where s.id=$beerId");
 					$result = $query->row_array();
 					
+					/* if(($result['aroma'] ==($validTasteProfile['aroma'])) || ($result['aroma'] ==($validTasteProfile['aroma']+1)) || ($result['aroma'] ==($validTasteProfile['aroma']-1))):
+						
+						$myTaste = $myTaste +1;
+					endif;
+					if(($result['sweet'] ==($validTasteProfile['sweet'])) || ($result['sweet'] ==($validTasteProfile['sweet']+1)) || ($result['sweet'] ==($validTasteProfile['sweet']-1))):
+						$myTaste = $myTaste +1;
+					endif;
+					if(($result['bitter'] ==($validTasteProfile['bitter'])) || ($result['bitter'] ==($validTasteProfile['bitter']+1)) || ($result['bitter'] ==($validTasteProfile['bitter']-1))):
+						
+						$myTaste = $myTaste +1;
+					endif;
+					if(($result['malt'] ==($validTasteProfile['malt'])) || ($result['malt'] ==($validTasteProfile['malt']+1)) || ($result['malt'] ==($validTasteProfile['malt']-1))):
+						$myTaste = $myTaste +1;
+					endif;
 					
+					if($result['yeast'] != 0):
+						if(($result['yeast'] ==($validTasteProfile['yeast'])) || ($result['yeast'] ==($validTasteProfile['yeast']+1)) || ($result['yeast'] ==($validTasteProfile['yeast']-1))):
+							$myTaste = $myTaste +1;
+						endif;
+					else:	
+						$total = $total - 1;
+					endif;
+					if(($result['mouthFeel'] ==($validTasteProfile['mouthFeel'])) || ($result['mouthFeel'] ==($validTasteProfile['mouthFeel']+1)) || ($result['mouthFeel'] ==($validTasteProfile['mouthFeel']-1))):
+						$myTaste = $myTaste +1;
+					endif;
+					
+					if($result['sour'] != 0):
+						if(($result['sour'] ==($validTasteProfile['sour'])) || ($result['sour'] ==($validTasteProfile['sour']+1)) || ($result['sour'] ==($validTasteProfile['sour']-1))):
+							$myTaste = $myTaste +1;
+						endif;
+					else:
+						$total = $total - 1;
+					endif;
+					
+					if($result['additive'] != 0):
+						if(($result['additive'] ==($validTasteProfile['additive'])) || ($result['additive'] ==($validTasteProfile['additive']+1)) || ($result['additive'] ==($validTasteProfile['additive']-1))):
+							$myTaste = $myTaste +1;
+						endif;
+					else:
+						$total = $total - 1;
+					endif;
+					
+					if($result['booziness'] != 0):
+						if(($result['booziness'] ==($validTasteProfile['booziness'])) || ($result['booziness'] ==($validTasteProfile['booziness']+1)) || ($result['booziness'] ==($validTasteProfile['booziness']-1))):
+							$myTaste = $myTaste +1;
+						endif;
+					else:
+						$total = $total - 1;
+					endif; */
 					if($result['aroma'] ==$validTasteProfile['aroma'] ):
 						$myTaste = $myTaste +1;
 					elseif(($result['aroma'] ==($validTasteProfile['aroma']+1)) || ($result['aroma'] ==($validTasteProfile['aroma']-1))):
@@ -676,7 +684,8 @@ class webservicemodel extends CI_Model {
 						$total = $total - 1;
 					endif;
 					
-					
+					//echo $total;
+					//echo $myTaste."-----My Taste------ Total------".$total."<br/>";
 					if($total == 0):
 						$tastePercentage = 0;
 					else:
@@ -718,6 +727,8 @@ class webservicemodel extends CI_Model {
 						$beerBottle = 100;
 					endif;
 					
+					
+					
 					$bearArr[] = array("beerId"=>$beerId,"aroma"=>$result['aroma'],"sweet"=>$result['sweet'],"bitter"=>$result['bitter'],"malt"=>$result['malt'],"yeast"=>$result['yeast'],"mouthFeel"=>$result['mouthFeel'],"sour"=>$result['sour'],"additive"=>$result['additive'],"booziness"=>$result['booziness'],"brewery"=>$brewery,"beerName"=>$beerName,"beerStyle"=>$beerStyle,"abv"=>$abv,"ibu"=>$ibu,"mood"=>$mood,"venue"=>$venue,"event"=>$event,"hype"=>$hype,"tastePercentage"=>$tastePercentage,"beerBottle"=>$beerBottle);
 				else:
 					$bearArr[] = array("beerId"=>$beerId,"aroma"=>"0","sweet"=>"0","bitter"=>"0","malt"=>"0","yeast"=>"0","mouthFeel"=>"0","sour"=>"0","additive"=>"0","booziness"=>"0","brewery"=>$brewery,"beerName"=>$beerName,"beerStyle"=>$beerStyle,"abv"=>$abv,"ibu"=>$ibu,"mood"=>$mood,"venue"=>$venue,"event"=>$event,"hype"=>$hype,"tastePercentage"=>0,"beerBottle"=>0);
@@ -729,11 +740,7 @@ class webservicemodel extends CI_Model {
 			return json_encode(array("searchBeer"=>$bearArr));
 		endif;
 	}
-	/***
-	 **
-	 ** function to get user taste profile 
-	 **
-	 ***/
+	
 	function getUserTasteProfile($userId){
 		$validUser = $this->db->select()->where('id',$userId)->from('userRegistration')->get()->num_rows();
 		if($validUser > 0):
@@ -747,11 +754,7 @@ class webservicemodel extends CI_Model {
 			return json_encode(array("getUserTasteProfile"=>"-3"));
 		endif;
 	}
-	/***
-	 **
-	 ** function to get user Profile
-	 **
-	 ***/
+	
 	function userProfile($userId,$type){
 		$uProfileArr = array();
 		$uProfile = $this->db->select('firstName,lastName,zipcode,drinkerLevel,email,username')->where('id',$userId)->from('userRegistration')->get()->row_array();
@@ -762,11 +765,6 @@ class webservicemodel extends CI_Model {
 			return json_encode(array("userProfile"=>$uProfile));
 		endif;
 	}
-	/***
-	 **
-	 ** function to edit user Profile
-	 **
-	 ***/
 	
 	function editUserProfile($userId,$firstName,$lastName,$zipcode,$drinkerLevel,$email,$username){
 		$uProfile =$this->db->select()->where('id',$userId)->from('userRegistration')->get()->row_array();
@@ -850,4 +848,340 @@ class webservicemodel extends CI_Model {
 		endif;
 	
 	}
+
+
+    // BreweryDBWebHooksInsert function insert data into brewerydata table when get data from web hooks
+    function BreweryDBWebHooksInsert($attribute,$attributeId,$action,$subAction,$subAttributeId,$timestamp,$post_data){
+          $brewerydata_insert = '';
+          $brewerydata_insert['attribute'] = $attribute;
+          $brewerydata_insert['attributeId'] = $attributeId;
+          $brewerydata_insert['action'] = $action;
+          $brewerydata_insert['subAttributeId'] = $subAttributeId;
+          $brewerydata_insert['timestamp'] = $timestamp;
+          $brewerydata_insert['post_data'] = $post_data;
+
+          if($subAction){
+                $brewerydata_insert['subAction'] = $subAction;
+          }
+          $this->db->insert("brewerydata",$brewerydata_insert);
+          $inserted_id = $this->db->insert_id();
+          return $inserted_id;
+
+
+    }
+
+    //InsertUpdateBeerBrewery function insert update data for beerbrewery table
+    function InsertUpdateBeerBrewery($beerdata,$subAttributeId,$timestamp,$subAction_typeAction){
+
+
+        $breweries = isset($beerdata['breweries'])?$beerdata['breweries']:'';
+        if($breweries){
+            $brewery = '';
+            foreach($breweries AS $brewery){
+                if($subAttributeId == $brewery['id']){
+                  $insert_brewey['name'] = $brewery['name'];
+                  $insert_brewey['description'] = isset($brewery['description'])?$brewery['description']:'';
+                  $insert_brewey['website'] = isset($brewery['website'])?$brewery['website']:'';
+                  $insert_brewey['established'] = isset($brewery['established'])?$brewery['established']:'';
+                  $insert_brewey['mediumImage'] = isset($brewery['images']['medium'])?$brewery['images']['medium']:'';
+                  $insert_brewey['largeImage'] = isset($brewery['images']['large'])?$brewery['images']['large']:'';
+                  $insert_brewey['icon'] = isset($brewery['images']['icon'])?$brewery['images']['icon']:'';
+                  $insert_brewey['mailingListUrl'] = isset($brewery['mailingListUrl'])?$brewery['mailingListUrl']:'';
+                }
+            }
+        }
+
+        $masterbeerId = $beerdata['id'];
+        $get_beerId = $this->db->select()->where('masterBeerId',$masterbeerId)->from('beer')->get()->row_array();
+        if($get_beerId){
+            $beerId = $get_beerId['id'];
+            $validateBeer = $this->db->select()->where('id',$beerId)->from('userBeer')->get()->row_array();
+            if($validateBeer){
+                $userBeerId = $validateBeer['id'];
+                $update_breweryName['brewery'] = $insert_brewey['name'];
+                $this->db->where('id',$userBeerId);
+  		        $this->db->update("userBeer",$update_breweryName);
+            }
+        }else{
+            $beerName  = trim($beerdata['name']);
+            $breweryName = isset($beerdata['breweries']['0']['name'])?$beerdata['breweries']['0']['name']:'';
+            $brewery = trim($breweryName);
+            $validateBeer = $this->db->select()->where('beerName',$beerName)->where('brewery',$brewery)->from('userBeer')->get()->row_array();
+            if($validateBeer){
+                $userBeerId = $validateBeer['id'];
+                $update_breweryName['brewery'] = $insert_brewey['name'];
+                $this->db->where('id',$userBeerId);
+  		        $this->db->update("userBeer",$update_breweryName);
+
+
+
+                $insert_beer['name'] = $beerdata['name'];
+                $insert_beer['abv'] = isset($beerdata['abv'])?$beerdata['abv']:'';
+                $insert_beer['ibu'] = isset($beerdata['ibu'])?$beerdata['ibu']:'';
+                $insert_beer['style'] = isset($beerdata['style']['name'])?$beerdata['style']['name']:'';
+                $insert_beer['description'] = isset($beerdata['description'])?$beerdata['description']:'';
+                $insert_beer['mediumLabel'] = isset($beerdata['labels']['medium'])?$beerdata['labels']['medium']:'';
+                $insert_beer['largeLabel'] = isset($beerdata['labels']['large'])?$beerdata['labels']['large']:'';
+                $insert_beer['icon'] = isset($beerdata['labels']['icon'])?$beerdata['labels']['icon']:'';
+                $insert_beer['id'] = $userBeerId;
+                $insert_beer['datecreated '] = date("Y-m-d H:i:s", $timestamp);
+                $insert_beer['masterBeerId'] = $beerdata['id'];
+                //insert intp beer table
+                $this->db->insert("beer",$insert_beer);
+            }
+        }
+        $get_brewery = $this->db->select()->where('masterBreweryId',$subAttributeId)->where('beerId',$userBeerId)->from('beerBrewery')->get()->row_array();
+        if($get_brewery){
+          $breweryId = $get_brewery['id'];
+          $this->db->where('id',$breweryId);
+          $this->db->update("beerBrewery",$insert_brewey);
+        }else{
+          $insert_brewey['masterBreweryId'] = $brewery['id'];
+          $insert_brewey['dateCreated'] =  date("Y-m-d H:i:s", $timestamp);
+          $insert_brewey['beerId'] = $userBeerId;
+          $this->db->insert("beerBrewery",$insert_brewey);
+        }
+
+
+    }
+
+    //InsertIngredient function insert data into beeringredient table
+    function InsertIngredient($ingredientdata,$attributeId,$subAttributeId,$timestamp){
+        $get_beerId = $this->db->select()->where('masterBeerId',$attributeId)->from('beer')->get()->row_array();
+        if($get_beerId){
+          $beerId = $get_beerId['id'];
+          foreach($ingredientdata AS $ingredient){
+            if($subAttributeId == $ingredient['id']){
+                $ingredient_data['id'] = $subAttributeId;
+                $ingredient_data['beerId'] = $beerId;
+                $ingredient_data['name'] = isset($ingredient['name'])?$ingredient['name']:'';
+                $ingredient_data['category'] = isset($ingredient['category'])?$ingredient['category']:'';
+                $ingredient_data['categoryDisplay'] = isset($ingredient['categoryDisplay'])?$ingredient['categoryDisplay']:'';
+                $ingredient_data['dateCreated'] = date("Y-m-d H:i:s", $timestamp);
+                $this->db->insert("beerIngredient",$ingredient_data);
+            }
+          }
+        }
+    }
+
+    //DeleteIngredient function delete data from beeringredient table
+    function DeleteIngredient($attributeId,$subAttributeId){
+        $get_beerId = $this->db->select()->where('masterBeerId',$attributeId)->from('beer')->get()->row_array();
+        if($get_beerId){
+          $beerId = $get_beerId['id'];
+          $this->db->where('id', $subAttributeId)->where('beerId ', $beerId);
+          $this->db->delete('beerIngredient');
+        }
+    }
+
+    //InsertUpdateSocialMediaAcct function insert-update data for socialmediaacc table
+    function InsertUpdateSocialMediaAcct($beerdata,$subAttributeId,$subAction_typeAction,$timestamp){
+
+        $socialAccounts = isset($beerdata['socialAccounts'])?$beerdata['socialAccounts']:'';
+        if($socialAccounts){
+            $socialAccount = '';
+            foreach($socialAccounts AS $socialAccount){
+                if($subAttributeId == $socialAccount['id']){
+                  $socialacc_data['network'] = isset($socialAccount['socialMedia']['name'])?$socialAccount['socialMedia']['name']:'';
+                  $socialacc_data['networkId'] = isset($socialAccount['socialMedia']['id'])?$socialAccount['socialMedia']['id']:'';
+                  $socialacc_data['url'] = isset($socialAccount['link'])?$socialAccount['link']:'';
+                  $socialacc_data['handle'] = isset($socialAccount['handle'])?$socialAccount['handle']:'';
+                }
+            }
+        }
+
+
+        $masterbeerId = $beerdata['id'];
+        $get_beerId = $this->db->select()->where('masterBeerId',$masterbeerId)->from('beer')->get()->row_array();
+        if($get_beerId){
+            $beerId = $get_beerId['id'];
+
+        }else{
+            $beerName  = trim($beerdata['name']);
+            $breweryName = isset($beerdata['breweries']['0']['name'])?$beerdata['breweries']['0']['name']:'';
+            $brewery = trim($breweryName);
+            $validateBeer = $this->db->select()->where('beerName',$beerName)->where('brewery',$brewery)->from('userBeer')->get()->row_array();
+            if($validateBeer){
+                $beerId = $validateBeer['id'];
+                $update_breweryName['brewery'] = isset($beerdata['breweries']['0']['name'])?$beerdata['breweries']['0']['name']:'';
+                $this->db->where('id',$beerId);
+  		        $this->db->update("userBeer",$update_breweryName);
+
+
+
+                $insert_beer['name'] = $beerdata['name'];
+                $insert_beer['abv'] = isset($beerdata['abv'])?$beerdata['abv']:'';
+                $insert_beer['ibu'] = isset($beerdata['ibu'])?$beerdata['ibu']:'';
+                $insert_beer['style'] = isset($beerdata['style']['name'])?$beerdata['style']['name']:'';
+                $insert_beer['description'] = isset($beerdata['description'])?$beerdata['description']:'';
+                $insert_beer['mediumLabel'] = isset($beerdata['labels']['medium'])?$beerdata['labels']['medium']:'';
+                $insert_beer['largeLabel'] = isset($beerdata['labels']['large'])?$beerdata['labels']['large']:'';
+                $insert_beer['icon'] = isset($beerdata['labels']['icon'])?$beerdata['labels']['icon']:'';
+                $insert_beer['id'] = $beerId;
+                $insert_beer['datecreated '] = date("Y-m-d H:i:s", $timestamp);
+                $insert_beer['masterBeerId'] = $beerdata['id'];
+                //insert intp beer table
+                $this->db->insert("beer",$insert_beer);
+        }
+      }
+      if($subAction_typeAction == 'insert'){
+            $socialacc_data['id'] = $subAttributeId;
+            $socialacc_data['beerId'] = $beerId ;
+            $this->db->insert("socialMediaAcct",$socialacc_data);
+      }
+      if($subAction_typeAction == 'edit'){
+            //Update case
+            $get_socialacc = $this->db->select()->where('id',$subAttributeId)->where('beerid',$beerId)->from('socialMediaAcct')->get()->row_array();
+            if($get_socialacc){
+                $social_id = $get_socialacc['id'];
+                $this->db->where('id',$social_id);
+  		        $this->db->update("socialMediaAcct",$socialacc_data);
+            }
+      }
+    }
+
+
+    //DeleteSocialMediaAcct function delete data from socialmediaacc table
+    function DeleteSocialMediaAcct($beerdata,$subAttributeId){
+        $masterbeerId = $beerdata['id'];
+        $get_beerId = $this->db->select()->where('masterBeerId',$masterbeerId)->from('beer')->get()->row_array();
+        if($get_beerId){
+            $beerId = $get_beerId['id'];
+            $this->db->where('id', $subAttributeId)->where('beerId',$beerId);
+            $this->db->delete('socialMediaAcct');
+        }
+    }
+
+
+    //InsertBeer function insert data into userbeer and beertable using userbeer table's id
+    //userbeer table id is used as id of beer table
+    function InsertUpdateBeer($beerdata,$timestamp,$action){
+
+        //userBeer table data
+
+        $insert_userbeer['beerName'] = $beerdata['name'];
+        $insert_userbeer['beerStyle'] = isset($beerdata['style']['name'])?$beerdata['style']['name']:'';
+        $insert_userbeer['abv'] = isset($beerdata['abv'])?$beerdata['abv']:'';
+        $insert_userbeer['ibu'] = isset($beerdata['ibu'])?$beerdata['ibu']:'';
+
+
+        //beer profile data
+        $insert_beerProfile['aroma'] = '0';
+        $insert_beerProfile['sweet'] = '0';
+        $insert_beerProfile['bitter'] = '0';
+        $insert_beerProfile['malt'] = '0';
+        $insert_beerProfile['yeast'] = '0';
+        $insert_beerProfile['mouthFeel'] = '0';
+        $insert_beerProfile['sour'] = '0';
+        $insert_beerProfile['additive'] = '0';
+        $insert_beerProfile['booziness'] = '0';
+        $insert_beerProfile['createdon'] = $timestamp;
+
+        //beer table data
+        $insert_beer['name'] = $beerdata['name'];
+        $insert_beer['abv'] = isset($beerdata['abv'])?$beerdata['abv']:'';
+        $insert_beer['ibu'] = isset($beerdata['ibu'])?$beerdata['ibu']:'';
+        $insert_beer['style'] = isset($beerdata['style']['name'])?$beerdata['style']['name']:'';
+        $insert_beer['description'] = isset($beerdata['description'])?$beerdata['description']:'';
+        $insert_beer['mediumLabel'] = isset($beerdata['labels']['medium'])?$beerdata['labels']['medium']:'';
+        $insert_beer['largeLabel'] = isset($beerdata['labels']['large'])?$beerdata['labels']['large']:'';
+        $insert_beer['icon'] = isset($beerdata['labels']['icon'])?$beerdata['labels']['icon']:'';
+
+        //create beer brewery from response
+        $breweries = isset($beerdata['breweries'])?$beerdata['breweries']:'';
+        if($breweries){
+            $i = 0;
+            $brewery = '';
+            foreach($breweries AS $brewery){
+                $insert_brewey[$i]['name'] = $brewery['name'];
+                $insert_brewey[$i]['masterBreweryId'] = $brewery['id'];
+                $insert_brewey[$i]['description'] = isset($brewery['description'])?$brewery['description']:'';
+                $insert_brewey[$i]['website'] = isset($brewery['website'])?$brewery['website']:'';
+                $insert_brewey[$i]['established'] = isset($brewery['established'])?$brewery['established']:'';
+                $insert_brewey[$i]['mediumImage'] = isset($brewery['images']['medium'])?$brewery['images']['medium']:'';
+                $insert_brewey[$i]['largeImage'] = isset($brewery['images']['large'])?$brewery['images']['large']:'';
+                $insert_brewey[$i]['icon'] = isset($brewery['images']['icon'])?$brewery['images']['icon']:'';
+                $insert_brewey[$i]['mailingListUrl'] = isset($brewery['mailingListUrl'])?$brewery['mailingListUrl']:'';
+                $insert_brewey[$i]['dateCreated'] =  date("Y-m-d H:i:s", $timestamp);
+                $i++;
+            }
+        }
+
+
+        if($action == 'insert'){
+            //insert into userbeer table
+            $insert_userbeer['createdon'] = $timestamp;
+            $insert_userbeer['brewery'] =  isset($beerdata['breweries']['0']['name'])?$beerdata['breweries']['0']['name']:'';
+            $this->db->insert("userBeer",$insert_userbeer);
+            $beerId = $this->db->insert_id();
+
+            $insert_beerProfile['beerId'] = $beerId;
+            $this->db->insert("beerProfile",$insert_beerProfile);
+
+            $insert_beer['id'] = $beerId;
+            $insert_beer['datecreated '] = date("Y-m-d H:i:s", $timestamp);
+            $insert_beer['masterBeerId'] = $beerdata['id'];
+            //insert intp beer table
+            $this->db->insert("beer",$insert_beer);
+
+            if($insert_brewey){
+              foreach($insert_brewey AS $insert_beerbrewery ){
+                  $insert_beerbrewery['beerId'] = $beerId;
+                  $this->db->insert("beerBrewery",$insert_beerbrewery);
+              }
+            }
+        }
+        if($action == 'edit'){
+             $masterbeerId = $beerdata['id'];
+             $get_beerId = $this->db->select()->where('masterBeerId',$masterbeerId)->from('beer')->get()->row_array();
+             if($get_beerId){
+                $beerId = $get_beerId['id'];
+                $this->db->where('id',$beerId);
+  		        $this->db->update("userBeer",$insert_userbeer);
+                $this->db->where('id',$beerId);
+  		        $this->db->update("beer",$insert_beer);
+
+             }else{
+                $beerName  = trim($beerdata['name']);
+                $breweryName = isset($beerdata['breweries']['0']['name'])?$beerdata['breweries']['0']['name']:'';
+                $brewery = trim($breweryName);
+                $validateBeer = $this->db->select()->where('beerName',$beerName)->where('brewery',$brewery)->from('userBeer')->get()->row_array();
+                if($validateBeer){
+                    $beerId = $validateBeer['id'];
+                    $this->db->where('id',$beerId);
+                    $this->db->update("userBeer",$insert_userbeer);
+                    //insert new beer
+                    $insert_beer['id'] = $beerId;
+                    $insert_beer['datecreated '] = date("Y-m-d H:i:s", $timestamp);
+                    $insert_beer['masterBeerId'] = $beerdata['id'];
+                    //insert intp beer table
+                    $this->db->insert("beer",$insert_beer);
+                    //insert new brewery
+                    if($insert_brewey){
+                      foreach($insert_brewey AS $insert_beerbrewery ){
+                          $insert_beerbrewery['beerId'] = $beerId;
+                          $this->db->insert("beerBrewery",$insert_beerbrewery);
+                      }
+                    }
+                }
+             }
+             if(isset($beerId)){
+               $get_beerProfileId = $this->db->select()->where('beerId',$beerId)->from('beerProfile')->get()->row_array();
+                if(!$get_beerProfileId){
+                    $insert_beerProfile['beerId'] = $beerId;
+                    $this->db->insert("beerProfile",$insert_beerProfile);
+                }
+             }
+
+
+        }
+
+
+
+
+
+
+    }
+
+
 }
