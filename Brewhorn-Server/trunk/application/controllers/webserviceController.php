@@ -11,6 +11,7 @@ class webserviceController extends CI_Controller {
 	    parent::__construct();
 		$this->load->database();
 		$this->load->model('webservicemodel');
+		$this->load->helper('string_helper');	
 	}
 	
 	function userRegistration(){
@@ -616,8 +617,12 @@ class webserviceController extends CI_Controller {
 	}
 
     Function BreweryDBWebHooks(){
+    
+    	$activityName = 'BreweryDBWebHooks:';
+		log_message('debug', "{$activityName} beginning with POST data: " . implode_with_key($_POST,'>',','));
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        	log_message('error', 'This must be accessed via POST');
             throw new Exception('This must be accessed via POST');
         }
 
@@ -649,9 +654,13 @@ class webserviceController extends CI_Controller {
                 // Timestamp that the change was integrated
                 $timestamp = $_POST['timestamp'];
                 $post_data = serialize($_POST);
+
+                log_message('debug', "{$activityName} attribute={$attribute} action={$action}, attributeId={$attributeId}, subAction={$subAction}, subAttributeId={$subAttributeId}, timestamp={$timestamp}");
+
                 $brewery_data = $this->webservicemodel->BreweryDBWebHooksInsert($attribute,$attributeId,$action,$subAction,$subAttributeId,$timestamp,$post_data);
                 //echo 'Inserted record id:'.$brewery_data;
 
+                log_message('debug', "Logged Web Hook Message into brewerydata table with id={$brewery_data}");
 
                 //$action equal to insert or edit
                 if(($action == 'insert') || ($action == 'edit')){
@@ -664,6 +673,7 @@ class webserviceController extends CI_Controller {
                         if($result_allbeer['message'] == 'Request Successful'){
                             if($result_allbeer['data']){
                                 $beerdata = $result_allbeer['data'];
+                                log_message('debug', "Successfully retrieved from url:{$url_beer} this data: ". implode_with_key($beerdata,'>',','));
                                 $this->webservicemodel->InsertUpdateBeer($beerdata,$timestamp,$action);
                             }
                         }
@@ -680,6 +690,7 @@ class webserviceController extends CI_Controller {
                             if($result_allbeer['data']){
                             //update beer and userbeertable
                             $beerdata = $result_allbeer['data'];
+                            log_message('debug', "Successfully retrieved from url:{$url_beer} data: ". implode_with_key($beerdata,'>',','));
                                 $this->webservicemodel->InsertUpdateBeer($beerdata,$timestamp,$action);
                             }
                         }
@@ -702,6 +713,7 @@ class webserviceController extends CI_Controller {
                                     if(($subAction_typeAction == 'insert') || ($subAction_typeAction == 'edit')){
                                         //insert update case for beerbrewery table
                                         $beerdata = $result_allbeer['data'];
+                                        log_message('debug', "Successfully retrieved from url:{$url_beer} data:". implode_with_key($beerdata,'>',','));
                                         $this->webservicemodel->InsertUpdateBeerBrewery($beerdata,$subAttributeId,$timestamp,$subAction_typeAction);
                                     }
                                  }
@@ -721,6 +733,7 @@ class webserviceController extends CI_Controller {
 
                                   //Insert update case for socialmediaacct table
                                   $beerdata = $result_socialaccount['data'];
+                                  log_message('debug', "Successfully retrieved from url:{$url_socialaccount} data:". implode_with_key($beerdata,'>',','));
                                   $this->webservicemodel->InsertUpdateSocialMediaAcct($beerdata,$subAttributeId,$subAction_typeAction,$timestamp);
                                 }
                               }
@@ -730,6 +743,7 @@ class webserviceController extends CI_Controller {
 
                                     //Insert update case for socialmediaacct table
                                     $beerdata = $result_socialaccount['data'];
+                                    log_message('debug', "Successfully retrieved from url:{$url_socialaccount} data: ". implode_with_key($beerdata,'>',','));
                                     $this->webservicemodel->DeleteSocialMediaAcct($beerdata,$subAttributeId);
                                   }
                               }
@@ -743,6 +757,7 @@ class webserviceController extends CI_Controller {
                                   if($result_ingredient['message'] == 'Request Successful'){
                                       $ingredientdata = $result_ingredient['data'];
                                       //insert into beeringredient table
+                                      log_message('debug', "Successfully retrieved from url:{$url_ingredient} data: ". implode_with_key($url_ingredient,'>',','));
                                       $this->webservicemodel->InsertIngredient($ingredientdata,$attributeId,$subAttributeId,$timestamp);
                                   }
 
