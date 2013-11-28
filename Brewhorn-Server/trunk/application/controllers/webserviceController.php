@@ -661,126 +661,126 @@ class webserviceController extends CI_Controller {
                 //echo 'Inserted record id:'.$brewery_data;
 
                 log_message('debug', "Logged Web Hook Message into brewerydata table with id={$brewery_data}");
+                if($brewery_data){       //If it is first time webhook call then it will be executed
+                  //$action equal to insert or edit
+                  if(($action == 'insert') || ($action == 'edit')){
 
-                //$action equal to insert or edit
-                if(($action == 'insert') || ($action == 'edit')){
-
-                      //insert beer into userbeer and beer table
-                      if($action == 'insert'){
-                      //get beer data from brewerydb
-                        $url_beer = 'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&format=php&withBreweries=Y';
-                        $result_allbeer = $this->get_web_page($url_beer);
-                        if($result_allbeer['message'] == 'Request Successful'){
-                            if($result_allbeer['data']){
-                                $beerdata = $result_allbeer['data'];
-                                log_message('debug', "Successfully retrieved from url:{$url_beer} this data: ". implode_with_key($beerdata,'>',','));
-                                $this->webservicemodel->InsertUpdateBeer($beerdata,$timestamp,$action);
-                            }
-                        }
-                      }
-
-
-
-                      //Edit case for beer attribute only
-                      if(($action == 'edit') && ($subAction == 'none')){
+                        //insert beer into userbeer and beer table
+                        if($action == 'insert'){
                         //get beer data from brewerydb
-                        $url_beer = 'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&format=php&withBreweries=Y';
-                        $result_allbeer = $this->get_web_page($url_beer);
-                        if($result_allbeer['message'] == 'Request Successful'){
-                            if($result_allbeer['data']){
-                            //update beer and userbeertable
-                            $beerdata = $result_allbeer['data'];
-                            log_message('debug', "Successfully retrieved from url:{$url_beer} data: ". implode_with_key($beerdata,'>',','));
-                                $this->webservicemodel->InsertUpdateBeer($beerdata,$timestamp,$action);
-                            }
-                        }
-                      }
-                      //edit case for related attribute
-                      if(($action == 'edit') && ($subAction != 'none')){
-
-                          //devide subaction into two varialbe
-                          //1)subaction type is brewery,ingredient,socialaccount and 2)related action for subaction is insert,edit,delete
-                          $subAction_array = explode('-',$subAction);
-                          $subAction_type = $subAction_array[0];
-                          $subAction_typeAction = $subAction_array[1];
-                          if($subAction_type == 'brewery'){
-                              //get beer data from brewerydb
-                              $url_beer = 'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&format=php&withBreweries=Y';
-                              $result_allbeer = $this->get_web_page($url_beer);
-                              if($result_allbeer['message'] == 'Request Successful'){
-                                  if($result_allbeer['data']){
-
-                                    if(($subAction_typeAction == 'insert') || ($subAction_typeAction == 'edit')){
-                                        //insert update case for beerbrewery table
-                                        $beerdata = $result_allbeer['data'];
-                                        log_message('debug', "Successfully retrieved from url:{$url_beer} data:". implode_with_key($beerdata,'>',','));
-                                        $this->webservicemodel->InsertUpdateBeerBrewery($beerdata,$subAttributeId,$timestamp,$subAction_typeAction);
-                                    }
-                                 }
-                               }
-
-                              if($subAction_typeAction == 'delete'){
-                              //nothing
+                          $url_beer = 'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&format=php&withBreweries=Y';
+                          $result_allbeer = $this->get_web_page($url_beer);
+                          if($result_allbeer['message'] == 'Request Successful'){
+                              if($result_allbeer['data']){
+                                  $beerdata = $result_allbeer['data'];
+                                  log_message('debug', "Successfully retrieved from url:{$url_beer} this data: ". implode_with_key($beerdata,'>',','));
+                                  $this->webservicemodel->InsertUpdateBeer($beerdata,$timestamp,$action);
                               }
                           }
+                        }
 
-                          if($subAction_type == 'socialaccount'){
-                              //get data from brewery db for socialaccount
-                              $url_socialaccount =  'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&withBreweries=Y&withSocialAccounts=Y&format=php';
-                              $result_socialaccount = $this->get_web_page($url_socialaccount);
-                              if(($subAction_typeAction == 'insert') || ($subAction_typeAction == 'edit')){
-                                if($result_socialaccount['message'] == 'Request Successful'){
 
-                                  //Insert update case for socialmediaacct table
-                                  $beerdata = $result_socialaccount['data'];
-                                  log_message('debug', "Successfully retrieved from url:{$url_socialaccount} data:". implode_with_key($beerdata,'>',','));
-                                  $this->webservicemodel->InsertUpdateSocialMediaAcct($beerdata,$subAttributeId,$subAction_typeAction,$timestamp);
-                                }
+
+                        //Edit case for beer attribute only
+                        if(($action == 'edit') && ($subAction == 'none')){
+                          //get beer data from brewerydb
+                          $url_beer = 'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&format=php&withBreweries=Y';
+                          $result_allbeer = $this->get_web_page($url_beer);
+                          if($result_allbeer['message'] == 'Request Successful'){
+                              if($result_allbeer['data']){
+                              //update beer and userbeertable
+                              $beerdata = $result_allbeer['data'];
+                              log_message('debug', "Successfully retrieved from url:{$url_beer} data: ". implode_with_key($beerdata,'>',','));
+                                  $this->webservicemodel->InsertUpdateBeer($beerdata,$timestamp,$action);
                               }
-                              if($subAction_typeAction == 'delete'){
-                                  //Delete case for socialmediaacct table
+                          }
+                        }
+                        //edit case for related attribute
+                        if(($action == 'edit') && ($subAction != 'none')){
+
+                            //devide subaction into two varialbe
+                            //1)subaction type is brewery,ingredient,socialaccount and 2)related action for subaction is insert,edit,delete
+                            $subAction_array = explode('-',$subAction);
+                            $subAction_type = $subAction_array[0];
+                            $subAction_typeAction = $subAction_array[1];
+                            if($subAction_type == 'brewery'){
+                                //get beer data from brewerydb
+                                $url_beer = 'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&format=php&withBreweries=Y';
+                                $result_allbeer = $this->get_web_page($url_beer);
+                                if($result_allbeer['message'] == 'Request Successful'){
+                                    if($result_allbeer['data']){
+
+                                      if(($subAction_typeAction == 'insert') || ($subAction_typeAction == 'edit')){
+                                          //insert update case for beerbrewery table
+                                          $beerdata = $result_allbeer['data'];
+                                          log_message('debug', "Successfully retrieved from url:{$url_beer} data:". implode_with_key($beerdata,'>',','));
+                                          $this->webservicemodel->InsertUpdateBeerBrewery($beerdata,$subAttributeId,$timestamp,$subAction_typeAction);
+                                      }
+                                   }
+                                 }
+
+                                if($subAction_typeAction == 'delete'){
+                                //nothing
+                                }
+                            }
+
+                            if($subAction_type == 'socialaccount'){
+                                //get data from brewery db for socialaccount
+                                $url_socialaccount =  'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&withBreweries=Y&withSocialAccounts=Y&format=php';
+                                $result_socialaccount = $this->get_web_page($url_socialaccount);
+                                if(($subAction_typeAction == 'insert') || ($subAction_typeAction == 'edit')){
                                   if($result_socialaccount['message'] == 'Request Successful'){
 
                                     //Insert update case for socialmediaacct table
                                     $beerdata = $result_socialaccount['data'];
-                                    log_message('debug', "Successfully retrieved from url:{$url_socialaccount} data: ". implode_with_key($beerdata,'>',','));
-                                    $this->webservicemodel->DeleteSocialMediaAcct($beerdata,$subAttributeId);
+                                    log_message('debug', "Successfully retrieved from url:{$url_socialaccount} data:". implode_with_key($beerdata,'>',','));
+                                    $this->webservicemodel->InsertUpdateSocialMediaAcct($beerdata,$subAttributeId,$subAction_typeAction,$timestamp);
                                   }
-                              }
-                          }
+                                }
+                                if($subAction_typeAction == 'delete'){
+                                    //Delete case for socialmediaacct table
+                                    if($result_socialaccount['message'] == 'Request Successful'){
 
-                          if($subAction_type == 'ingredient'){
-                              if($subAction_typeAction == 'insert'){
-                                  //get data for ingredient from brewery db database
-                                  $url_ingredient =  'http://api.brewerydb.com/v2/beer/'.$attributeId.'/ingredients/?key='.$apiKey.'&format=php';
-                                  $result_ingredient = $this->get_web_page($url_ingredient);
-                                  if($result_ingredient['message'] == 'Request Successful'){
-                                      $ingredientdata = $result_ingredient['data'];
-                                      //insert into beeringredient table
-                                      log_message('debug', "Successfully retrieved from url:{$url_ingredient} data: ". implode_with_key($url_ingredient,'>',','));
-                                      $this->webservicemodel->InsertIngredient($ingredientdata,$attributeId,$subAttributeId,$timestamp);
-                                  }
+                                      //Insert update case for socialmediaacct table
+                                      $beerdata = $result_socialaccount['data'];
+                                      log_message('debug', "Successfully retrieved from url:{$url_socialaccount} data: ". implode_with_key($beerdata,'>',','));
+                                      $this->webservicemodel->DeleteSocialMediaAcct($beerdata,$subAttributeId);
+                                    }
+                                }
+                            }
 
-                              }
-                              if($subAction_typeAction == 'delete'){
-                                  //delete case for beeringredient table
-                                  $this->webservicemodel->DeleteIngredient($attributeId,$subAttributeId);
-                              }
-                          }
+                            if($subAction_type == 'ingredient'){
+                                if($subAction_typeAction == 'insert'){
+                                    //get data for ingredient from brewery db database
+                                    $url_ingredient =  'http://api.brewerydb.com/v2/beer/'.$attributeId.'/ingredients/?key='.$apiKey.'&format=php';
+                                    $result_ingredient = $this->get_web_page($url_ingredient);
+                                    if($result_ingredient['message'] == 'Request Successful'){
+                                        $ingredientdata = $result_ingredient['data'];
+                                        //insert into beeringredient table
+                                        log_message('debug', "Successfully retrieved from url:{$url_ingredient} data: ". implode_with_key($url_ingredient,'>',','));
+                                        $this->webservicemodel->InsertIngredient($ingredientdata,$attributeId,$subAttributeId,$timestamp);
+                                    }
 
-                    }
+                                }
+                                if($subAction_typeAction == 'delete'){
+                                    //delete case for beeringredient table
+                                    $this->webservicemodel->DeleteIngredient($attributeId,$subAttributeId);
+                                }
+                            }
+
+                      }
 
 
 
+
+                  }
+                  //$action equal to delete
+                  if($action == 'delete'){
+
+                  }
+                   // echo 'Script run successfully';
 
                 }
-                //$action equal to delete
-                if($action == 'delete'){
-
-                }
-                 // echo 'Script run successfully';
-
-
                 // Now you can take whatever action you need based
                 // on the information you received
 
