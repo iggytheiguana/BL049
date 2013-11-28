@@ -873,20 +873,27 @@ class webservicemodel extends CI_Model {
 
     // BreweryDBWebHooksInsert function insert data into brewerydata table when get data from web hooks
     function BreweryDBWebHooksInsert($attribute,$attributeId,$action,$subAction,$subAttributeId,$timestamp,$post_data){
-          $brewerydata_insert = '';
-          $brewerydata_insert['attribute'] = $attribute;
-          $brewerydata_insert['attributeId'] = $attributeId;
-          $brewerydata_insert['action'] = $action;
-          $brewerydata_insert['subAttributeId'] = $subAttributeId;
-          $brewerydata_insert['timestamp'] = $timestamp;
-          $brewerydata_insert['post_data'] = $post_data;
 
-          if($subAction){
-                $brewerydata_insert['subAction'] = $subAction;
+          $get_brewery_data = $this->db->select()->where('attribute',$attribute)->where('attributeId',$attributeId)->where('action',$action)->where('subAttributeId',$subAttributeId)->where('subAction',$subAction)->where('timestamp',$timestamp)->from('brewerydata')->get()->result_array();
+          if($get_brewery_data){
+            return false;
           }
-          $this->db->insert("brewerydata",$brewerydata_insert);
-          $inserted_id = $this->db->insert_id();
-          return $inserted_id;
+          else{
+            $brewerydata_insert = '';
+            $brewerydata_insert['attribute'] = $attribute;
+            $brewerydata_insert['attributeId'] = $attributeId;
+            $brewerydata_insert['action'] = $action;
+            $brewerydata_insert['subAttributeId'] = $subAttributeId;
+            $brewerydata_insert['timestamp'] = $timestamp;
+            $brewerydata_insert['post_data'] = $post_data;
+
+            if($subAction){
+                  $brewerydata_insert['subAction'] = $subAction;
+            }
+            $this->db->insert("brewerydata",$brewerydata_insert);
+            $inserted_id = $this->db->insert_id();
+            return $inserted_id;
+          }
 
 
     }
@@ -961,7 +968,7 @@ class webservicemodel extends CI_Model {
           $this->db->update("beerBrewery",$insert_brewey);
           log_message('debug', "{$activityName} updated beerBrewery record with id={$breweryId} with data: " . implode_with_key($insert_brewey,'>',','));
         }else{
-          $insert_brewey['masterBreweryId'] = $brewery['id'];
+          $insert_brewey['masterBreweryId'] = $subAttributeId;
           $insert_brewey['dateCreated'] =  date("Y-m-d H:i:s", $timestamp);
           $insert_brewey['beerId'] = $userBeerId;
           $this->db->insert("beerBrewery",$insert_brewey);
