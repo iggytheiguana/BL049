@@ -981,6 +981,8 @@ class webservicemodel extends CI_Model {
 
     //InsertIngredient function insert data into beeringredient table
     function InsertIngredient($ingredientdata,$attributeId,$subAttributeId,$timestamp){
+    	$activityName = "InsertIngredient:";
+
         $get_beerId = $this->db->select()->where('masterBeerId',$attributeId)->from('beer')->get()->row_array();
         if($get_beerId){
           $beerId = $get_beerId['id'];
@@ -993,23 +995,32 @@ class webservicemodel extends CI_Model {
                 $ingredient_data['categoryDisplay'] = isset($ingredient['categoryDisplay'])?$ingredient['categoryDisplay']:'';
                 $ingredient_data['dateCreated'] = date("Y-m-d H:i:s", $timestamp);
                 $this->db->insert("beerIngredient",$ingredient_data);
+
+                log_message('debug', "{$activityName} inserted beerIngredient record with data: " . implode_with_key($ingredient_data,'>',','));
             }
           }
         }
+
+        log_message('debug',"${activityName} completed execution");
     }
 
     //DeleteIngredient function delete data from beeringredient table
     function DeleteIngredient($attributeId,$subAttributeId){
+    	$activityName = "DeleteIngredient:";
+
         $get_beerId = $this->db->select()->where('masterBeerId',$attributeId)->from('beer')->get()->row_array();
         if($get_beerId){
           $beerId = $get_beerId['id'];
           $this->db->where('id', $subAttributeId)->where('beerId ', $beerId);
           $this->db->delete('beerIngredient');
+          log_message('debug', "{$activityName} deleted Ingredient with id={$subAttributeId} and beerId={$beerId}");
         }
     }
 
     //InsertUpdateSocialMediaAcct function insert-update data for socialmediaacc table
     function InsertUpdateSocialMediaAcct($beerdata,$subAttributeId,$subAction_typeAction,$timestamp){
+    	$activityName = "InsertUpdateSocialMediaAcct:";
+    	log_message('debug', "{$activityName} begin processing of {$subAction_typeAction}");
 
         $socialAccounts = isset($beerdata['socialAccounts'])?$beerdata['socialAccounts']:'';
         if($socialAccounts){
@@ -1041,6 +1052,7 @@ class webservicemodel extends CI_Model {
                 $this->db->where('id',$beerId);
   		        $this->db->update("userBeer",$update_breweryName);
 
+  		        log_message('debug', "{$activityName} Updated userBeer record with id={$beerId} with values ".$this->webservicemodel->implode_with_key($update_breweryName,'>',','));
 
 
                 $insert_beer['name'] = $beerdata['name'];
@@ -1056,12 +1068,17 @@ class webservicemodel extends CI_Model {
                 $insert_beer['masterBeerId'] = $beerdata['id'];
                 //insert intp beer table
                 $this->db->insert("beer",$insert_beer);
+
+                log_message('debug', "{$activityName} Inserted record into beer table with values ".$this->webservicemodel->implode_with_key($insert_beer,'>',','));
         }
       }
       if($subAction_typeAction == 'insert'){
             $socialacc_data['id'] = $subAttributeId;
             $socialacc_data['beerId'] = $beerId ;
             $this->db->insert("socialMediaAcct",$socialacc_data);
+
+             log_message('debug', "{$activityName} Inserted record into socialMediaAcct for beerId={$beerId} with values ".$this->webservicemodel->implode_with_key($socialacc_data,'>',','));
+
       }
       if($subAction_typeAction == 'edit'){
             //Update case
@@ -1070,19 +1087,25 @@ class webservicemodel extends CI_Model {
                 $social_id = $get_socialacc['id'];
                 $this->db->where('id',$social_id);
   		        $this->db->update("socialMediaAcct",$socialacc_data);
+  		        log_message('debug', "{$activityName} Updated record in socialMediaAcct with id={$social_id} with values ".$this->webservicemodel->implode_with_key($socialacc_data,'>',','));
+
             }
       }
+
+      log_message('debug', "{$activityName} completed processing");
     }
 
 
     //DeleteSocialMediaAcct function delete data from socialmediaacc table
     function DeleteSocialMediaAcct($beerdata,$subAttributeId){
+    	$activityName = "DeleteSocialMediaAcct:";
         $masterbeerId = $beerdata['id'];
         $get_beerId = $this->db->select()->where('masterBeerId',$masterbeerId)->from('beer')->get()->row_array();
         if($get_beerId){
             $beerId = $get_beerId['id'];
             $this->db->where('id', $subAttributeId)->where('beerId',$beerId);
             $this->db->delete('socialMediaAcct');
+            log_message('debug',"{$activityName} successfully deleted socialMediaAcct with {$subAttributeId} for beerID={$beerId}");
         }
     }
 

@@ -757,7 +757,7 @@ class webserviceController extends CI_Controller {
                                     if($result_ingredient['message'] == 'Request Successful'){
                                         $ingredientdata = $result_ingredient['data'];
                                         //insert into beeringredient table
-                                        log_message('debug', "Successfully retrieved from url:{$url_ingredient} data: ". implode_with_key($url_ingredient,'>',','));
+                                        log_message('debug', "Successfully retrieved from url:{$url_ingredient} data: ". implode_with_key($ingredientdata,'>',','));
                                         $this->webservicemodel->InsertIngredient($ingredientdata,$attributeId,$subAttributeId,$timestamp);
                                     }
 
@@ -780,6 +780,10 @@ class webserviceController extends CI_Controller {
                   }
                    // echo 'Script run successfully';
 
+                }
+                else
+                {
+                	log_message('debug', "{$activityName} skipping processing of web hook push as we have already processed it.");
                 }
                 // Now you can take whatever action you need based
                 // on the information you received
