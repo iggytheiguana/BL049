@@ -69,7 +69,7 @@
     [theRequest setAllHTTPHeaderFields:headerFieldsDict];
     [theRequest setHTTPMethod:@"POST"];
     [theRequest setHTTPBody:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
-    
+    [theRequest setHTTPShouldHandleCookies:NO];
     [AsyncURLConnection request:theRequest completeBlock:^(NSData *jsonData) {
         NSMutableDictionary *dictUserImgsLst = [jsonData objectFromJSONData];
         NSMutableArray *array=[dictUserImgsLst valueForKey:@"userProfile"];

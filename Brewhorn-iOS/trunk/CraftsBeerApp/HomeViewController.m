@@ -116,23 +116,36 @@
                 NSString *beername = txtBeerName.text;
                 NSString *strUserid=[[NSUserDefaults standardUserDefaults]valueForKey:@"user_id"];
                 NSString * xmlString =
-                [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?><searchBeer><beerName><![CDATA[%@]]></beerName><userId><![CDATA[%@]]></userId></searchBeer>",beername,strUserid];
+                [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\" ?><searchBeer><beerName><![CDATA[%@]]></beerName><userId><![CDATA[%@]]></userId></searchBeer>",beername,strUserid];
                 if ([arrayBeer count]>0) {
                     [arrayBeer removeAllObjects];
                 }
                 NSLog(@"the xmlstring is =%@",xmlString);
                 NSURL * serviceUrl = [NSURL URLWithString:kBrreUrl];
+                
+                NSLog(@"the url is=%@",serviceUrl);
                 NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:serviceUrl
                                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:120.0];
-                NSDictionary *headerFieldsDict = [NSDictionary dictionaryWithObjectsAndKeys:@"text/xml; charset=ISO-8859-1", @"Content-Type", nil];
+                NSDictionary *headerFieldsDict = [NSDictionary dictionaryWithObjectsAndKeys:@"text/xml; charset=utf-8", @"Content-Type", nil];
+                [theRequest setHTTPShouldHandleCookies:NO];
                 [theRequest setAllHTTPHeaderFields:headerFieldsDict];
                 [theRequest setHTTPMethod:@"POST"];
-                [theRequest setHTTPBody:[xmlString dataUsingEncoding:NSISOLatin1StringEncoding]];
+                [theRequest setHTTPBody:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];
+                
+            
                 NSHTTPURLResponse* urlResponse = nil;
-                NSError *error = [[NSError alloc] init];
+                NSError *error = nil;
                 NSData *responseData1 = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:&urlResponse error:&error];
                 NSString* serRslt= [[NSString alloc] initWithData:responseData1 encoding:NSUTF8StringEncoding];
-                NSLog(@"The result is = %@",serRslt);
+                
+                if (error != nil)
+                {
+                    NSLog(@"The result is = %@ and error is = %@",serRslt, [error description]);
+                }
+                else
+                {
+                    NSLog(@"The result is = %@",serRslt);
+                }
                 NSDictionary *dict = [serRslt JSONValue];
                 NSLog(@"the dictionary = %@",dict);
                 arrayBeer=[dict objectForKey:@"searchBeer"];

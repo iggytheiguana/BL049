@@ -141,7 +141,7 @@
                                                                       cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:120.0];
             
             NSDictionary *headerFieldsDict = [NSDictionary dictionaryWithObjectsAndKeys:@"text/xml; charset=utf-8", @"Content-Type", nil];
-            
+            [theRequest setHTTPShouldHandleCookies:NO];
             [theRequest setAllHTTPHeaderFields:headerFieldsDict];
             [theRequest setHTTPMethod:@"POST"];
             [theRequest setHTTPBody:[xmlString dataUsingEncoding:NSUTF8StringEncoding]];

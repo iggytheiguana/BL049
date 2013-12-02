@@ -1143,8 +1143,8 @@
 		9E979561176622D200787A0F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jasjeet Gill (3678L3Y396)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jasjeet Gill (3678L3Y396)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jasjeet Gill (ZS63QT8ZZP)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jasjeet Gill (ZS63QT8ZZP)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -1152,6 +1152,10 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CraftsBeerApp/CraftsBeerApp-Prefix.pch";
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "CraftsBeerApp/CraftsBeerApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1165,7 +1169,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8B4A0CE8-CC4F-4841-B71D-AD09C9B96549";
+				PROVISIONING_PROFILE = "BABFA535-DAAA-408F-8BD2-79F687D4A844";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
 				WRAPPER_EXTENSION = app;
@@ -1175,8 +1179,8 @@
 		9E979562176622D200787A0F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Blue Label Solutions LLC";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Blue Label Solutions LLC";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Craft Beer Coach LLC (X6X4MP2348)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Craft Beer Coach LLC (X6X4MP2348)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -1197,7 +1201,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "637023C0-91B0-4756-9501-1F7A795331BB";
+				PROVISIONING_PROFILE = "9FE3C982-6BE7-4D80-A8E4-6A786EC738DF";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
 				WRAPPER_EXTENSION = app;

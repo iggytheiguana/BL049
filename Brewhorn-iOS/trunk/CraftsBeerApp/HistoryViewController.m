@@ -61,6 +61,7 @@
         [theRequest setAllHTTPHeaderFields:headerFieldsDict];
         [theRequest setHTTPMethod:@"POST"];
         [theRequest setHTTPBody:[xmlString dataUsingEncoding:NSISOLatin1StringEncoding]];
+        [theRequest setHTTPShouldHandleCookies:NO];
         NSHTTPURLResponse* urlResponse = nil;
         NSError *error = [[NSError alloc] init];
         NSData *responseData1 = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:&urlResponse error:&error];

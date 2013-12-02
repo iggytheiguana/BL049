@@ -42,7 +42,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [TestFlight takeOff:@"58476152-f78a-4005-b3b0-5182b3a51eb2"];
+    [TestFlight takeOff:@"f9eb553e-b3ca-44b6-8fc8-fdac2c0e3d90"];
     [Crashlytics startWithAPIKey:@"b53fcf08df9b183b382153735d57a10862fc5348"];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
