@@ -704,6 +704,24 @@ class webservicemodel extends CI_Model {
 					else:
 						$total = $total - 1;
 					endif;
+                                        
+                                        
+                                        
+                                        //add facebook twitter parameter
+                                        $FacebookData = $this->db->select()->where('beerId',$beerId)->where('networkId','1')->from('socialMediaAcct')->get()->row_array();
+                                        if($FacebookData):
+                                            $facebook = $FacebookData['handle'];
+                                        else:
+                                            $facebook = '';
+                                        endif;
+                                        
+                                        $twitterData = $this->db->select()->where('beerId',$beerId)->where('networkId','2')->from('socialMediaAcct')->get()->row_array();
+                                        if($twitterData):
+                                            $twitter = $twitterData['handle'];
+                                        else:
+                                            $twitter = '';
+                                        endif;
+                                        //facebook twitter parameter end
 					
 					//echo $total;
 					//echo $myTaste."-----My Taste------ Total------".$total."<br/>";
@@ -750,9 +768,9 @@ class webservicemodel extends CI_Model {
 					
 					
 					
-					$bearArr[] = array("beerId"=>$beerId,"aroma"=>$result['aroma'],"sweet"=>$result['sweet'],"bitter"=>$result['bitter'],"malt"=>$result['malt'],"yeast"=>$result['yeast'],"mouthFeel"=>$result['mouthFeel'],"sour"=>$result['sour'],"additive"=>$result['additive'],"booziness"=>$result['booziness'],"brewery"=>$brewery,"beerName"=>$beerName,"beerStyle"=>$beerStyle,"abv"=>$abv,"ibu"=>$ibu,"mood"=>$mood,"venue"=>$venue,"event"=>$event,"hype"=>$hype,"tastePercentage"=>$tastePercentage,"beerBottle"=>$beerBottle);
+					$bearArr[] = array("beerId"=>$beerId,"aroma"=>$result['aroma'],"sweet"=>$result['sweet'],"bitter"=>$result['bitter'],"malt"=>$result['malt'],"yeast"=>$result['yeast'],"mouthFeel"=>$result['mouthFeel'],"sour"=>$result['sour'],"additive"=>$result['additive'],"booziness"=>$result['booziness'],"brewery"=>$brewery,"beerName"=>$beerName,"beerStyle"=>$beerStyle,"abv"=>$abv,"ibu"=>$ibu,"mood"=>$mood,"venue"=>$venue,"event"=>$event,"hype"=>$hype,"tastePercentage"=>$tastePercentage,"beerBottle"=>$beerBottle,"facebook"=>$facebook,"twitter"=>$twitter);
 				else:
-					$bearArr[] = array("beerId"=>$beerId,"aroma"=>"0","sweet"=>"0","bitter"=>"0","malt"=>"0","yeast"=>"0","mouthFeel"=>"0","sour"=>"0","additive"=>"0","booziness"=>"0","brewery"=>$brewery,"beerName"=>$beerName,"beerStyle"=>$beerStyle,"abv"=>$abv,"ibu"=>$ibu,"mood"=>$mood,"venue"=>$venue,"event"=>$event,"hype"=>$hype,"tastePercentage"=>0,"beerBottle"=>0);
+					$bearArr[] = array("beerId"=>$beerId,"aroma"=>"0","sweet"=>"0","bitter"=>"0","malt"=>"0","yeast"=>"0","mouthFeel"=>"0","sour"=>"0","additive"=>"0","booziness"=>"0","brewery"=>$brewery,"beerName"=>$beerName,"beerStyle"=>$beerStyle,"abv"=>$abv,"ibu"=>$ibu,"mood"=>$mood,"venue"=>$venue,"event"=>$event,"hype"=>$hype,"tastePercentage"=>0,"beerBottle"=>0,"facebook"=>"","twitter"=>"");
 				endif; 
 			endforeach;
 			//die;
