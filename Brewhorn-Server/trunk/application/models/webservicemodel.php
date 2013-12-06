@@ -710,7 +710,7 @@ class webservicemodel extends CI_Model {
                                         //add facebook twitter parameter
                                         $FacebookData = $this->db->select()->where('beerId',$beerId)->where('networkId','1')->from('socialMediaAcct')->get()->row_array();
                                         if($FacebookData):
-                                            $facebook = $FacebookData['handle'];
+                                            $facebook = $FacebookData['url'];
                                         else:
                                             $facebook = '';
                                         endif;
