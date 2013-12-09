@@ -1277,13 +1277,16 @@ class webservicemodel extends CI_Model {
 
         }
       }
-      $get_socialacc = $this->db->select()->where('id',$subAttributeId)->where('beerid',$beerId)->from('socialMediaAcct')->get()->row_array();
-      if($get_socialacc){
-          $social_id = $get_socialacc['id'];
-          $this->db->where('id',$social_id);
-          $this->db->update("socialMediaAcct",$socialacc_data);
-          log_message('debug', "{$activityName} Updated record in socialMediaAcct with id={$social_id} with values ".$this->webservicemodel->implode_with_key($socialacc_data,'>',','));
+      if($subAction_typeAction == 'edit'){
+            //Update case
+            $get_socialacc = $this->db->select()->where('id',$subAttributeId)->where('beerid',$beerId)->from('socialMediaAcct')->get()->row_array();
+            if($get_socialacc){
+                $social_id = $get_socialacc['id'];
+                $this->db->where('id',$social_id);
+  		        $this->db->update("socialMediaAcct",$socialacc_data);
+  		        //log_message('debug', "{$activityName} Updated record in socialMediaAcct with id={$social_id} with values ".$this->webservicemodel->implode_with_key($socialacc_data,'>',','));
 
+            }
       }
 
       log_message('debug', "{$activityName} completed processing");
