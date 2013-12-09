@@ -668,13 +668,13 @@ class webserviceController extends CI_Controller {
                         //insert beer into userbeer and beer table
                         if($action == 'insert'){
                         //get beer data from brewerydb
-                          $url_beer = 'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&format=php&withBreweries=Y';
-                          $result_allbeer = $this->get_web_page($url_beer);
+                          $url_beer = 'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&format=php&withBreweries=Y&withSocialAccounts=Y&withIngredients=Y';
+                          $result_allbeer = $this->webservicemodel->get_web_page($url_beer);
                           if($result_allbeer['message'] == 'Request Successful'){
                               if($result_allbeer['data']){
                                   $beerdata = $result_allbeer['data'];
                                   log_message('debug', "Successfully retrieved from url:{$url_beer} this data: ". implode_with_key($beerdata,'>',','));
-                                  $this->webservicemodel->InsertUpdateBeer($beerdata,$timestamp,$action);
+                                  $this->webservicemodel->InsertUpdateBeer($beerdata,$timestamp,$action,$apiKey);
                               }
                           }
                         }
@@ -684,14 +684,14 @@ class webserviceController extends CI_Controller {
                         //Edit case for beer attribute only
                         if(($action == 'edit') && ($subAction == 'none')){
                           //get beer data from brewerydb
-                          $url_beer = 'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&format=php&withBreweries=Y';
-                          $result_allbeer = $this->get_web_page($url_beer);
+                          $url_beer = 'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&format=php&withBreweries=Y&withSocialAccounts=Y&withIngredients=Y';
+                          $result_allbeer = $this->webservicemodel->get_web_page($url_beer);
                           if($result_allbeer['message'] == 'Request Successful'){
                               if($result_allbeer['data']){
                               //update beer and userbeertable
                               $beerdata = $result_allbeer['data'];
                               log_message('debug', "Successfully retrieved from url:{$url_beer} data: ". implode_with_key($beerdata,'>',','));
-                                  $this->webservicemodel->InsertUpdateBeer($beerdata,$timestamp,$action);
+                              $this->webservicemodel->InsertUpdateBeer($beerdata,$timestamp,$action,$apiKey);
                               }
                           }
                         }
@@ -705,8 +705,8 @@ class webserviceController extends CI_Controller {
                             $subAction_typeAction = $subAction_array[1];
                             if($subAction_type == 'brewery'){
                                 //get beer data from brewerydb
-                                $url_beer = 'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&format=php&withBreweries=Y';
-                                $result_allbeer = $this->get_web_page($url_beer);
+                                $url_beer = 'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&format=php&withBreweries=Y&withSocialAccounts=Y&withIngredients=Y';
+                                $result_allbeer = $this->webservicemodel->get_web_page($url_beer);
                                 if($result_allbeer['message'] == 'Request Successful'){
                                     if($result_allbeer['data']){
 
@@ -714,7 +714,7 @@ class webserviceController extends CI_Controller {
                                           //insert update case for beerbrewery table
                                           $beerdata = $result_allbeer['data'];
                                           log_message('debug', "Successfully retrieved from url:{$url_beer} data:". implode_with_key($beerdata,'>',','));
-                                          $this->webservicemodel->InsertUpdateBeerBrewery($beerdata,$subAttributeId,$timestamp,$subAction_typeAction);
+                                          $this->webservicemodel->InsertUpdateBeerBrewery($beerdata,$subAttributeId,$timestamp,$subAction_typeAction,$apiKey);
                                       }
                                    }
                                  }
@@ -726,15 +726,15 @@ class webserviceController extends CI_Controller {
 
                             if($subAction_type == 'socialaccount'){
                                 //get data from brewery db for socialaccount
-                                $url_socialaccount =  'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&withBreweries=Y&withSocialAccounts=Y&format=php';
-                                $result_socialaccount = $this->get_web_page($url_socialaccount);
+                                $url_socialaccount =  'http://api.brewerydb.com/v2/beer/'.$attributeId.'?key='.$apiKey.'&withBreweries=Y&withSocialAccounts=Y&withIngredients=Y&format=php';
+                                $result_socialaccount = $this->webservicemodel->get_web_page($url_socialaccount);
                                 if(($subAction_typeAction == 'insert') || ($subAction_typeAction == 'edit')){
                                   if($result_socialaccount['message'] == 'Request Successful'){
 
                                     //Insert update case for socialmediaacct table
                                     $beerdata = $result_socialaccount['data'];
                                     log_message('debug', "Successfully retrieved from url:{$url_socialaccount} data:". implode_with_key($beerdata,'>',','));
-                                    $this->webservicemodel->InsertUpdateSocialMediaAcct($beerdata,$subAttributeId,$subAction_typeAction,$timestamp);
+                                    $this->webservicemodel->InsertUpdateSocialMediaAcct($beerdata,$subAttributeId,$subAction_typeAction,$timestamp,$apiKey);
                                   }
                                 }
                                 if($subAction_typeAction == 'delete'){
@@ -753,7 +753,7 @@ class webserviceController extends CI_Controller {
                                 if($subAction_typeAction == 'insert'){
                                     //get data for ingredient from brewery db database
                                     $url_ingredient =  'http://api.brewerydb.com/v2/beer/'.$attributeId.'/ingredients/?key='.$apiKey.'&format=php';
-                                    $result_ingredient = $this->get_web_page($url_ingredient);
+                                    $result_ingredient = $this->webservicemodel->get_web_page($url_ingredient);
                                     if($result_ingredient['message'] == 'Request Successful'){
                                         $ingredientdata = $result_ingredient['data'];
                                         //insert into beeringredient table
@@ -799,31 +799,15 @@ class webserviceController extends CI_Controller {
         }
     }
 
+    function implode_with_key($assoc, $inglue = '>', $outglue = ',') {
+		    $return = '';
 
+		    foreach ($assoc as $tk => $tv) {
+		        $return .= $outglue . $tk . $inglue . $tv;
+		    }
 
+		    return substr($return, strlen($outglue));
+	}
 
-    function get_web_page($url) {
-        $options = array(CURLOPT_RETURNTRANSFER => true, // return web page
-        CURLOPT_HEADER => false, // don't return headers
-        CURLOPT_FOLLOWLOCATION => true, // follow redirects
-        CURLOPT_ENCODING => "", // handle all encodings
-        CURLOPT_USERAGENT => "", // who am i
-        CURLOPT_AUTOREFERER => true, // set referer on redirect
-        CURLOPT_CONNECTTIMEOUT => 120, // timeout on connect
-        CURLOPT_TIMEOUT => 120, // timeout on response
-        CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
-        );
-        $ch = curl_init($url);
-        curl_setopt_array($ch, $options);
-        $content = curl_exec($ch);
-        $err = curl_errno($ch);
-        $errmsg = curl_error($ch);
-        $header = curl_getinfo($ch);
-		curl_close($ch);
-
-        $array = unserialize($content);
-		//echo "<pre>";print_R($array);die;
-        return $array;
-    }
 
 }
