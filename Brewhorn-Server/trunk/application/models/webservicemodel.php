@@ -1290,7 +1290,7 @@ class webservicemodel extends CI_Model {
                 $social_id = $get_socialacc['id'];
                 $this->db->where('id',$social_id);
   		        $this->db->update("socialMediaAcct",$socialacc_data);
-  		        //log_message('debug', "{$activityName} Updated record in socialMediaAcct with id={$social_id} with values ".$this->webservicemodel->implode_with_key($socialacc_data,'>',','));
+  		        log_message('debug', "{$activityName} Updated record in socialMediaAcct with id={$social_id} with values ".$this->webservicemodel->implode_with_key($socialacc_data,'>',','));
 
             }
       }
