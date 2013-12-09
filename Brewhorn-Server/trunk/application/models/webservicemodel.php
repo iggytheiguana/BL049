@@ -716,7 +716,7 @@ class webservicemodel extends CI_Model {
                                             $facebook = '';
                                             $facebookurl = '';
                                         endif;
-                                        
+
                                         $twitterData = $this->db->select()->where('beerId',$beerId)->where('networkId','2')->from('socialMediaAcct')->get()->row_array();
                                         if($twitterData):
                                             $twitter = $twitterData['handle'];
@@ -919,12 +919,13 @@ class webservicemodel extends CI_Model {
     }
 
     //InsertUpdateBeerBrewery function insert update data for beerbrewery table
-    function InsertUpdateBeerBrewery($beerdata,$subAttributeId,$timestamp,$subAction_typeAction){
+    function InsertUpdateBeerBrewery($beerdata,$subAttributeId,$timestamp,$subAction_typeAction,$apiKey){
     	$activityName = "InsertUpdateBeerBrewery";
 
         $breweries = isset($beerdata['breweries'])?$beerdata['breweries']:'';
         if($breweries){
             $brewery = '';
+            $i = 0;
             foreach($breweries AS $brewery){
                 if($subAttributeId == $brewery['id']){
                   $insert_brewey['name'] = $brewery['name'];
@@ -935,12 +936,61 @@ class webservicemodel extends CI_Model {
                   $insert_brewey['largeImage'] = isset($brewery['images']['large'])?$brewery['images']['large']:'';
                   $insert_brewey['icon'] = isset($brewery['images']['icon'])?$brewery['images']['icon']:'';
                   $insert_brewey['mailingListUrl'] = isset($brewery['mailingListUrl'])?$brewery['mailingListUrl']:'';
+                  $insert_brewey['dateCreated'] =  $brewery['createDate'];
                 }
+                $insert_brewey_all[$i]['name'] = $brewery['name'];
+                $insert_brewey_all[$i]['description'] = isset($brewery['description'])?$brewery['description']:'';
+                $insert_brewey_all[$i]['website'] = isset($brewery['website'])?$brewery['website']:'';
+                $insert_brewey_all[$i]['established'] = isset($brewery['established'])?$brewery['established']:'';
+                $insert_brewey_all[$i]['mediumImage'] = isset($brewery['images']['medium'])?$brewery['images']['medium']:'';
+                $insert_brewey_all[$i]['largeImage'] = isset($brewery['images']['large'])?$brewery['images']['large']:'';
+                $insert_brewey_all[$i]['icon'] = isset($brewery['images']['icon'])?$brewery['images']['icon']:'';
+                $insert_brewey_all[$i]['mailingListUrl'] = isset($brewery['mailingListUrl'])?$brewery['mailingListUrl']:'';
+                $insert_brewey_all[$i]['dateCreated'] =  $brewery['createDate'];
             }
         }
 
+        //create social media account from response
+        $socialAccounts = isset($beerdata['socialAccounts'])?$beerdata['socialAccounts']:'';
+        if($socialAccounts){
+            $i = 0;
+            $socialAccount = '';
+            foreach($socialAccounts AS $socialAccount){
+                $insert_socialacc[$i]['id'] = $socialAccount['id'];
+                $insert_socialacc[$i]['network'] = isset($socialAccount['socialMedia']['name'])?$socialAccount['socialMedia']['name']:'';
+                $insert_socialacc[$i]['networkId'] = isset($socialAccount['socialMedia']['id'])?$socialAccount['socialMedia']['id']:'';
+                $insert_socialacc[$i]['url'] = isset($socialAccount['link'])?$socialAccount['link']:'';
+                $insert_socialacc[$i]['handle'] = isset($socialAccount['handle'])?$socialAccount['handle']:'';
+                $insert_socialacc[$i]['handle'] = isset($socialAccount['handle'])?$socialAccount['handle']:'';
+                $i++;
+            }
+        }
+
+
+        //create beer ingredient
+        $url_ingredient =  'http://api.brewerydb.com/v2/beer/'.$beerdata['id'].'/ingredients/?key='.$apiKey.'&format=php';
+        $result_ingredient = $this->webservicemodel->get_web_page($url_ingredient);
+        if($result_ingredient['message'] == 'Request Successful'){
+            if(isset($result_ingredient['data'])){
+              $ingredients = $result_ingredient['data'];
+              if($ingredients){
+                  $i = 0;
+                  $ingredient = '';
+                  foreach($ingredients AS $ingredient){
+                      $insert_ingredient[$i]['id'] = $ingredient['id'];
+                      $insert_ingredient[$i]['name'] = isset($ingredient['name'])?$ingredient['name']:'';
+                      $insert_ingredient[$i]['category'] = isset($ingredient['category'])?$ingredient['category']:'';
+                      $insert_ingredient[$i]['categoryDisplay'] = isset($ingredient['categoryDisplay'])?$ingredient['categoryDisplay']:'';
+                      $insert_ingredient[$i]['dateCreated'] = $ingredient['createDate'];
+                      $i++;
+                  }
+              }
+            }
+
+        }
         $masterbeerId = $beerdata['id'];
         $get_beerId = $this->db->select()->where('masterBeerId',$masterbeerId)->from('beer')->get()->row_array();
+
         if($get_beerId){
             $beerId = $get_beerId['id'];
             $validateBeer = $this->db->select()->where('id',$beerId)->from('userBeer')->get()->row_array();
@@ -956,6 +1006,7 @@ class webservicemodel extends CI_Model {
             $breweryName = isset($beerdata['breweries']['0']['name'])?$beerdata['breweries']['0']['name']:'';
             $brewery = trim($breweryName);
             $validateBeer = $this->db->select()->where('beerName',$beerName)->where('brewery',$brewery)->from('userBeer')->get()->row_array();
+
             if($validateBeer){
                 $userBeerId = $validateBeer['id'];
                 $update_breweryName['brewery'] = $insert_brewey['name'];
@@ -973,12 +1024,62 @@ class webservicemodel extends CI_Model {
                 $insert_beer['largeLabel'] = isset($beerdata['labels']['large'])?$beerdata['labels']['large']:'';
                 $insert_beer['icon'] = isset($beerdata['labels']['icon'])?$beerdata['labels']['icon']:'';
                 $insert_beer['id'] = $userBeerId;
-                $insert_beer['datecreated '] = date("Y-m-d H:i:s", $timestamp);
+                $insert_beer['datecreated '] = $beerdata['createDate'];
                 $insert_beer['masterBeerId'] = $beerdata['id'];
                 //insert intp beer table
                 $this->db->insert("beer",$insert_beer);
 
                 log_message('debug', "{$activityName} inserted Beer record with id={$userBeerId} with data: " . implode_with_key($insert_beer,'>',','));
+
+                if(isset($insert_brewey_all)){
+                  foreach($insert_brewey_all AS $insert_beerbrewery_all ){
+                      $insert_beerbrewery_all['beerId'] = $userBeerId;
+                      $insert_beerbrewery_all['masterBreweryId'] = $subAttributeId;
+                      $this->db->insert("beerBrewery",$insert_beerbrewery_all);
+
+                      log_message('debug', "{$activityName} Inserted brewery record into BeerBrewery with value ".$this->webservicemodel->implode_with_key($insert_beerbrewery_all,'>',','));
+
+                  }
+                }
+                else
+                {
+                	log_message('debug', "{$activityName} Beer had no Brewery data to insert into BeerBrewery table");
+
+                }
+
+                //insert social accounts
+                if(isset($insert_socialacc)){
+                  foreach($insert_socialacc AS $insert_beersocialacc ){
+                        $insert_beersocialacc['beerId'] = $userBeerId;
+                        $this->db->insert("socialMediaAcct",$insert_beersocialacc);
+
+                        log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->webservicemodel->implode_with_key($insert_beersocialacc,'>',','));
+
+                    }
+                }
+                else
+                {
+                	log_message('debug', "{$activityName} Beer had no Social account data to insert into socialMediaAcct table");
+
+                }
+
+
+                //insert ingredients
+                if(isset($insert_ingredient)){
+                  foreach($insert_ingredient AS $insert_beeringredient ){
+                        $insert_beeringredient['beerId'] = $userBeerId;
+                        $this->db->insert("beerIngredient",$insert_beeringredient);
+
+                        log_message('debug', "{$activityName} Inserted ingredient record into beerIngredient with value ".$this->webservicemodel->implode_with_key($insert_beeringredient,'>',','));
+
+                    }
+                }
+                else
+                {
+                	log_message('debug', "{$activityName} Beer had no ingredient data to insert into beerIngredient table");
+
+                }
+
             }
         }
         $get_brewery = $this->db->select()->where('masterBreweryId',$subAttributeId)->where('beerId',$userBeerId)->from('beerBrewery')->get()->row_array();
@@ -989,11 +1090,10 @@ class webservicemodel extends CI_Model {
           log_message('debug', "{$activityName} updated beerBrewery record with id={$breweryId} with data: " . implode_with_key($insert_brewey,'>',','));
         }else{
           $insert_brewey['masterBreweryId'] = $subAttributeId;
-          $insert_brewey['dateCreated'] =  date("Y-m-d H:i:s", $timestamp);
+          //$insert_brewey['dateCreated'] =  date("Y-m-d H:i:s", $timestamp);
           $insert_brewey['beerId'] = $userBeerId;
           $this->db->insert("beerBrewery",$insert_brewey);
           log_message('debug', "{$activityName} inserted beerBrewery record with data: " . implode_with_key($insert_brewey,'>',','));
-
         }
 
         log_message('debug',"{$activityName} completed execution");
@@ -1013,7 +1113,7 @@ class webservicemodel extends CI_Model {
                 $ingredient_data['name'] = isset($ingredient['name'])?$ingredient['name']:'';
                 $ingredient_data['category'] = isset($ingredient['category'])?$ingredient['category']:'';
                 $ingredient_data['categoryDisplay'] = isset($ingredient['categoryDisplay'])?$ingredient['categoryDisplay']:'';
-                $ingredient_data['dateCreated'] = date("Y-m-d H:i:s", $timestamp);
+                $ingredient_data['dateCreated'] = $ingredient['createDate'];
                 $this->db->insert("beerIngredient",$ingredient_data);
 
                 log_message('debug', "{$activityName} inserted beerIngredient record with data: " . implode_with_key($ingredient_data,'>',','));
@@ -1038,13 +1138,33 @@ class webservicemodel extends CI_Model {
     }
 
     //InsertUpdateSocialMediaAcct function insert-update data for socialmediaacc table
-    function InsertUpdateSocialMediaAcct($beerdata,$subAttributeId,$subAction_typeAction,$timestamp){
+    function InsertUpdateSocialMediaAcct($beerdata,$subAttributeId,$subAction_typeAction,$timestamp,$apiKey){
     	$activityName = "InsertUpdateSocialMediaAcct:";
     	log_message('debug', "{$activityName} begin processing of {$subAction_typeAction}");
-
+        //create beer brewery from response
+        $breweries = isset($beerdata['breweries'])?$beerdata['breweries']:'';
+        if($breweries){
+            $i = 0;
+            $brewery = '';
+            foreach($breweries AS $brewery){
+                $insert_brewey[$i]['name'] = $brewery['name'];
+                $insert_brewey[$i]['masterBreweryId'] = $brewery['id'];
+                $insert_brewey[$i]['description'] = isset($brewery['description'])?$brewery['description']:'';
+                $insert_brewey[$i]['website'] = isset($brewery['website'])?$brewery['website']:'';
+                $insert_brewey[$i]['established'] = isset($brewery['established'])?$brewery['established']:'';
+                $insert_brewey[$i]['mediumImage'] = isset($brewery['images']['medium'])?$brewery['images']['medium']:'';
+                $insert_brewey[$i]['largeImage'] = isset($brewery['images']['large'])?$brewery['images']['large']:'';
+                $insert_brewey[$i]['icon'] = isset($brewery['images']['icon'])?$brewery['images']['icon']:'';
+                $insert_brewey[$i]['mailingListUrl'] = isset($brewery['mailingListUrl'])?$brewery['mailingListUrl']:'';
+                $insert_brewey[$i]['dateCreated'] =  $brewery['createDate'];
+                $i++;
+            }
+        }
+        //create social media account response
         $socialAccounts = isset($beerdata['socialAccounts'])?$beerdata['socialAccounts']:'';
         if($socialAccounts){
             $socialAccount = '';
+            $i = 0;
             foreach($socialAccounts AS $socialAccount){
                 if($subAttributeId == $socialAccount['id']){
                   $socialacc_data['network'] = isset($socialAccount['socialMedia']['name'])?$socialAccount['socialMedia']['name']:'';
@@ -1052,6 +1172,32 @@ class webservicemodel extends CI_Model {
                   $socialacc_data['url'] = isset($socialAccount['link'])?$socialAccount['link']:'';
                   $socialacc_data['handle'] = isset($socialAccount['handle'])?$socialAccount['handle']:'';
                 }
+                $socialacc_data_all[$i]['id'] = isset($socialAccount['id'])?$socialAccount['id']:'';
+                $socialacc_data_all[$i]['network'] = isset($socialAccount['socialMedia']['name'])?$socialAccount['socialMedia']['name']:'';
+                $socialacc_data_all[$i]['networkId'] = isset($socialAccount['socialMedia']['id'])?$socialAccount['socialMedia']['id']:'';
+                $socialacc_data_all[$i]['url'] = isset($socialAccount['link'])?$socialAccount['link']:'';
+                $socialacc_data_all[$i]['handle'] = isset($socialAccount['handle'])?$socialAccount['handle']:'';
+            }
+        }
+
+        //create beer ingredient
+        $url_ingredient =  'http://api.brewerydb.com/v2/beer/'.$beerdata['id'].'/ingredients/?key='.$apiKey.'&format=php';
+        $result_ingredient = $this->webservicemodel->get_web_page($url_ingredient);
+        if($result_ingredient['message'] == 'Request Successful'){
+            if(isset($result_ingredient['data'])){
+              $ingredients = $result_ingredient['data'];
+              if($ingredients){
+                  $i = 0;
+                  $ingredient = '';
+                  foreach($ingredients AS $ingredient){
+                      $insert_ingredient[$i]['id'] = $ingredient['id'];
+                      $insert_ingredient[$i]['name'] = isset($ingredient['name'])?$ingredient['name']:'';
+                      $insert_ingredient[$i]['category'] = isset($ingredient['category'])?$ingredient['category']:'';
+                      $insert_ingredient[$i]['categoryDisplay'] = isset($ingredient['categoryDisplay'])?$ingredient['categoryDisplay']:'';
+                      $insert_ingredient[$i]['dateCreated'] = $ingredient['createDate'];
+                      $i++;
+                  }
+              }
             }
         }
 
@@ -1084,37 +1230,64 @@ class webservicemodel extends CI_Model {
                 $insert_beer['largeLabel'] = isset($beerdata['labels']['large'])?$beerdata['labels']['large']:'';
                 $insert_beer['icon'] = isset($beerdata['labels']['icon'])?$beerdata['labels']['icon']:'';
                 $insert_beer['id'] = $beerId;
-                $insert_beer['datecreated '] = date("Y-m-d H:i:s", $timestamp);
+                $insert_beer['datecreated '] = $beerdata['createDate'];
                 $insert_beer['masterBeerId'] = $beerdata['id'];
                 //insert intp beer table
                 $this->db->insert("beer",$insert_beer);
 
                 log_message('debug', "{$activityName} Inserted record into beer table with values ".$this->webservicemodel->implode_with_key($insert_beer,'>',','));
+
+                if(isset($insert_brewey)){
+                  foreach($insert_brewey AS $insert_beerbrewery ){
+                      $insert_beerbrewery['beerId'] = $beerId;
+                      $this->db->insert("beerBrewery",$insert_beerbrewery);
+                      log_message('debug', "{$activityName} Inserted brewery record into BeerBrewery with value ".$this->webservicemodel->implode_with_key($insert_beerbrewery,'>',','));
+                  }
+                }
+                else
+                {
+                	log_message('debug', "{$activityName} Beer had no Brewery data to insert into BeerBrewery table");
+                }
+                //insert social accounts
+                if(isset($socialacc_data_all)){
+                  foreach($socialacc_data_all AS $socialacc_beerdata_all ){
+                        $socialacc_beerdata_all['beerId'] = $beerId;
+                        $this->db->insert("socialMediaAcct",$socialacc_beerdata_all);
+                        log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->webservicemodel->implode_with_key($insert_beersocialacc,'>',','));
+                    }
+                }
+                else
+                {
+                	log_message('debug', "{$activityName} Beer had no Social account data to insert into socialMediaAcct table");
+                }
+
+                //insert ingredients
+                if(isset($insert_ingredient)){
+                  foreach($insert_ingredient AS $insert_beeringredient ){
+                        $insert_beeringredient['beerId'] = $beerId;
+                        $this->db->insert("beerIngredient",$insert_beeringredient);
+                        log_message('debug', "{$activityName} Inserted ingredient record into beerIngredient with value ".$this->webservicemodel->implode_with_key($insert_beeringredient,'>',','));
+
+                    }
+                }
+                else
+                {
+                	log_message('debug', "{$activityName} Beer had no ingredient data to insert into beerIngredient table");
+                }
+
         }
       }
-      if($subAction_typeAction == 'insert'){
-            $socialacc_data['id'] = $subAttributeId;
-            $socialacc_data['beerId'] = $beerId ;
-            $this->db->insert("socialMediaAcct",$socialacc_data);
+      $get_socialacc = $this->db->select()->where('id',$subAttributeId)->where('beerid',$beerId)->from('socialMediaAcct')->get()->row_array();
+      if($get_socialacc){
+          $social_id = $get_socialacc['id'];
+          $this->db->where('id',$social_id);
+          $this->db->update("socialMediaAcct",$socialacc_data);
+          log_message('debug', "{$activityName} Updated record in socialMediaAcct with id={$social_id} with values ".$this->webservicemodel->implode_with_key($socialacc_data,'>',','));
 
-             log_message('debug', "{$activityName} Inserted record into socialMediaAcct for beerId={$beerId} with values ".$this->webservicemodel->implode_with_key($socialacc_data,'>',','));
-
-      }
-      if($subAction_typeAction == 'edit'){
-            //Update case
-            $get_socialacc = $this->db->select()->where('id',$subAttributeId)->where('beerid',$beerId)->from('socialMediaAcct')->get()->row_array();
-            if($get_socialacc){
-                $social_id = $get_socialacc['id'];
-                $this->db->where('id',$social_id);
-  		        $this->db->update("socialMediaAcct",$socialacc_data);
-  		        log_message('debug', "{$activityName} Updated record in socialMediaAcct with id={$social_id} with values ".$this->webservicemodel->implode_with_key($socialacc_data,'>',','));
-
-            }
       }
 
       log_message('debug', "{$activityName} completed processing");
     }
-
 
     //DeleteSocialMediaAcct function delete data from socialmediaacc table
     function DeleteSocialMediaAcct($beerdata,$subAttributeId){
@@ -1131,18 +1304,18 @@ class webservicemodel extends CI_Model {
 
     function implode_with_key($assoc, $inglue = '>', $outglue = ',') {
 		    $return = '';
-		 
+
 		    foreach ($assoc as $tk => $tv) {
 		        $return .= $outglue . $tk . $inglue . $tv;
 		    }
-		 
+
 		    return substr($return, strlen($outglue));
 	}
 
 
     //InsertBeer function insert data into userbeer and beertable using userbeer table's id
     //userbeer table id is used as id of beer table
-    function InsertUpdateBeer($beerdata,$timestamp,$action){
+    function InsertUpdateBeer($beerdata,$timestamp,$action,$apiKey){
     	$activityName = "InsertUpdateBeer:";
         //userBeer table data
     	log_message('debug', "{$activityName} Processing action={$action}");
@@ -1151,7 +1324,6 @@ class webservicemodel extends CI_Model {
         $insert_userbeer['beerStyle'] = isset($beerdata['style']['name'])?$beerdata['style']['name']:'';
         $insert_userbeer['abv'] = isset($beerdata['abv'])?$beerdata['abv']:'';
         $insert_userbeer['ibu'] = isset($beerdata['ibu'])?$beerdata['ibu']:'';
-
 
         //beer profile data
         $insert_beerProfile['aroma'] = '0';
@@ -1190,15 +1362,52 @@ class webservicemodel extends CI_Model {
                 $insert_brewey[$i]['largeImage'] = isset($brewery['images']['large'])?$brewery['images']['large']:'';
                 $insert_brewey[$i]['icon'] = isset($brewery['images']['icon'])?$brewery['images']['icon']:'';
                 $insert_brewey[$i]['mailingListUrl'] = isset($brewery['mailingListUrl'])?$brewery['mailingListUrl']:'';
-                $insert_brewey[$i]['dateCreated'] =  date("Y-m-d H:i:s", $timestamp);
+                $insert_brewey[$i]['dateCreated'] =  $brewery['createDate'];
                 $i++;
             }
         }
 
+        //create social media account from response
+        $socialAccounts = isset($beerdata['socialAccounts'])?$beerdata['socialAccounts']:'';
+        if($socialAccounts){
+            $i = 0;
+            $socialAccount = '';
+            foreach($socialAccounts AS $socialAccount){
+                $insert_socialacc[$i]['id'] = $socialAccount['id'];
+                $insert_socialacc[$i]['network'] = isset($socialAccount['socialMedia']['name'])?$socialAccount['socialMedia']['name']:'';
+                $insert_socialacc[$i]['networkId'] = isset($socialAccount['socialMedia']['id'])?$socialAccount['socialMedia']['id']:'';
+                $insert_socialacc[$i]['url'] = isset($socialAccount['link'])?$socialAccount['link']:'';
+                $insert_socialacc[$i]['handle'] = isset($socialAccount['handle'])?$socialAccount['handle']:'';
+                $insert_socialacc[$i]['handle'] = isset($socialAccount['handle'])?$socialAccount['handle']:'';
+                $i++;
+            }
+        }
+
+        //create beer ingredient
+        $url_ingredient =  'http://api.brewerydb.com/v2/beer/'.$beerdata['id'].'/ingredients/?key='.$apiKey.'&format=php';
+        $result_ingredient = $this->webservicemodel->get_web_page($url_ingredient);
+        if($result_ingredient['message'] == 'Request Successful'){
+            if(isset($result_ingredient['data'])){
+              $ingredients = $result_ingredient['data'];
+              if($ingredients){
+                  $i = 0;
+                  $ingredient = '';
+                  foreach($ingredients AS $ingredient){
+                      $insert_ingredient[$i]['id'] = $ingredient['id'];
+                      $insert_ingredient[$i]['name'] = isset($ingredient['name'])?$ingredient['name']:'';
+                      $insert_ingredient[$i]['category'] = isset($ingredient['category'])?$ingredient['category']:'';
+                      $insert_ingredient[$i]['categoryDisplay'] = isset($ingredient['categoryDisplay'])?$ingredient['categoryDisplay']:'';
+                      $insert_ingredient[$i]['dateCreated'] = $ingredient['createDate'];
+                      $i++;
+                  }
+              }
+            }
+
+        }
 
         if($action == 'insert'){
 
-        	
+
 
             //insert into userbeer table
             $insert_userbeer['createdon'] = $timestamp;
@@ -1206,35 +1415,57 @@ class webservicemodel extends CI_Model {
             $this->db->insert("userBeer",$insert_userbeer);
             $beerId = $this->db->insert_id();
 
-
             log_message('debug',"{$activityName} Inserted record in UserBeer with id={$beerId}, name=".$insert_userbeer['beerName'].",brewery=".$insert_userbeer['brewery']);
-
             $insert_beerProfile['beerId'] = $beerId;
             $this->db->insert("beerProfile",$insert_beerProfile);
             log_message('debug', "{$activityName} Inserted record into BeerProfile with value ". $this->webservicemodel->implode_with_key($insert_beerProfile, '>',','));
 
             $insert_beer['id'] = $beerId;
-            $insert_beer['datecreated '] = date("Y-m-d H:i:s", $timestamp);
+            $insert_beer['datecreated '] = $beerdata['createDate'];
             $insert_beer['masterBeerId'] = $beerdata['id'];
             //insert intp beer table
             $this->db->insert("beer",$insert_beer);
 
             log_message('debug', "{$activityName} Inserted record into Beer with value ".$this->webservicemodel->implode_with_key($insert_beer,'>', ','));
 
-            if($insert_brewey){
+            if(isset($insert_brewey)){
               foreach($insert_brewey AS $insert_beerbrewery ){
                   $insert_beerbrewery['beerId'] = $beerId;
                   $this->db->insert("beerBrewery",$insert_beerbrewery);
 
                   log_message('debug', "{$activityName} Inserted brewery record into BeerBrewery with value ".$this->webservicemodel->implode_with_key($insert_beerbrewery,'>',','));
-
               }
             }
             else
             {
             	log_message('debug', "{$activityName} Beer had no Brewery data to insert into BeerBrewery table");
+            }
+            //insert social accounts
+            if(isset($insert_socialacc)){
+              foreach($insert_socialacc AS $insert_beersocialacc ){
+                    $insert_beersocialacc['beerId'] = $beerId;
+                    $this->db->insert("socialMediaAcct",$insert_beersocialacc);
+                    log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->webservicemodel->implode_with_key($insert_beersocialacc,'>',','));
+                }
+            }
+            else
+            {
+            	log_message('debug', "{$activityName} Beer had no Social account data to insert into socialMediaAcct table");
+            }
+            //insert ingredients
+            if(isset($insert_ingredient)){
+              foreach($insert_ingredient AS $insert_beeringredient ){
+                    $insert_beeringredient['beerId'] = $beerId;
+                    $this->db->insert("beerIngredient",$insert_beeringredient);
+                    log_message('debug', "{$activityName} Inserted ingredient record into beerIngredient with value ".$this->webservicemodel->implode_with_key($insert_beeringredient,'>',','));
+                }
+            }
+            else
+            {
+            	log_message('debug', "{$activityName} Beer had no ingredient data to insert into beerIngredient table");
 
             }
+
         }
         if($action == 'edit'){
              $masterbeerId = $beerdata['id'];
@@ -1272,20 +1503,38 @@ class webservicemodel extends CI_Model {
 
                     //insert new beer
                     $insert_beer['id'] = $beerId;
-                    $insert_beer['datecreated '] = date("Y-m-d H:i:s", $timestamp);
+                    $insert_beer['datecreated '] = $beerdata['createDate'];
                     $insert_beer['masterBeerId'] = $beerdata['id'];
                     //insert intp beer table
                     $this->db->insert("beer",$insert_beer);
                     log_message('debug', "{$activityName} Inserted Beer record with values ".$this->webservicemodel->implode_with_key($insert_beer,'>',','));
 
                     //insert new brewery
-                    if($insert_brewey){
+                    if(isset($insert_brewey)){
                       foreach($insert_brewey AS $insert_beerbrewery ){
                           $insert_beerbrewery['beerId'] = $beerId;
                           $this->db->insert("beerBrewery",$insert_beerbrewery);
                           log_message('debug', "{$activityName} Inserted brewery record into BeerBrewery with value ".$this->webservicemodel->implode_with_key($insert_beerbrewery,'>',','));
-
                       }
+                    }
+
+                    //insert new socialMediaAccount
+                    if(isset($insert_socialacc)){
+                      foreach($insert_socialacc AS $insert_beersocialacc ){
+                          $insert_beersocialacc['beerId'] = $beerId;
+                          $this->db->insert("socialMediaAcct",$insert_beersocialacc);
+                          log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->webservicemodel->implode_with_key($insert_beersocialacc,'>',','));
+                      }
+                    }
+
+                    if(isset($insert_ingredient)){
+                      foreach($insert_ingredient AS $insert_beeringredient ){
+                            $insert_beeringredient['beerId'] = $beerId;
+                            $this->db->insert("beerIngredient",$insert_beeringredient);
+
+                            log_message('debug', "{$activityName} Inserted ingredient record into beerIngredient with value ".$this->webservicemodel->implode_with_key($insert_beeringredient,'>',','));
+
+                        }
                     }
 
                 }
@@ -1299,18 +1548,32 @@ class webservicemodel extends CI_Model {
                     log_message('debug', "{$activityName} Inserted BeerProfile record with value ".$this->webservicemodel->implode_with_key($insert_beerProfile,'>',','));
                 }
              }
-
-
         }
-
-
-
-
         log_message('debug', "{$activityName} completed execution");
-
     }
 
-  
+    function get_web_page($url) {
+        $options = array(CURLOPT_RETURNTRANSFER => true, // return web page
+        CURLOPT_HEADER => false, // don't return headers
+        CURLOPT_FOLLOWLOCATION => true, // follow redirects
+        CURLOPT_ENCODING => "", // handle all encodings
+        CURLOPT_USERAGENT => "", // who am i
+        CURLOPT_AUTOREFERER => true, // set referer on redirect
+        CURLOPT_CONNECTTIMEOUT => 120, // timeout on connect
+        CURLOPT_TIMEOUT => 120, // timeout on response
+        CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
+        );
+        $ch = curl_init($url);
+        curl_setopt_array($ch, $options);
+        $content = curl_exec($ch);
+        $err = curl_errno($ch);
+        $errmsg = curl_error($ch);
+        $header = curl_getinfo($ch);
+		curl_close($ch);
 
+        $array = unserialize($content);
+		//echo "<pre>";print_R($array);die;
+        return $array;
+    }
 
 }
