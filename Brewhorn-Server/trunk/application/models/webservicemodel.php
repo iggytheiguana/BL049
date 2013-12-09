@@ -1206,7 +1206,13 @@ class webservicemodel extends CI_Model {
         $get_beerId = $this->db->select()->where('masterBeerId',$masterbeerId)->from('beer')->get()->row_array();
         if($get_beerId){
             $beerId = $get_beerId['id'];
+            if($subAction_typeAction == 'insert'){
+                $socialacc_data['id'] = $subAttributeId;
+                $socialacc_data['beerId'] = $beerId ;
+                $this->db->insert("socialMediaAcct",$socialacc_data);
+                log_message('debug', "{$activityName} Inserted record into socialMediaAcct for beerId={$beerId} with values ".$this->webservicemodel->implode_with_key($socialacc_data,'>',','));
 
+            }
         }else{
             $beerName  = trim($beerdata['name']);
             $breweryName = isset($beerdata['breweries']['0']['name'])?$beerdata['breweries']['0']['name']:'';
