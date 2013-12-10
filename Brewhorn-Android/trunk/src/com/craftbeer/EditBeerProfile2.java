@@ -2062,7 +2062,7 @@ public class EditBeerProfile2 extends Activity implements
 						"").replaceAll(" ", "")
 				+ " with @BrewHornBeerApp. #brewhorn ";
 		}
-		Log.e("postStatusUpdate", ":"+stringMain);
+//		Log.e("postStatusUpdate", ":"+stringMain);
 		if (hasPublishPermission()) {
 			Request request = Request.newStatusUpdateRequest(
 					Session.getActiveSession(), stringMain,
