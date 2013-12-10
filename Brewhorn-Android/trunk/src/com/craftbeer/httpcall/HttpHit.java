@@ -47,16 +47,11 @@ Context context;
 
 			Log.i("Response", Response);
 			if (Response != null) {
-
 				strresponse = Response;
-
 			}
-
 			else {
-
 				strresponse = "";
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 

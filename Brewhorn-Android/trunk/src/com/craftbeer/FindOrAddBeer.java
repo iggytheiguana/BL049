@@ -71,6 +71,11 @@ public class FindOrAddBeer extends Activity implements HttpListener {
 	private Button instructionBtn;
 	
 	TextView textHint;
+	
+	public static String facebookHandle = "";
+	public static String twitterHandle = "";
+	public static String facebookUrl = "";
+		
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +109,9 @@ public class FindOrAddBeer extends Activity implements HttpListener {
 
 				// Seding all parameters of beer along with the percentage match
 				// with your taste profile
-
+				facebookHandle = "";
+				twitterHandle = "";
+				facebookUrl = "";
 				Intent toUserBeerProfile = new Intent(FindOrAddBeer.this,
 						UserBeerProfile.class);
 				toUserBeerProfile.putExtra("TASTE_PERCENTAGE", SEARCHBEER_AL
@@ -148,6 +155,14 @@ public class FindOrAddBeer extends Activity implements HttpListener {
 						SEARCHBEER_AL.get(arg2).getAdditive());
 				toUserBeerProfile.putExtra("BOOZINESS_VALUE", SEARCHBEER_AL
 						.get(arg2).getBooziness());
+				facebookHandle = SEARCHBEER_AL.get(arg2).getFacebookHandle();
+				twitterHandle = SEARCHBEER_AL.get(arg2).getTwitterHandle();
+				facebookUrl = SEARCHBEER_AL.get(arg2).getFacebookurl();
+				
+//				Log.e("FindOrAddBeer.facebookHandle", ":"+FindOrAddBeer.facebookHandle);
+//				Log.e("FindOrAddBeer.facebookUrl", ":"+facebookUrl);
+//				Log.e("FindOrAddBeer.twitterHandle", ":"+FindOrAddBeer.twitterHandle);
+				
 				startActivity(toUserBeerProfile);
 
 				_edtFindBeer.setText("");
@@ -225,7 +240,9 @@ public class FindOrAddBeer extends Activity implements HttpListener {
 				// TODO Auto-generated method stub
 
 				showAddDialog();
-
+				facebookHandle = "";
+				twitterHandle = "";
+				facebookUrl = "";
 				_edtFindBeer.setText("");
 
 				SEARCHBEER_AL.clear();
@@ -338,11 +355,9 @@ public class FindOrAddBeer extends Activity implements HttpListener {
 						} else {
 							searchbeer.setAroma(jsonObjectChild
 									.getString("aroma"));
-
 						}
 						searchbeer.setBeerId(jsonObjectChild
 								.getString("beerId"));
-
 						searchbeer.setSweet(jsonObjectChild.getString("sweet"));
 						searchbeer.setBitter(jsonObjectChild
 								.getString("bitter"));
@@ -369,23 +384,22 @@ public class FindOrAddBeer extends Activity implements HttpListener {
 						searchbeer.setHype(jsonObjectChild.getString("hype"));
 						searchbeer.setTastePercentage(jsonObjectChild
 								.getString("beerBottle"));
-
+						// New Change By Samit
+//						searchbeer.setFacebookHandle("TimelessPintsBrewingCompany");
+//						searchbeer.setTwitterHandle("timelesspints");
+//						searchbeer.setFacebookurl("https://www.facebook.com/TimelessPintsBrewingCompany");
+						searchbeer.setFacebookHandle(jsonObjectChild.optString("facebook"));
+						searchbeer.setTwitterHandle(jsonObjectChild.optString("twitter"));
+						searchbeer.setFacebookurl(jsonObjectChild.optString("facebookurl"));
 						SEARCHBEER_AL.add(searchbeer);
-
 					}
-
 					adapter.notifyDataSetChanged();
-
 				}
 
 			} catch (JSONException e) {
-
 				e.printStackTrace();
-
 			}
-
 		}
-
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(_edtFindBeer.getWindowToken(), 0);
 

@@ -3,7 +3,6 @@ package com.craftbeer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.json.JSONObject;
 
@@ -23,8 +22,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -57,11 +56,13 @@ import com.craftbeer.utility.Url;
 import com.facebook.FacebookRequestError;
 import com.facebook.LoggingBehavior;
 import com.facebook.Request;
+import com.facebook.Request.GraphUserCallback;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.Settings;
 import com.facebook.model.GraphObject;
+import com.facebook.model.GraphUser;
 import com.flurry.android.FlurryAgent;
 import com.model.MODEL_AROMA;
 
@@ -188,7 +189,7 @@ public class EditBeerProfile1 extends Activity implements
 			arrayListTexture.add(model);
 		}
 		initializeView();
-//		Log.e("Profile Detail KeyHash:", showHashKey(this));
+		Log.e("Profile Detail KeyHash:", showHashKey(this));
 		initFacebookSession(savedInstanceState);
 	}
 
@@ -694,7 +695,7 @@ public class EditBeerProfile1 extends Activity implements
 		String hashkey = "";
 		try {
 			PackageInfo info = context.getPackageManager().getPackageInfo(
-					"com.craftbeer", PackageManager.GET_SIGNATURES); 																	
+					"com.craftbeer", PackageManager.GET_SIGNATURES);
 			for (Signature signature : info.signatures) {
 				MessageDigest md = MessageDigest.getInstance("SHA");
 				md.update(signature.toByteArray());
@@ -705,7 +706,7 @@ public class EditBeerProfile1 extends Activity implements
 		}
 		return hashkey;
 	}
-	
+
 	public void showDialogMalt() {
 		aromaShow = "";
 
@@ -1111,26 +1112,32 @@ public class EditBeerProfile1 extends Activity implements
 					if (preferences.getBoolean(Constants.AUTO_SHARE_TWITTER,
 							false)) {
 						Constants.ShowProgress(this);
-						stringMain = "I just profiled  #"
-								+ preferences.getString("BREWERY_NAME", "")
-										.replaceAll(" ", "")
-								+ " #"
-								+ preferences.getString("PROFILED_BEER_NAME",
-										"").replaceAll(" ", "")
-								+ " with @BrewHornBeerApp. #brewhorn ";
+						if (FindOrAddBeer.twitterHandle.trim().length() > 0) {
+							stringMain = "I just profiled  @"
+									// + preferences.getString("BREWERY_NAME",
+									// "") .replaceAll(" ", "")
+									+ FindOrAddBeer.twitterHandle
+									+ " #"
+									+ preferences.getString(
+											"PROFILED_BEER_NAME", "")
+											.replaceAll(" ", "")
+									+ " with @BrewHornBeerApp. #brewhorn ";
+						} else {
+							stringMain = "I just profiled  #"
+									+ preferences.getString("BREWERY_NAME", "")
+											.replaceAll(" ", "")
+									+ " #"
+									+ preferences.getString(
+											"PROFILED_BEER_NAME", "")
+											.replaceAll(" ", "")
+									+ " with @BrewHornBeerApp. #brewhorn ";
+						}
 						Log.e("sendTweet", ":" + stringMain);
 						sendTweet(stringMain);
 					} else if (preferences.getBoolean(
 							Constants.AUTO_SHARE_FACEBOOK, false)) {
 						Constants.ShowProgress(this);
-						stringMain = "I just profiled  #"
-								+ preferences.getString("BREWERY_NAME", "")
-										.replaceAll(" ", "")
-								+ " #"
-								+ preferences.getString("PROFILED_BEER_NAME",
-										"").replaceAll(" ", "")
-								+ " with @BrewHornBeerApp. #brewhorn ";
-						Log.e("Post Facebook", ":loginToFacebook");
+
 						loginToFacebook();
 					} else {
 						finish();
@@ -1451,14 +1458,13 @@ public class EditBeerProfile1 extends Activity implements
 	}
 
 	private void closeActivity() {
-		try{
-		Constants.DismissProgress();
-		finish();
-		EditBeerProfile.activity.finish();
-		EditUserBeer.activity.finish();
-		UserBeerProfile.activity.finish();
-		}catch(Exception e)
-		{
+		try {
+			Constants.DismissProgress();
+			finish();
+			EditBeerProfile.activity.finish();
+			EditUserBeer.activity.finish();
+			UserBeerProfile.activity.finish();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -1552,10 +1558,9 @@ public class EditBeerProfile1 extends Activity implements
 						messageHandler.sendEmptyMessage(0);
 					} catch (Exception e) {
 						e.printStackTrace();
-						  if(!isFacebookShare())
-						    {
-						    	   closeActivity();
-						    }
+						if (!isFacebookShare()) {
+							closeActivity();
+						}
 					}
 				}
 			});
@@ -1661,7 +1666,7 @@ public class EditBeerProfile1 extends Activity implements
 	private boolean isFacebookShare() {
 		if (preferences.getBoolean(Constants.AUTO_SHARE_FACEBOOK, false)) {
 			Log.e("Post loginToFacebook ", ":Facebook");
-			loginToFacebook();		
+			loginToFacebook();
 			return true;
 		} else {
 			return false;
@@ -1678,12 +1683,10 @@ public class EditBeerProfile1 extends Activity implements
 		}
 	}
 
-	private void initFacebookSession(Bundle savedInstanceState) 
-	{
+	private void initFacebookSession(Bundle savedInstanceState) {
 		Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
 		Session session = Session.getActiveSession();
-		if (session == null) 
-		{
+		if (session == null) {
 			if (savedInstanceState != null) {
 				session = Session.restoreSession(this, null, statusCallback,
 						savedInstanceState);
@@ -1692,8 +1695,7 @@ public class EditBeerProfile1 extends Activity implements
 				session = new Session(this);
 			}
 			Session.setActiveSession(session);
-			if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) 
-			{
+			if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) {
 				session.openForRead(new Session.OpenRequest(this)
 						.setCallback(statusCallback));
 			}
@@ -1703,7 +1705,7 @@ public class EditBeerProfile1 extends Activity implements
 	private class SessionStatusCallback implements Session.StatusCallback {
 		@Override
 		public void call(Session session, SessionState state,
-				Exception exception) {			
+				Exception exception) {
 		}
 	}
 
@@ -1712,21 +1714,19 @@ public class EditBeerProfile1 extends Activity implements
 		public void call(Session session, SessionState state,
 				Exception exception) {
 			Log.e("statusCallbackLogin session", ":" + session);
-			if (session.isOpened()) 
-			{
+			if (session.isOpened()) {
 				performPublish();
 			}
-			
-			else  if (state.equals(SessionState.CLOSED_LOGIN_FAILED))
-			{
-			        	Log.e("Clear", ": Session"  );
-			            session.closeAndClearTokenInformation();
-			            Toast.makeText(getApplicationContext(), "Failed to post",Toast.LENGTH_LONG).show();
-			            closeActivity();
+
+			else if (state.equals(SessionState.CLOSED_LOGIN_FAILED)) {
+				Log.e("Clear", ": Session");
+				session.closeAndClearTokenInformation();
+				Toast.makeText(getApplicationContext(), "Failed to post",	Toast.LENGTH_LONG).show();
+				closeActivity();
 			}
 		}
 	}
-	
+
 	@Override
 	public void onStart() {
 		super.onStart();
@@ -1752,18 +1752,15 @@ public class EditBeerProfile1 extends Activity implements
 				checTwitterLogin(Uri.parse(data.getStringExtra("URL")));
 			}
 		} else {
-			if(resultCode == RESULT_OK)
-			{
-			Session.getActiveSession().onActivityResult(this, requestCode,
-					resultCode, data);
-			}
-			else
-			{
+			if (resultCode == RESULT_OK) {
+				Session.getActiveSession().onActivityResult(this, requestCode,
+						resultCode, data);
+			} else {
 				Session session = Session.getActiveSession();
-		        if (!session.isClosed()) {
-		        	Log.e("Clear", ": Session"  );
-		            session.closeAndClearTokenInformation();
-		        }
+				if (!session.isClosed()) {
+					Log.e("Clear", ": Session");
+					session.closeAndClearTokenInformation();
+				}
 				closeActivity();
 			}
 		}
@@ -1783,7 +1780,6 @@ public class EditBeerProfile1 extends Activity implements
 	}
 
 	private void performPublish() {
-
 		Session session = Session.getActiveSession();
 		if (session != null) {
 			if (hasPublishPermission()) {
@@ -1798,7 +1794,37 @@ public class EditBeerProfile1 extends Activity implements
 		}
 	}
 
-	private void postStatusUpdate() {
+	private void postStatusUpdate() 
+	{
+//		Log.e("FindOrAddBeer.facebookHandle", ":"+FindOrAddBeer.facebookHandle);
+//		Log.e("FindOrAddBeer.facebookUrl", ":"+FindOrAddBeer.facebookUrl);
+//		Log.e("FindOrAddBeer.twitterHandle", ":"+FindOrAddBeer.twitterHandle);
+
+		
+		if (FindOrAddBeer.facebookHandle.trim().length() > 0) 
+		{
+			stringMain = "I just profiled  @"
+					// + preferences.getString("BREWERY_NAME", "")
+					// .replaceAll(" ", "")
+					+ FindOrAddBeer.facebookHandle
+					+ " #"
+					+ preferences.getString("PROFILED_BEER_NAME", "")
+							.replaceAll(" ", "")
+					+ " with @BrewHornBeerApp. #brewhorn ";
+
+		} 
+		else 
+		{
+			stringMain = "I just profiled  #"
+					+ preferences.getString("BREWERY_NAME", "").replaceAll(" ",
+							"")
+					+ " #"
+					+ preferences.getString("PROFILED_BEER_NAME", "")
+							.replaceAll(" ", "")
+					+ " with @BrewHornBeerApp. #brewhorn ";		
+		}
+		Log.e("postStatusUpdate", ":"+stringMain);
+
 		if (hasPublishPermission()) {
 			Request request = Request.newStatusUpdateRequest(
 					Session.getActiveSession(), stringMain,
@@ -1810,9 +1836,12 @@ public class EditBeerProfile1 extends Activity implements
 									response.getError());
 						}
 					});
+			Bundle bExtra = new Bundle();
+			if(FindOrAddBeer.facebookUrl.trim().length() > 0)
+			bExtra.putString("link",	FindOrAddBeer.facebookUrl);
+			bExtra.putString("message", stringMain);
+			request.setParameters(bExtra);
 			request.executeAsync();
-		} else {
-			Log.e("Not Idea", "Not Idea");
 		}
 	}
 
@@ -1831,10 +1860,10 @@ public class EditBeerProfile1 extends Activity implements
 		} else {
 			alertMessage = error.getErrorMessage();
 		}
+		Log.e("facebook", ":" + alertMessage);
 		Toast.makeText(getApplicationContext(), alertMessage, Toast.LENGTH_LONG)
 				.show();
 		closeActivity();
 	}
-
 
 }

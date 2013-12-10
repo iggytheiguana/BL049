@@ -971,9 +971,20 @@ public class EditBeerProfile2 extends Activity implements
 					Toast.makeText(EditBeerProfile2.this, _response,
 							Toast.LENGTH_LONG).show();
 
-					if (preferences.getBoolean(Constants.AUTO_SHARE_TWITTER,
-							false)) {
+					if (preferences.getBoolean(Constants.AUTO_SHARE_TWITTER,	false)) {
 						Constants.ShowProgress(this);
+						if(FindOrAddBeer.twitterHandle.trim().length() > 0)
+						{
+							stringMain = "I just profiled  @"
+								//	+ preferences.getString("BREWERY_NAME", "")	.replaceAll(" ", "")
+									+ FindOrAddBeer.twitterHandle
+									+ " #"
+									+ preferences.getString("PROFILED_BEER_NAME",
+											"").replaceAll(" ", "")
+									+ " with @BrewHornBeerApp. #brewhorn ";
+						}
+						else
+						{
 						stringMain = "I just profiled  #"
 								+ preferences.getString("BREWERY_NAME", "")
 										.replaceAll(" ", "")
@@ -981,19 +992,13 @@ public class EditBeerProfile2 extends Activity implements
 								+ preferences.getString("PROFILED_BEER_NAME",
 										"").replaceAll(" ", "")
 								+ " with @BrewHornBeerApp. #brewhorn ";
+						}
 						Log.e("sendTweet", ":" + stringMain);
 						sendTweet(stringMain);
 					} else if (preferences.getBoolean(
 							Constants.AUTO_SHARE_FACEBOOK, false)) {
 						Constants.ShowProgress(this);
-						stringMain = "I just profiled  #"
-								+ preferences.getString("BREWERY_NAME", "")
-										.replaceAll(" ", "")
-								+ " #"
-								+ preferences.getString("PROFILED_BEER_NAME",
-										"").replaceAll(" ", "")
-								+ " with @BrewHornBeerApp. #brewhorn ";
-						Log.e("Post Facebook", ":loginToFacebook");
+						
 						loginToFacebook();
 					}
 					else
@@ -2030,7 +2035,34 @@ public class EditBeerProfile2 extends Activity implements
 		}
 	}
 
-	private void postStatusUpdate() {
+	private void postStatusUpdate() 
+	{
+		
+//		Log.e("FindOrAddBeer.facebookHandle", ":"+FindOrAddBeer.facebookHandle);
+//		Log.e("FindOrAddBeer.facebookUrl", ":"+FindOrAddBeer.facebookUrl);
+//		Log.e("FindOrAddBeer.twitterHandle", ":"+FindOrAddBeer.twitterHandle);
+		
+		if(FindOrAddBeer.facebookHandle.trim().length() > 0)
+		{
+			stringMain = "I just profiled  @"
+				//	+ preferences.getString("BREWERY_NAME", "")	.replaceAll(" ", "")
+					+ FindOrAddBeer.facebookHandle
+					+ " #"
+					+ preferences.getString("PROFILED_BEER_NAME",
+							"").replaceAll(" ", "")
+					+ " with @BrewHornBeerApp. #brewhorn ";
+		}
+		else
+		{
+		stringMain = "I just profiled  #"
+				+ preferences.getString("BREWERY_NAME", "")
+						.replaceAll(" ", "")
+				+ " #"
+				+ preferences.getString("PROFILED_BEER_NAME",
+						"").replaceAll(" ", "")
+				+ " with @BrewHornBeerApp. #brewhorn ";
+		}
+		Log.e("postStatusUpdate", ":"+stringMain);
 		if (hasPublishPermission()) {
 			Request request = Request.newStatusUpdateRequest(
 					Session.getActiveSession(), stringMain,
@@ -2042,9 +2074,12 @@ public class EditBeerProfile2 extends Activity implements
 									response.getError());
 						}
 					});
+			Bundle bExtra = new Bundle();
+			if(FindOrAddBeer.facebookUrl.trim().length() > 0)
+				bExtra.putString("link",	FindOrAddBeer.facebookUrl);
+			bExtra.putString("message", stringMain);
+			request.setParameters(bExtra);
 			request.executeAsync();
-		} else {
-			Log.e("Not Idea", "Not Idea");
 		}
 	}
 

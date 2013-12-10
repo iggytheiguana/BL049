@@ -15,6 +15,32 @@ public class SearchBeerModel  implements  Serializable {
 	private String aroma="",sweet="",bitter="",malt="",yeast="",mouthfeel="",sour="",additive="",booziness="",brewery="",beerName="",beerStyle="",abv="",ibu="",mood="",
 	
 	venue="",event="",hype="",tastePercentage="",beerId="";
+	
+	String facebookHandle="" , twitterHandle="" , facebookurl="";
+
+	public String getFacebookurl() {
+		return facebookurl;
+	}
+
+	public void setFacebookurl(String facebookurl) {
+		this.facebookurl = facebookurl;
+	}
+
+	public String getFacebookHandle() {
+		return facebookHandle;
+	}
+
+	public void setFacebookHandle(String facebookHandle) {
+		this.facebookHandle = facebookHandle;
+	}
+
+	public String getTwitterHandle() {
+		return twitterHandle;
+	}
+
+	public void setTwitterHandle(String twitterHandle) {
+		this.twitterHandle = twitterHandle;
+	}
 
 	public String getBeerId() {
 		return beerId;
