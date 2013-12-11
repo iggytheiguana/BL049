@@ -58,7 +58,9 @@
     NSString *strAddictive;
     NSString *strBooziness;
     
+    NSString *someTweetFb;
     NSString *someTweet;
+    NSString *strURL;
     
     BOOL fb;
 }

@@ -151,13 +151,80 @@
     }
     
     //    NSString *strText=[NSString stringWithFormat:@"I just profiled %@ %@ with @brewhornbeerapp.#brewhorn#craftbeer",strBrwName,strBrName];
-    NSString *strText=[NSString stringWithFormat:@"I just profiled %@ %@ with @BrewHornBeerApp.#brewhorn",strBrwName,strBrName];
+//    NSString *strText=[NSString stringWithFormat:@"I just profiled %@ %@ with @BrewHornBeerApp.#brewhorn",strBrwName,strBrName];
+//    
+//    if (strBrName.length==0 && strBrwName.length==0)
+//    {
+//        strText=[NSString stringWithFormat:@"@brewhornbeerapp.#brewhorn#craftbeer"];
+//    }
+//    
+//    someTweet = strText;
     
-    if (strBrName.length==0 && strBrwName.length==0) {
-        strText=[NSString stringWithFormat:@"@brewhornbeerapp.#brewhorn#craftbeer"];
+    if([[[NSUserDefaults standardUserDefaults]valueForKey:@"Facebook"] isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults]valueForKey:@"Twitter"] isEqualToString:@""])
+    {
+        NSString *strText=[NSString stringWithFormat:@"I just profiled %@ %@ with @BrewHornBeerApp.#brewhorn",strBrwName,strBrName];
+        
+        if (strBrName.length==0 && strBrwName.length==0)
+        {
+            strText=[NSString stringWithFormat:@"@brewhornbeerapp.#brewhorn#craftbeer"];
+        }
+        
+        someTweet = strText;
+        someTweetFb=strText;
     }
     
-    someTweet = strText;
+    else if(![[[NSUserDefaults standardUserDefaults]valueForKey:@"Facebook"] isEqualToString:@""] && ![[[NSUserDefaults standardUserDefaults]valueForKey:@"Twitter"] isEqualToString:@""])
+    {
+        NSString *strFb=[NSString stringWithFormat:@"@%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"Facebook"]];
+        NSString *strTwitter=[NSString stringWithFormat:@"@%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"Twitter"]];
+        
+        strURL=[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"FacebookURL"]];
+        
+          NSString *strText1=[NSString stringWithFormat:@"I just profiled %@ %@ with @BrewHornBeerApp.#brewhorn",strFb,strBrName];
+          NSString *strText2=[NSString stringWithFormat:@"I just profiled %@ %@ with @BrewHornBeerApp.#brewhorn",strTwitter,strBrName];
+          
+          if (strBrName.length==0 && strBrwName.length==0)
+          {
+              strText1=[NSString stringWithFormat:@"@brewhornbeerapp.#brewhorn#craftbeer"];
+              strText2=[NSString stringWithFormat:@"@brewhornbeerapp.#brewhorn#craftbeer"];
+          }
+          
+          someTweetFb = strText1;
+          someTweet=strText2;
+    }
+    else if(![[[NSUserDefaults standardUserDefaults]valueForKey:@"Twitter"] isEqualToString:@""])
+    {
+        NSString *strTwitter=[NSString stringWithFormat:@"@%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"Twitter"]];
+        
+        NSString *strText=[NSString stringWithFormat:@"I just profiled %@ %@ with @BrewHornBeerApp.#brewhorn",strTwitter,strBrName];
+        NSString *strText1=[NSString stringWithFormat:@"I just profiled %@ %@ with @BrewHornBeerApp.#brewhorn",strBrwName,strBrName];
+        
+        if (strBrName.length==0 && strBrwName.length==0)
+        {
+            strText=[NSString stringWithFormat:@"@brewhornbeerapp.#brewhorn#craftbeer"];
+            strText1=[NSString stringWithFormat:@"@brewhornbeerapp.#brewhorn#craftbeer"];
+        }
+        
+        someTweet = strText;
+        someTweetFb=strText1;
+    }
+    else
+    {
+        NSString *strFb=[NSString stringWithFormat:@"@%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"Facebook"]];
+        
+        NSString *strText=[NSString stringWithFormat:@"I just profiled %@ %@ with @BrewHornBeerApp.#brewhorn",strFb,strBrName];
+        NSString *strText1=[NSString stringWithFormat:@"I just profiled %@ %@ with @BrewHornBeerApp.#brewhorn",strBrwName,strBrName];
+        
+        if (strBrName.length==0 && strBrwName.length==0)
+        {
+            strText=[NSString stringWithFormat:@"@brewhornbeerapp.#brewhorn#craftbeer"];
+            strText1=[NSString stringWithFormat:@"@brewhornbeerapp.#brewhorn#craftbeer"];
+        }
+        
+        someTweetFb = strText;
+        someTweet = strText1;
+    }
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -512,13 +579,13 @@
             {
                 //                [self btnFb];
              
-                [self performSelector:@selector(shareOnFbAction:) withObject:someTweet afterDelay:0.0];
+                [self performSelector:@selector(shareOnFbAction:) withObject:someTweetFb afterDelay:0.0];
                 [self performSelector:@selector(shareOnTwitter:) withObject:someTweet afterDelay:3.0];
             }
             else if ([[NSUserDefaults standardUserDefaults]boolForKey:@"AutomateSharingFb"])
             {
                 
-                [self performSelector:@selector(shareOnFbAction:) withObject:someTweet afterDelay:0.0];
+                [self performSelector:@selector(shareOnFbAction:) withObject:someTweetFb afterDelay:0.0];
             }
             else if ([[NSUserDefaults standardUserDefaults]boolForKey:@"AutomateSharingTwitter"])
             {
@@ -570,10 +637,10 @@
     ACAccountType *facebookAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
     
     NSString *appId=@"589751437754650";
-    NSArray * permissions = @[@"publish_stream", @"publish_actions"];
+  //  NSArray * permissions = @[@"publish_stream", @"publish_actions"];
     
     //    NSArray * permissions = @[@"publish_stream", @"publish_actions",@"email"];
-    //    NSArray * permissions = @[@"email"];
+        NSArray * permissions = @[@"email"];
     //  NSArray *permissions=[NSArray arrayWithObjects:@"email",@"user_location",@"user_hometown",@"user_birthday", nil];
     NSMutableDictionary *options = [[NSMutableDictionary alloc]initWithObjectsAndKeys:appId,ACFacebookAppIdKey,permissions,ACFacebookPermissionsKey,ACFacebookAudienceFriends,ACFacebookAudienceKey, nil];
     
@@ -587,7 +654,14 @@
                  NSArray *accounts = [accountStore accountsWithAccountType:facebookAccountType];
                  self.facebookAccount =[accounts lastObject];
                  
-                 NSDictionary *parameters=@{@"message": sender};
+              //   NSDictionary *parameters=@{@"message": sender};
+             //    NSDictionary *parameters = @{@"message": sender , @"link": strURL};
+             
+                 NSMutableDictionary *parameters =[NSMutableDictionary dictionaryWithObjectsAndKeys:
+                  sender, @"message",
+                  strURL, @"link",
+                  nil];
+                 
                  NSURL *feedURL = [NSURL URLWithString:@"https://graph.facebook.com/me/feed"];
                  
                  SLRequest *feedRequest = [SLRequest requestForServiceType:SLServiceTypeFacebook requestMethod:SLRequestMethodPOST URL:feedURL parameters:parameters];
@@ -649,8 +723,8 @@
              {
                  self.twitterAccount = [arrayOfAccounts lastObject];
                  
-                 NSDictionary *message = @{@"status":someTweet};
-                 
+                NSDictionary *message = @{@"status":someTweet};
+
                  NSURL *requestURL = [NSURL
                                       URLWithString:@"http://api.twitter.com/1/statuses/update.json"];
                  
@@ -990,6 +1064,7 @@
 {
     NSString *strBrName=[NSString stringWithFormat:@"#%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"Beername"]];
     NSString *strBrwName=[NSString stringWithFormat:@"#%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"Breweryname"]];
+  
     strBrName=[strBrName stringByReplacingOccurrencesOfString:@" " withString:@""];
     strBrwName=[strBrwName stringByReplacingOccurrencesOfString:@" " withString:@""];
     
@@ -1000,11 +1075,27 @@
         strBrName=@"";
     }
     
-    NSString *strText=[NSString stringWithFormat:@"I just profiled %@ %@ with @brewhornbeerapp.#brewhorn#craftbeer",strBrwName,strBrName];
-    if (strBrName.length==0 && strBrwName.length==0)
+    NSString *strText;
+   
+    if([[[NSUserDefaults standardUserDefaults]valueForKey:@"facebook"] isEqualToString:@""])
     {
-        strText=[NSString stringWithFormat:@"@brewhornbeerapp.#brewhorn#craftbeer"];
+        strText=[NSString stringWithFormat:@"I just profiled %@ %@ with @brewhornbeerapp.#brewhorn#craftbeer",strBrwName,strBrName];
+        if (strBrName.length==0 && strBrwName.length==0)
+        {
+            strText=[NSString stringWithFormat:@"@brewhornbeerapp.#brewhorn#craftbeer"];
+        }
     }
+    else
+    {
+        
+    }
+    
+//    NSString *strText=[NSString stringWithFormat:@"I just profiled %@ %@ with @brewhornbeerapp.#brewhorn#craftbeer",strBrwName,strBrName];
+//    if (strBrName.length==0 && strBrwName.length==0)
+//    {
+//        strText=[NSString stringWithFormat:@"@brewhornbeerapp.#brewhorn#craftbeer"];
+//    }
+    
     someTweet = strText;
     
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)

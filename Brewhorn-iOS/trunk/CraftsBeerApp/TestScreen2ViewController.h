@@ -36,7 +36,11 @@
     int chkArray;
     
     NSString *swch;
+    NSString *someTweetFb;
     NSString *someTweet;
+    NSString *strURL;
+   
+    
     
     BOOL fb;
 }
