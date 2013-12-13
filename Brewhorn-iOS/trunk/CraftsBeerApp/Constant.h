@@ -24,22 +24,22 @@
 #define kFrgtPswdServerUrl @"http://192.168.1.4/BrewHorn-Server/index.php/webserviceController/forgotPassword"
 
 #else
-#define kLoginServerUrl @"http://brewhorn.com/app_data/webserviceController/userLogin"
+#define kLoginServerUrl @"http://brewhorn.lifeskillhacker.com/app_data/webserviceController/userLogin"
 // home screen
-#define kBrreUrl @"http://brewhorn.com/app_data/webserviceController/searchBeer"
-#define kUserProfile @"http://brewhorn.com/app_data/webserviceController/userProfile"
-#define kEditUserProfile @"http://brewhorn.com/app_data/webserviceController/editUserProfile"
-#define kUserTaste @"http://brewhorn.com/app_data/webserviceController/userTasteProfile"
-#define kNewBeerTaste @"http://brewhorn.com/app_data/webserviceController/addBeerProfile"
-#define kEditUserBeerTaste @"http://brewhorn.com/app_data/webserviceController/editUserTasteProfile"
-#define kEditBeer @"http://brewhorn.com/app_data/webserviceController/editUserBeer"
-#define kEditBeerProfile @"http://brewhorn.com/app_data/webserviceController/editBeerProfile"
-#define kGetBeerDetails @"http://brewhorn.com/app_data/webserviceController/getBeerProfile?beerId=%@"
-#define kAddBeer @"http://brewhorn.com/app_data/webserviceController/addUserBeer"
-#define kChangePassword @"http://brewhorn.com/app_data/webserviceController/changePassword"
-#define kHistory @"http://brewhorn.com/app_data/webserviceController/beerHistory"
-#define  kRegServerUrl @"http://brewhorn.com/app_data/webserviceController/userRegistration"
-#define kFrgtPswdServerUrl @"http://brewhorn.com/app_data/webserviceController/forgotPassword"
+#define kBrreUrl @"http://brewhorn.lifeskillhacker.com/app_data/webserviceController/searchBeer"
+#define kUserProfile @"http://brewhorn.lifeskillhacker.com/app_data/webserviceController/userProfile"
+#define kEditUserProfile @"http://brewhorn.lifeskillhacker.com/app_data/webserviceController/editUserProfile"
+#define kUserTaste @"http://brewhorn.lifeskillhacker.com/app_data/webserviceController/userTasteProfile"
+#define kNewBeerTaste @"http://brewhorn.lifeskillhacker.com/app_data/webserviceController/addBeerProfile"
+#define kEditUserBeerTaste @"http://brewhorn.lifeskillhacker.com/app_data/webserviceController/editUserTasteProfile"
+#define kEditBeer @"http://brewhorn.lifeskillhacker.com/app_data/webserviceController/editUserBeer"
+#define kEditBeerProfile @"http://brewhorn.lifeskillhacker.com/app_data/webserviceController/editBeerProfile"
+#define kGetBeerDetails @"http://brewhorn.lifeskillhacker.com/app_data/webserviceController/getBeerProfile?beerId=%@"
+#define kAddBeer @"http://brewhorn.lifeskillhacker.com/app_data/webserviceController/addUserBeer"
+#define kChangePassword @"http://brewhorn.lifeskillhacker.com/app_data/webserviceController/changePassword"
+#define kHistory @"http://brewhorn.lifeskillhacker.com/app_data/webserviceController/beerHistory"
+#define  kRegServerUrl @"http://brewhorn.lifeskillhacker.com/app_data/webserviceController/userRegistration"
+#define kFrgtPswdServerUrl @"http://brewhorn.lifeskillhacker.com/app_data/webserviceController/forgotPassword"
 #endif
 
 

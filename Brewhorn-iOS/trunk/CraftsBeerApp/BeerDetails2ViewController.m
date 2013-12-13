@@ -779,7 +779,7 @@
                 xmlString =[NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\" ?><editBeerProfile><beerId><![CDATA[%@]]></beerId><userId><![CDATA[%@]]></userId><aroma><![CDATA[%@]]></aroma><sweet><![CDATA[%@]]></sweet><bitter><![CDATA[%@]]></bitter><malt><![CDATA[%@]]></malt><yeast><![CDATA[%@]]></yeast><mouthFeel><![CDATA[%@]]></mouthFeel><sour><![CDATA[%@]]></sour><additive><![CDATA[%@]]></additive><booziness><![CDATA[%@]]></booziness><aroma_cmt><![CDATA[%@]]></aroma_cmt><sweet_cmt><![CDATA[%@]]></sweet_cmt><bitter_cmt><![CDATA[%@]]></bitter_cmt><malt_cmt><![CDATA[%@]]></malt_cmt><yeast_cmt><![CDATA[%@]]></yeast_cmt><mouthFeel_cmt><![CDATA[%@]]></mouthFeel_cmt><sour_cmt><![CDATA[%@]]></sour_cmt><additive_cmt><![CDATA[%@]]></additive_cmt><booziness_cmt><![CDATA[%@]]></booziness_cmt></editBeerProfile>",striD,strUseriD,valAroma,valSweet,valBitter,valMalt,valYeast,valMouthFeel,strSour,strAddictive,strBooziness,txtAr,txtSw,txtBi,strSour,strAddictive,strBooziness,@"1",@"1",@"1"];
                 
                 NSLog(@"the xmlstring is =%@",xmlString);
-                serviceUrl = [NSURL URLWithString:@"http://brewhorn.com/app_data/webserviceController/editBeerProfile"];
+                serviceUrl = [NSURL URLWithString:@"http://brewhorn.lifeskillhacker.com/app_data/webserviceController/editBeerProfile"];
                 
             }
             else{
