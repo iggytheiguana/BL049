@@ -3,11 +3,12 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="lib" path="libs/crittercism_v3_0_8_sdkonly.jar"/>
-	<classpathentry kind="lib" path="libs/achartengine-1.1.0.jar"/>
-	<classpathentry kind="lib" path="libs/wheel.jar"/>
-	<classpathentry kind="lib" path="libs/twitter4j-core-3.0.3.jar"/>
-	<classpathentry kind="lib" path="libs/Flurry_3.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/achartengine-1.1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/wheel.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/twitter4j-core-3.0.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/Flurry_3.2.2.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

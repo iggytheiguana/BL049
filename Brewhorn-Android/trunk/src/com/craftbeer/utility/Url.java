@@ -4,7 +4,7 @@ public class Url {
 	
 	
 	//public static String BASE_URL="http://craftbeer.netsmartz.us/webserviceController/";
-	public static String BASE_URL="http://brewhorn.com/app_data/webserviceController/";
+	public static String BASE_URL="http://brewhorn.lifeskillhacker.com/app_data/webserviceController/";
 	public  static String REGISTARTION_URL="userRegistration";
 
 	public static String  LOGIN_URL ="userLogin";

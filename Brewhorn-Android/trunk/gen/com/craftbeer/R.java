@@ -9,6 +9,170 @@ package com.craftbeer;
 
 public final class R {
     public static final class attr {
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int confirm_logout=0x7f01000c;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int done_button_background=0x7f010006;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int done_button_text=0x7f010004;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int extra_fields=0x7f010001;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int fetch_user_info=0x7f01000d;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int is_cropped=0x7f010011;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int login_text=0x7f01000e;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int logout_text=0x7f01000f;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int multi_select=0x7f010007;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>small</code></td><td>-2</td><td> Keep in sync with constants in ProfilePictureView </td></tr>
+<tr><td><code>normal</code></td><td>-3</td><td></td></tr>
+<tr><td><code>large</code></td><td>-4</td><td></td></tr>
+</table>
+         */
+        public static final int preset_size=0x7f010010;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int radius_in_meters=0x7f010008;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int results_limit=0x7f010009;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int search_text=0x7f01000a;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int show_pictures=0x7f010000;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int show_search_box=0x7f01000b;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int show_title_bar=0x7f010002;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int title_bar_background=0x7f010005;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int title_text=0x7f010003;
+    }
+    public static final class color {
+        public static final int com_facebook_blue=0x7f060002;
+        public static final int com_facebook_loginview_text_color=0x7f060006;
+        public static final int com_facebook_picker_search_bar_background=0x7f060000;
+        public static final int com_facebook_picker_search_bar_text=0x7f060001;
+        public static final int com_facebook_usersettingsfragment_connected_shadow_color=0x7f060004;
+        public static final int com_facebook_usersettingsfragment_connected_text_color=0x7f060003;
+        public static final int com_facebook_usersettingsfragment_not_connected_text_color=0x7f060005;
+    }
+    public static final class dimen {
+        public static final int com_facebook_loginview_compound_drawable_padding=0x7f050008;
+        public static final int com_facebook_loginview_padding_bottom=0x7f050007;
+        public static final int com_facebook_loginview_padding_left=0x7f050004;
+        public static final int com_facebook_loginview_padding_right=0x7f050005;
+        public static final int com_facebook_loginview_padding_top=0x7f050006;
+        public static final int com_facebook_loginview_text_size=0x7f050009;
+        public static final int com_facebook_picker_divider_width=0x7f050001;
+        public static final int com_facebook_picker_place_image_size=0x7f050000;
+        public static final int com_facebook_profilepictureview_preset_size_large=0x7f05000c;
+        public static final int com_facebook_profilepictureview_preset_size_normal=0x7f05000b;
+        public static final int com_facebook_profilepictureview_preset_size_small=0x7f05000a;
+        public static final int com_facebook_usersettingsfragment_profile_picture_height=0x7f050003;
+        public static final int com_facebook_usersettingsfragment_profile_picture_width=0x7f050002;
     }
     public static final class drawable {
         public static final int add_beer=0x7f020000;
@@ -59,312 +223,374 @@ public final class R {
         public static final int change_password_selector=0x7f02002d;
         public static final int checked_new=0x7f02002e;
         public static final int chk_box_terms_condition=0x7f02002f;
-        public static final int dropdown=0x7f020030;
-        public static final int edit_beer=0x7f020031;
-        public static final int edt_selector=0x7f020032;
-        public static final int eight=0x7f020033;
-        public static final int find_add=0x7f020034;
-        public static final int five=0x7f020035;
-        public static final int forgot_password=0x7f020036;
-        public static final int forgot_password_submit=0x7f020037;
-        public static final int four=0x7f020038;
-        public static final int ic_launcher=0x7f020039;
-        public static final int login_btn_register=0x7f02003a;
-        public static final int login_btn_register_hover=0x7f02003b;
-        public static final int login_btn_sign_in=0x7f02003c;
-        public static final int login_btn_sign_in_hover=0x7f02003d;
-        public static final int logo=0x7f02003e;
-        public static final int match_beer=0x7f02003f;
-        public static final int my_profile=0x7f020040;
-        public static final int new_user=0x7f020041;
-        public static final int next_btn_pdf=0x7f020042;
-        public static final int next_btn_selector=0x7f020043;
-        public static final int ninty=0x7f020044;
-        public static final int one=0x7f020045;
-        public static final int password=0x7f020046;
-        public static final int previous_btn_pdf=0x7f020047;
-        public static final int profile_beer=0x7f020048;
-        public static final int rating_star=0x7f020049;
-        public static final int register=0x7f02004a;
-        public static final int registeration_save_btn=0x7f02004b;
-        public static final int registration_back=0x7f02004c;
-        public static final int registration_canel_btn=0x7f02004d;
-        public static final int seven=0x7f02004e;
-        public static final int share=0x7f02004f;
-        public static final int share_btn_selector=0x7f020050;
-        public static final int six=0x7f020051;
-        public static final int slider_handle=0x7f020052;
-        public static final int slider_red=0x7f020053;
-        public static final int slider_yellow=0x7f020054;
-        public static final int splash=0x7f020055;
-        public static final int taste_profile=0x7f020056;
-        public static final int ten=0x7f020057;
-        public static final int terrms_and_conditions=0x7f020058;
-        public static final int text_field=0x7f020059;
-        public static final int textfields_bg=0x7f02005a;
-        public static final int three=0x7f02005b;
-        public static final int toggle_btn_on_off=0x7f02005c;
-        public static final int toggle_off=0x7f02005d;
-        public static final int toggle_on=0x7f02005e;
-        public static final int trans_check_mark=0x7f02005f;
-        public static final int two=0x7f020060;
-        public static final int unchecked=0x7f020061;
-        public static final int unchecked_new=0x7f020062;
-        public static final int update_profile=0x7f020063;
-        public static final int username=0x7f020064;
-        public static final int view_beer_profile=0x7f020065;
-        public static final int wheel_bg=0x7f020066;
-        public static final int wheel_val=0x7f020067;
-        public static final int zero=0x7f020068;
+        public static final int com_facebook_button_blue=0x7f020030;
+        public static final int com_facebook_button_blue_focused=0x7f020031;
+        public static final int com_facebook_button_blue_normal=0x7f020032;
+        public static final int com_facebook_button_blue_pressed=0x7f020033;
+        public static final int com_facebook_button_check=0x7f020034;
+        public static final int com_facebook_button_check_off=0x7f020035;
+        public static final int com_facebook_button_check_on=0x7f020036;
+        public static final int com_facebook_button_grey_focused=0x7f020037;
+        public static final int com_facebook_button_grey_normal=0x7f020038;
+        public static final int com_facebook_button_grey_pressed=0x7f020039;
+        public static final int com_facebook_close=0x7f02003a;
+        public static final int com_facebook_inverse_icon=0x7f02003b;
+        public static final int com_facebook_list_divider=0x7f02003c;
+        public static final int com_facebook_list_section_header_background=0x7f02003d;
+        public static final int com_facebook_loginbutton_silver=0x7f02003e;
+        public static final int com_facebook_logo=0x7f02003f;
+        public static final int com_facebook_picker_default_separator_color=0x7f020089;
+        public static final int com_facebook_picker_item_background=0x7f020040;
+        public static final int com_facebook_picker_list_focused=0x7f020041;
+        public static final int com_facebook_picker_list_longpressed=0x7f020042;
+        public static final int com_facebook_picker_list_pressed=0x7f020043;
+        public static final int com_facebook_picker_list_selector=0x7f020044;
+        public static final int com_facebook_picker_list_selector_background_transition=0x7f020045;
+        public static final int com_facebook_picker_list_selector_disabled=0x7f020046;
+        public static final int com_facebook_picker_magnifier=0x7f020047;
+        public static final int com_facebook_picker_top_button=0x7f020048;
+        public static final int com_facebook_place_default_icon=0x7f020049;
+        public static final int com_facebook_profile_default_icon=0x7f02004a;
+        public static final int com_facebook_profile_picture_blank_portrait=0x7f02004b;
+        public static final int com_facebook_profile_picture_blank_square=0x7f02004c;
+        public static final int com_facebook_top_background=0x7f02004d;
+        public static final int com_facebook_top_button=0x7f02004e;
+        public static final int com_facebook_usersettingsfragment_background_gradient=0x7f02004f;
+        public static final int dropdown=0x7f020050;
+        public static final int edit_beer=0x7f020051;
+        public static final int edt_selector=0x7f020052;
+        public static final int eight=0x7f020053;
+        public static final int find_add=0x7f020054;
+        public static final int five=0x7f020055;
+        public static final int forgot_password=0x7f020056;
+        public static final int forgot_password_submit=0x7f020057;
+        public static final int four=0x7f020058;
+        public static final int ic_launcher=0x7f020059;
+        public static final int login_btn_register=0x7f02005a;
+        public static final int login_btn_register_hover=0x7f02005b;
+        public static final int login_btn_sign_in=0x7f02005c;
+        public static final int login_btn_sign_in_hover=0x7f02005d;
+        public static final int logo=0x7f02005e;
+        public static final int match_beer=0x7f02005f;
+        public static final int my_profile=0x7f020060;
+        public static final int new_user=0x7f020061;
+        public static final int next_btn_pdf=0x7f020062;
+        public static final int next_btn_selector=0x7f020063;
+        public static final int ninty=0x7f020064;
+        public static final int one=0x7f020065;
+        public static final int password=0x7f020066;
+        public static final int previous_btn_pdf=0x7f020067;
+        public static final int profile_beer=0x7f020068;
+        public static final int rating_star=0x7f020069;
+        public static final int register=0x7f02006a;
+        public static final int registeration_save_btn=0x7f02006b;
+        public static final int registration_back=0x7f02006c;
+        public static final int registration_canel_btn=0x7f02006d;
+        public static final int seven=0x7f02006e;
+        public static final int share=0x7f02006f;
+        public static final int share_btn_selector=0x7f020070;
+        public static final int six=0x7f020071;
+        public static final int slider_handle=0x7f020072;
+        public static final int slider_red=0x7f020073;
+        public static final int slider_yellow=0x7f020074;
+        public static final int splash=0x7f020075;
+        public static final int taste_profile=0x7f020076;
+        public static final int ten=0x7f020077;
+        public static final int terrms_and_conditions=0x7f020078;
+        public static final int text_field=0x7f020079;
+        public static final int textfields_bg=0x7f02007a;
+        public static final int three=0x7f02007b;
+        public static final int toggle_btn_on_off=0x7f02007c;
+        public static final int toggle_off=0x7f02007d;
+        public static final int toggle_on=0x7f02007e;
+        public static final int trans_check_mark=0x7f02007f;
+        public static final int two=0x7f020080;
+        public static final int unchecked=0x7f020081;
+        public static final int unchecked_new=0x7f020082;
+        public static final int update_profile=0x7f020083;
+        public static final int username=0x7f020084;
+        public static final int view_beer_profile=0x7f020085;
+        public static final int wheel_bg=0x7f020086;
+        public static final int wheel_val=0x7f020087;
+        public static final int zero=0x7f020088;
     }
     public static final class id {
-        public static final int add_beer_abv_edt=0x7f07006c;
-        public static final int add_beer_brewery_edt_new=0x7f070068;
-        public static final int add_beer_cancel_btn=0x7f070073;
-        public static final int add_beer_event_spinner=0x7f070070;
-        public static final int add_beer_hype_expectation_spinner=0x7f070071;
-        public static final int add_beer_ibu_edt=0x7f07006d;
-        public static final int add_beer_mood_spinner=0x7f07006e;
-        public static final int add_beer_name_edt_new=0x7f070069;
-        public static final int add_beer_save_btn=0x7f070072;
-        public static final int add_beer_style_spinner=0x7f07006a;
-        public static final int add_beer_venue_spinner=0x7f07006f;
-        public static final int additive_text3=0x7f070052;
-        public static final int additive_text4=0x7f070053;
-        public static final int additive_text5=0x7f070054;
-        public static final int additive_text6=0x7f070055;
-        public static final int additive_text7=0x7f070056;
-        public static final int aroma_edit=0x7f0700bf;
-        public static final int aroma_text3=0x7f070007;
-        public static final int aroma_text4=0x7f070009;
-        public static final int aroma_text5=0x7f07000a;
-        public static final int aroma_text6=0x7f07000b;
-        public static final int aroma_text7=0x7f07000c;
-        public static final int automate_sharing_text=0x7f07008f;
-        public static final int automate_sharing_toggle=0x7f070090;
-        public static final int automate_text=0x7f0700e8;
-        public static final int automate_toggle=0x7f0700eb;
-        public static final int back_btn=0x7f0700a8;
-        public static final int back_btn_new=0x7f070079;
-        public static final int bitter_edit=0x7f0700c1;
-        public static final int bitter_text3=0x7f07001a;
-        public static final int bitter_text4=0x7f07001b;
-        public static final int bitter_text5=0x7f07001c;
-        public static final int bitter_text6=0x7f07001d;
-        public static final int bitter_text7=0x7f07001e;
-        public static final int booziness_text3=0x7f07005c;
-        public static final int booziness_text4=0x7f07005d;
-        public static final int booziness_text5=0x7f07005e;
-        public static final int booziness_text6=0x7f07005f;
-        public static final int booziness_text7=0x7f070060;
-        public static final int bottom_layout=0x7f070067;
-        public static final int bottom_rel=0x7f0700a9;
-        public static final int btn=0x7f070084;
-        public static final int btn_instruction=0x7f070074;
-        public static final int cancel_btn=0x7f070080;
-        public static final int chk=0x7f070083;
-        public static final int chk_terms_conditions=0x7f0700dc;
-        public static final int confirm_password_edt=0x7f07007f;
-        public static final int done_btn=0x7f07007b;
-        public static final int edit_btn=0x7f0700f0;
-        public static final int edt=0x7f070092;
-        public static final int edt_beer_btn_new=0x7f070078;
-        public static final int facebook_share_btn=0x7f0700f3;
-        public static final int find_add_beer_name_edit=0x7f070097;
-        public static final int find_add_edit_user_beer_btn=0x7f07009d;
-        public static final int find_add_enter_new_btn=0x7f070096;
-        public static final int find_add_linear_layout=0x7f070095;
-        public static final int find_add_list=0x7f070099;
-        public static final int find_add_my_profile=0x7f070094;
-        public static final int find_add_new_beer_text_new=0x7f07009b;
-        public static final int find_add_search_beer_btn_new=0x7f070098;
-        public static final int find_add_share_btn=0x7f07009c;
-        public static final int find_add_title_text=0x7f070093;
-        public static final int forgot_password_btn=0x7f07009f;
-        public static final int forgot_password_cancel_btn=0x7f0700a0;
-        public static final int forgot_user_name_edt=0x7f07009e;
-        public static final int graph_beer_boozer_drink_beer_btn=0x7f0700a1;
-        public static final int graph_beer_linear_layout=0x7f0700a2;
-        public static final int graph_edit_profile_btn=0x7f0700a6;
-        public static final int graph_linear_layout=0x7f0700a5;
-        public static final int graph_relative=0x7f0700a4;
-        public static final int graph_share_btn=0x7f0700a3;
-        public static final int home_2_additive_seek_bar=0x7f070057;
-        public static final int home_2_booziness_seek_bar=0x7f070061;
-        public static final int home_2_cancel_btn=0x7f070065;
-        public static final int home_2_save_btn=0x7f070044;
-        public static final int home_2_sour_seek_bar=0x7f07004d;
-        public static final int home_additive_comment=0x7f0700c5;
-        public static final int home_additive_edt=0x7f070059;
-        public static final int home_additive_seek_bar=0x7f0700b0;
-        public static final int home_additive_txt=0x7f070058;
-        public static final int home_aroma_edt=0x7f07000f;
-        public static final int home_aroma_seek_bar=0x7f07000d;
-        public static final int home_aroma_txt=0x7f07000e;
-        public static final int home_bitter_edt=0x7f070021;
-        public static final int home_bitter_seek_bar=0x7f07001f;
-        public static final int home_bitter_txt=0x7f070020;
-        public static final int home_booziness_edt=0x7f070063;
-        public static final int home_booziness_seek_bar=0x7f0700b1;
-        public static final int home_booziness_txt=0x7f070062;
-        public static final int home_booziness_warmth_edt=0x7f070064;
-        public static final int home_cancel_btn=0x7f070038;
-        public static final int home_feel_txt=0x7f07003f;
-        public static final int home_flavour_comment=0x7f0700d5;
-        public static final int home_malt_edt=0x7f070039;
-        public static final int home_malt_seek_bar=0x7f070028;
-        public static final int home_malt_txt=0x7f07003a;
-        public static final int home_mouth_edt=0x7f070040;
-        public static final int home_mouth_feel_txt=0x7f07003e;
-        public static final int home_mouth_seek_bar=0x7f070036;
-        public static final int home_mouth_texture_edt=0x7f070041;
-        public static final int home_next_btn=0x7f070037;
-        public static final int home_save_btn=0x7f070042;
-        public static final int home_sour_comment=0x7f0700cd;
-        public static final int home_sour_edt=0x7f07004f;
-        public static final int home_sour_seek_bar=0x7f0700af;
-        public static final int home_sour_txt=0x7f07004e;
-        public static final int home_sweet_edt=0x7f070018;
-        public static final int home_sweet_seek_bar=0x7f070016;
-        public static final int home_sweet_txt=0x7f070017;
-        public static final int home_toggle_additive=0x7f070050;
-        public static final int home_toggle_booziness=0x7f07005a;
-        public static final int home_toggle_sour=0x7f070046;
-        public static final int home_warmth_comment=0x7f0700d6;
-        public static final int home_yeast_chk_bx=0x7f07003b;
-        public static final int home_yeast_edt=0x7f07003d;
-        public static final int home_yeast_seek_bar=0x7f07002f;
-        public static final int home_yeast_txt=0x7f07003c;
-        public static final int image=0x7f070077;
-        public static final int imageView1=0x7f0700b2;
-        public static final int img_terms_conditions=0x7f0700dd;
-        public static final int info_btn=0x7f070001;
-        public static final int linearLayout1=0x7f070043;
-        public static final int linear_layout=0x7f070004;
-        public static final int list=0x7f070081;
-        public static final int list1=0x7f0700d7;
-        public static final int list2=0x7f0700d8;
-        public static final int list_history=0x7f0700a7;
-        public static final int list_new=0x7f070085;
-        public static final int ll_seek_bars=0x7f070005;
-        public static final int ll_tags=0x7f070045;
-        public static final int login_forgot_btn=0x7f0700bb;
-        public static final int login_linear_layout=0x7f0700b6;
-        public static final int login_login_btn=0x7f0700ba;
-        public static final int login_password_registration_btn=0x7f0700bd;
-        public static final int login_title=0x7f0700b5;
-        public static final int login_user_name_edt=0x7f0700b8;
-        public static final int login_user_password_edt=0x7f0700b9;
-        public static final int logo=0x7f0700f1;
-        public static final int malt_text3=0x7f070023;
-        public static final int malt_text4=0x7f070024;
-        public static final int malt_text5=0x7f070025;
-        public static final int malt_text6=0x7f070026;
-        public static final int malt_text7=0x7f070027;
-        public static final int menu_settings=0x7f0700f6;
-        public static final int mouth_text3=0x7f070031;
-        public static final int mouth_text4=0x7f070032;
-        public static final int mouth_text5=0x7f070033;
-        public static final int mouth_text6=0x7f070034;
-        public static final int mouth_text7=0x7f070035;
-        public static final int new_password_edt=0x7f07007e;
-        public static final int new_user_text=0x7f0700bc;
-        public static final int next_btn=0x7f0700b4;
-        public static final int old_password_edt=0x7f07007d;
-        public static final int previous_btn=0x7f0700b3;
-        public static final int registartion_expirience_level=0x7f07008c;
-        public static final int registartion_text_exp_level=0x7f0700db;
-        public static final int registration_cancel_btn=0x7f070091;
-        public static final int registration_change_password=0x7f07008e;
-        public static final int registration_confirm_password_edt=0x7f0700da;
-        public static final int registration_linear_layout=0x7f07007c;
-        public static final int registration_password_edt=0x7f0700d9;
-        public static final int registration_registartion_btn=0x7f070086;
-        public static final int registration_spinner=0x7f07008d;
-        public static final int registration_user_email_edt=0x7f07008a;
-        public static final int registration_user_first_name_edt_new=0x7f070087;
-        public static final int registration_user_last_name_edt=0x7f070088;
-        public static final int registration_user_name_edt=0x7f070089;
-        public static final int registration_zip_edt=0x7f07008b;
-        public static final int rel1_number=0x7f0700c4;
-        public static final int rel1_text_toggle=0x7f0700c3;
-        public static final int rel2_number=0x7f0700c7;
-        public static final int rel2_text_toggle=0x7f0700c6;
-        public static final int rel3_number=0x7f0700cf;
-        public static final int rel3_text_toggle=0x7f0700ce;
-        public static final int rel_1=0x7f0700aa;
-        public static final int rel_additive=0x7f070051;
-        public static final int rel_aroma=0x7f070006;
-        public static final int rel_bitter=0x7f070019;
-        public static final int rel_booziness=0x7f07005b;
-        public static final int rel_bottom=0x7f070003;
-        public static final int rel_malt=0x7f070022;
-        public static final int rel_mouth=0x7f070030;
-        public static final int rel_sour=0x7f070047;
-        public static final int rel_sweetness=0x7f070010;
-        public static final int rel_texts=0x7f0700be;
-        public static final int rel_yeast=0x7f070029;
-        public static final int relative_layout_username_password=0x7f0700b7;
-        public static final int scroll=0x7f070066;
-        public static final int scrollView=0x7f0700c2;
-        public static final int scroll_view=0x7f070002;
-        public static final int sharing_text=0x7f0700e9;
-        public static final int sour_text3=0x7f070048;
-        public static final int sour_text4=0x7f070049;
-        public static final int sour_text5=0x7f07004a;
-        public static final int sour_text6=0x7f07004b;
-        public static final int sour_text7=0x7f07004c;
-        public static final int sweet_edit=0x7f0700c0;
-        public static final int sweet_text3=0x7f070011;
-        public static final int sweet_text4=0x7f070012;
-        public static final int sweet_text5=0x7f070013;
-        public static final int sweet_text6=0x7f070014;
-        public static final int sweet_text7=0x7f070015;
-        public static final int text=0x7f070082;
-        public static final int text3=0x7f0700ab;
-        public static final int text3_2=0x7f0700c8;
-        public static final int text3_3=0x7f0700d0;
-        public static final int text4=0x7f070008;
-        public static final int text4_2=0x7f0700c9;
-        public static final int text4_3=0x7f0700d1;
-        public static final int text5=0x7f0700ac;
-        public static final int text5_2=0x7f0700ca;
-        public static final int text5_3=0x7f0700d2;
-        public static final int text6=0x7f0700ad;
-        public static final int text6_2=0x7f0700cb;
-        public static final int text6_3=0x7f0700d3;
-        public static final int text7=0x7f0700ae;
-        public static final int text7_2=0x7f0700cc;
-        public static final int text7_3=0x7f0700d4;
-        public static final int textHint=0x7f07009a;
-        public static final int text_abv=0x7f07006b;
-        public static final int text_inflater=0x7f070075;
-        public static final int text_inflater_1=0x7f070076;
-        public static final int title=0x7f070000;
-        public static final int title_text=0x7f07007a;
-        public static final int twitter_share_btn=0x7f0700f4;
-        public static final int twitterlogin=0x7f0700f5;
-        public static final int txt=0x7f0700f2;
-        public static final int user_info_edt_btn=0x7f0700de;
-        public static final int user_info_email_txt=0x7f0700e5;
-        public static final int user_info_email_txt_1=0x7f0700e6;
-        public static final int user_info_experience_txt=0x7f0700ed;
-        public static final int user_info_experience_txt_1=0x7f0700ee;
-        public static final int user_info_first_name_txt=0x7f0700df;
-        public static final int user_info_first_name_txt_1=0x7f0700e0;
-        public static final int user_info_last_name_txt=0x7f0700e1;
-        public static final int user_info_last_name_txt_1=0x7f0700e2;
-        public static final int user_info_show_taste_btn=0x7f0700ef;
-        public static final int user_info_user_name_txt=0x7f0700e3;
-        public static final int user_info_user_name_txt_1=0x7f0700e4;
-        public static final int user_info_zip_txt=0x7f0700e7;
-        public static final int user_info_zip_txt_1=0x7f0700ec;
-        public static final int view_history=0x7f0700ea;
-        public static final int yeast_text3=0x7f07002a;
-        public static final int yeast_text4=0x7f07002b;
-        public static final int yeast_text5=0x7f07002c;
-        public static final int yeast_text6=0x7f07002d;
-        public static final int yeast_text7=0x7f07002e;
+        public static final int add_beer_abv_edt=0x7f04006f;
+        public static final int add_beer_brewery_edt_new=0x7f04006b;
+        public static final int add_beer_cancel_btn=0x7f040076;
+        public static final int add_beer_event_spinner=0x7f040073;
+        public static final int add_beer_hype_expectation_spinner=0x7f040074;
+        public static final int add_beer_ibu_edt=0x7f040070;
+        public static final int add_beer_mood_spinner=0x7f040071;
+        public static final int add_beer_name_edt_new=0x7f04006c;
+        public static final int add_beer_save_btn=0x7f040075;
+        public static final int add_beer_style_spinner=0x7f04006d;
+        public static final int add_beer_venue_spinner=0x7f040072;
+        public static final int additive_text3=0x7f040055;
+        public static final int additive_text4=0x7f040056;
+        public static final int additive_text5=0x7f040057;
+        public static final int additive_text6=0x7f040058;
+        public static final int additive_text7=0x7f040059;
+        public static final int aroma_edit=0x7f0400da;
+        public static final int aroma_text3=0x7f04000a;
+        public static final int aroma_text4=0x7f04000c;
+        public static final int aroma_text5=0x7f04000d;
+        public static final int aroma_text6=0x7f04000e;
+        public static final int aroma_text7=0x7f04000f;
+        public static final int automate_sharing_text_facebook=0x7f0400a8;
+        public static final int automate_sharing_text_facebook_reg=0x7f0400f8;
+        public static final int automate_sharing_text_twitter=0x7f0400a6;
+        public static final int automate_sharing_text_twitter_reg=0x7f0400f6;
+        public static final int automate_sharing_toggle_facebook=0x7f0400a9;
+        public static final int automate_sharing_toggle_facebook_reg=0x7f0400f9;
+        public static final int automate_sharing_toggle_twitter=0x7f0400a7;
+        public static final int automate_sharing_toggle_twitter_reg=0x7f0400f7;
+        public static final int back_btn=0x7f0400c2;
+        public static final int back_btn_new=0x7f04007c;
+        public static final int bitter_edit=0x7f0400dc;
+        public static final int bitter_text3=0x7f04001d;
+        public static final int bitter_text4=0x7f04001e;
+        public static final int bitter_text5=0x7f04001f;
+        public static final int bitter_text6=0x7f040020;
+        public static final int bitter_text7=0x7f040021;
+        public static final int booziness_text3=0x7f04005f;
+        public static final int booziness_text4=0x7f040060;
+        public static final int booziness_text5=0x7f040061;
+        public static final int booziness_text6=0x7f040062;
+        public static final int booziness_text7=0x7f040063;
+        public static final int bottom_layout=0x7f04006a;
+        public static final int bottom_rel=0x7f0400c3;
+        public static final int btn=0x7f04009c;
+        public static final int btn_instruction=0x7f040077;
+        public static final int cancel_btn=0x7f040083;
+        public static final int chk=0x7f04009b;
+        public static final int chk_terms_conditions=0x7f0400fb;
+        public static final int com_facebook_login_activity_progress_bar=0x7f040086;
+        public static final int com_facebook_picker_activity_circle=0x7f040085;
+        public static final int com_facebook_picker_checkbox=0x7f040088;
+        public static final int com_facebook_picker_checkbox_stub=0x7f04008c;
+        public static final int com_facebook_picker_divider=0x7f040090;
+        public static final int com_facebook_picker_done_button=0x7f04008f;
+        public static final int com_facebook_picker_image=0x7f040089;
+        public static final int com_facebook_picker_list_section_header=0x7f04008d;
+        public static final int com_facebook_picker_list_view=0x7f040084;
+        public static final int com_facebook_picker_profile_pic_stub=0x7f04008a;
+        public static final int com_facebook_picker_row_activity_circle=0x7f040087;
+        public static final int com_facebook_picker_search_text=0x7f040095;
+        public static final int com_facebook_picker_title=0x7f04008b;
+        public static final int com_facebook_picker_title_bar=0x7f040092;
+        public static final int com_facebook_picker_title_bar_stub=0x7f040091;
+        public static final int com_facebook_picker_top_bar=0x7f04008e;
+        public static final int com_facebook_search_bar_view=0x7f040094;
+        public static final int com_facebook_usersettingsfragment_login_button=0x7f040098;
+        public static final int com_facebook_usersettingsfragment_logo_image=0x7f040096;
+        public static final int com_facebook_usersettingsfragment_profile_name=0x7f040097;
+        public static final int confirm_password_edt=0x7f040082;
+        public static final int done_btn=0x7f04007e;
+        public static final int edit_btn=0x7f04010d;
+        public static final int edt=0x7f0400ac;
+        public static final int edt_beer_btn_new=0x7f04007b;
+        public static final int facebook_share_btn=0x7f040110;
+        public static final int find_add_beer_name_edit=0x7f0400b1;
+        public static final int find_add_edit_user_beer_btn=0x7f0400b7;
+        public static final int find_add_enter_new_btn=0x7f0400b0;
+        public static final int find_add_linear_layout=0x7f0400af;
+        public static final int find_add_list=0x7f0400b3;
+        public static final int find_add_my_profile=0x7f0400ae;
+        public static final int find_add_new_beer_text_new=0x7f0400b5;
+        public static final int find_add_search_beer_btn_new=0x7f0400b2;
+        public static final int find_add_share_btn=0x7f0400b6;
+        public static final int find_add_title_text=0x7f0400ad;
+        public static final int forgot_password_btn=0x7f0400b9;
+        public static final int forgot_password_cancel_btn=0x7f0400ba;
+        public static final int forgot_user_name_edt=0x7f0400b8;
+        public static final int graph_beer_boozer_drink_beer_btn=0x7f0400bb;
+        public static final int graph_beer_linear_layout=0x7f0400bc;
+        public static final int graph_edit_profile_btn=0x7f0400c0;
+        public static final int graph_linear_layout=0x7f0400bf;
+        public static final int graph_relative=0x7f0400be;
+        public static final int graph_share_btn=0x7f0400bd;
+        public static final int home_2_additive_seek_bar=0x7f04005a;
+        public static final int home_2_booziness_seek_bar=0x7f040064;
+        public static final int home_2_cancel_btn=0x7f040068;
+        public static final int home_2_save_btn=0x7f040047;
+        public static final int home_2_sour_seek_bar=0x7f040050;
+        public static final int home_additive_comment=0x7f0400e0;
+        public static final int home_additive_edt=0x7f04005c;
+        public static final int home_additive_seek_bar=0x7f0400ca;
+        public static final int home_additive_txt=0x7f04005b;
+        public static final int home_aroma_edt=0x7f040012;
+        public static final int home_aroma_seek_bar=0x7f040010;
+        public static final int home_aroma_txt=0x7f040011;
+        public static final int home_bitter_edt=0x7f040024;
+        public static final int home_bitter_seek_bar=0x7f040022;
+        public static final int home_bitter_txt=0x7f040023;
+        public static final int home_booziness_edt=0x7f040066;
+        public static final int home_booziness_seek_bar=0x7f0400cb;
+        public static final int home_booziness_txt=0x7f040065;
+        public static final int home_booziness_warmth_edt=0x7f040067;
+        public static final int home_cancel_btn=0x7f04003b;
+        public static final int home_feel_txt=0x7f040042;
+        public static final int home_flavour_comment=0x7f0400f0;
+        public static final int home_malt_edt=0x7f04003c;
+        public static final int home_malt_seek_bar=0x7f04002b;
+        public static final int home_malt_txt=0x7f04003d;
+        public static final int home_mouth_edt=0x7f040043;
+        public static final int home_mouth_feel_txt=0x7f040041;
+        public static final int home_mouth_seek_bar=0x7f040039;
+        public static final int home_mouth_texture_edt=0x7f040044;
+        public static final int home_next_btn=0x7f04003a;
+        public static final int home_save_btn=0x7f040045;
+        public static final int home_sour_comment=0x7f0400e8;
+        public static final int home_sour_edt=0x7f040052;
+        public static final int home_sour_seek_bar=0x7f0400c9;
+        public static final int home_sour_txt=0x7f040051;
+        public static final int home_sweet_edt=0x7f04001b;
+        public static final int home_sweet_seek_bar=0x7f040019;
+        public static final int home_sweet_txt=0x7f04001a;
+        public static final int home_toggle_additive=0x7f040053;
+        public static final int home_toggle_booziness=0x7f04005d;
+        public static final int home_toggle_sour=0x7f040049;
+        public static final int home_warmth_comment=0x7f0400f1;
+        public static final int home_yeast_chk_bx=0x7f04003e;
+        public static final int home_yeast_edt=0x7f040040;
+        public static final int home_yeast_seek_bar=0x7f040032;
+        public static final int home_yeast_txt=0x7f04003f;
+        public static final int image=0x7f04007a;
+        public static final int imageView1=0x7f0400cc;
+        public static final int img_terms_conditions=0x7f0400fc;
+        public static final int info_btn=0x7f040004;
+        public static final int large=0x7f040002;
+        public static final int linearLayout1=0x7f040046;
+        public static final int linear_layout=0x7f040007;
+        public static final int list=0x7f040099;
+        public static final int list1=0x7f0400f2;
+        public static final int list2=0x7f0400f3;
+        public static final int list_history=0x7f0400c1;
+        public static final int list_new=0x7f04009d;
+        public static final int ll_seek_bars=0x7f040008;
+        public static final int ll_tags=0x7f040048;
+        public static final int login_forgot_btn=0x7f0400d6;
+        public static final int login_linear_layout=0x7f0400d1;
+        public static final int login_login_btn=0x7f0400d5;
+        public static final int login_password_registration_btn=0x7f0400d8;
+        public static final int login_title=0x7f0400d0;
+        public static final int login_user_name_edt=0x7f0400d3;
+        public static final int login_user_password_edt=0x7f0400d4;
+        public static final int logo=0x7f04010e;
+        public static final int malt_text3=0x7f040026;
+        public static final int malt_text4=0x7f040027;
+        public static final int malt_text5=0x7f040028;
+        public static final int malt_text6=0x7f040029;
+        public static final int malt_text7=0x7f04002a;
+        public static final int menu_settings=0x7f040113;
+        public static final int mouth_text3=0x7f040034;
+        public static final int mouth_text4=0x7f040035;
+        public static final int mouth_text5=0x7f040036;
+        public static final int mouth_text6=0x7f040037;
+        public static final int mouth_text7=0x7f040038;
+        public static final int new_password_edt=0x7f040081;
+        public static final int new_user_text=0x7f0400d7;
+        public static final int next_btn=0x7f0400ce;
+        public static final int normal=0x7f040001;
+        public static final int old_password_edt=0x7f040080;
+        public static final int picker_subtitle=0x7f040093;
+        public static final int previous_btn=0x7f0400cd;
+        public static final int registartion_expirience_level=0x7f0400a4;
+        public static final int registartion_text_exp_level=0x7f0400fa;
+        public static final int registration_cancel_btn=0x7f0400ab;
+        public static final int registration_change_password=0x7f0400aa;
+        public static final int registration_confirm_password_edt=0x7f0400f5;
+        public static final int registration_linear_layout=0x7f04007f;
+        public static final int registration_password_edt=0x7f0400f4;
+        public static final int registration_registartion_btn=0x7f04009e;
+        public static final int registration_spinner=0x7f0400a5;
+        public static final int registration_user_email_edt=0x7f0400a2;
+        public static final int registration_user_first_name_edt_new=0x7f04009f;
+        public static final int registration_user_last_name_edt=0x7f0400a0;
+        public static final int registration_user_name_edt=0x7f0400a1;
+        public static final int registration_zip_edt=0x7f0400a3;
+        public static final int rel1_number=0x7f0400df;
+        public static final int rel1_text_toggle=0x7f0400de;
+        public static final int rel2_number=0x7f0400e2;
+        public static final int rel2_text_toggle=0x7f0400e1;
+        public static final int rel3_number=0x7f0400ea;
+        public static final int rel3_text_toggle=0x7f0400e9;
+        public static final int rel_1=0x7f0400c4;
+        public static final int rel_additive=0x7f040054;
+        public static final int rel_aroma=0x7f040009;
+        public static final int rel_bitter=0x7f04001c;
+        public static final int rel_booziness=0x7f04005e;
+        public static final int rel_bottom=0x7f040006;
+        public static final int rel_malt=0x7f040025;
+        public static final int rel_mouth=0x7f040033;
+        public static final int rel_sour=0x7f04004a;
+        public static final int rel_sweetness=0x7f040013;
+        public static final int rel_texts=0x7f0400d9;
+        public static final int rel_yeast=0x7f04002c;
+        public static final int relative_layout_username_password=0x7f0400d2;
+        public static final int scrMain=0x7f0400fd;
+        public static final int scroll=0x7f040069;
+        public static final int scrollView=0x7f0400dd;
+        public static final int scroll_view=0x7f040005;
+        public static final int small=0x7f040000;
+        public static final int sour_text3=0x7f04004b;
+        public static final int sour_text4=0x7f04004c;
+        public static final int sour_text5=0x7f04004d;
+        public static final int sour_text6=0x7f04004e;
+        public static final int sour_text7=0x7f04004f;
+        public static final int sweet_edit=0x7f0400db;
+        public static final int sweet_text3=0x7f040014;
+        public static final int sweet_text4=0x7f040015;
+        public static final int sweet_text5=0x7f040016;
+        public static final int sweet_text6=0x7f040017;
+        public static final int sweet_text7=0x7f040018;
+        public static final int text=0x7f04009a;
+        public static final int text3=0x7f0400c5;
+        public static final int text3_2=0x7f0400e3;
+        public static final int text3_3=0x7f0400eb;
+        public static final int text4=0x7f04000b;
+        public static final int text4_2=0x7f0400e4;
+        public static final int text4_3=0x7f0400ec;
+        public static final int text5=0x7f0400c6;
+        public static final int text5_2=0x7f0400e5;
+        public static final int text5_3=0x7f0400ed;
+        public static final int text6=0x7f0400c7;
+        public static final int text6_2=0x7f0400e6;
+        public static final int text6_3=0x7f0400ee;
+        public static final int text7=0x7f0400c8;
+        public static final int text7_2=0x7f0400e7;
+        public static final int text7_3=0x7f0400ef;
+        public static final int textHint=0x7f0400b4;
+        public static final int text_abv=0x7f04006e;
+        public static final int text_inflater=0x7f040078;
+        public static final int text_inflater_1=0x7f040079;
+        public static final int title=0x7f040003;
+        public static final int title_text=0x7f04007d;
+        public static final int twitter_share_btn=0x7f040111;
+        public static final int twitterlogin=0x7f040112;
+        public static final int txt=0x7f04010f;
+        public static final int user_info_edt_btn=0x7f0400fe;
+        public static final int user_info_email_txt=0x7f040105;
+        public static final int user_info_email_txt_1=0x7f040106;
+        public static final int user_info_experience_txt=0x7f04010a;
+        public static final int user_info_experience_txt_1=0x7f04010b;
+        public static final int user_info_first_name_txt=0x7f0400ff;
+        public static final int user_info_first_name_txt_1=0x7f040100;
+        public static final int user_info_last_name_txt=0x7f040101;
+        public static final int user_info_last_name_txt_1=0x7f040102;
+        public static final int user_info_show_taste_btn=0x7f04010c;
+        public static final int user_info_user_name_txt=0x7f040103;
+        public static final int user_info_user_name_txt_1=0x7f040104;
+        public static final int user_info_zip_txt=0x7f040107;
+        public static final int user_info_zip_txt_1=0x7f040108;
+        public static final int view_history=0x7f040109;
+        public static final int webView1=0x7f0400cf;
+        public static final int yeast_text3=0x7f04002d;
+        public static final int yeast_text4=0x7f04002e;
+        public static final int yeast_text5=0x7f04002f;
+        public static final int yeast_text6=0x7f040030;
+        public static final int yeast_text7=0x7f040031;
     }
     public static final class layout {
         public static final int add_beer_profile=0x7f030000;
@@ -374,67 +600,107 @@ public final class R {
         public static final int beer_adapter_inflater=0x7f030004;
         public static final int beer_user_match=0x7f030005;
         public static final int change_password=0x7f030006;
-        public static final int dialg_listing=0x7f030007;
-        public static final int dialog_aroma=0x7f030008;
-        public static final int dialog_list=0x7f030009;
-        public static final int edt_user_info=0x7f03000a;
-        public static final int experience_level=0x7f03000b;
-        public static final int facebook_dialog=0x7f03000c;
-        public static final int find_add_beer=0x7f03000d;
-        public static final int forgot_password=0x7f03000e;
-        public static final int graph_beer_boozer=0x7f03000f;
-        public static final int graph_screen=0x7f030010;
-        public static final int history=0x7f030011;
-        public static final int home_screen=0x7f030012;
-        public static final int home_screen_2=0x7f030013;
-        public static final int image=0x7f030014;
-        public static final int information_page=0x7f030015;
-        public static final int login_screen=0x7f030016;
-        public static final int new_home=0x7f030017;
-        public static final int new_home_2=0x7f030018;
-        public static final int picker_dialog=0x7f030019;
-        public static final int registration_screen=0x7f03001a;
-        public static final int show_user_info=0x7f03001b;
-        public static final int show_user_taste_profile=0x7f03001c;
-        public static final int social_networking_share=0x7f03001d;
-        public static final int splash=0x7f03001e;
-        public static final int terms_condition=0x7f03001f;
-        public static final int title_ame=0x7f030020;
-        public static final int twitter_login=0x7f030021;
+        public static final int com_facebook_friendpickerfragment=0x7f030007;
+        public static final int com_facebook_login_activity_layout=0x7f030008;
+        public static final int com_facebook_picker_activity_circle_row=0x7f030009;
+        public static final int com_facebook_picker_checkbox=0x7f03000a;
+        public static final int com_facebook_picker_image=0x7f03000b;
+        public static final int com_facebook_picker_list_row=0x7f03000c;
+        public static final int com_facebook_picker_list_section_header=0x7f03000d;
+        public static final int com_facebook_picker_search_box=0x7f03000e;
+        public static final int com_facebook_picker_title_bar=0x7f03000f;
+        public static final int com_facebook_picker_title_bar_stub=0x7f030010;
+        public static final int com_facebook_placepickerfragment=0x7f030011;
+        public static final int com_facebook_placepickerfragment_list_row=0x7f030012;
+        public static final int com_facebook_search_bar_layout=0x7f030013;
+        public static final int com_facebook_usersettingsfragment=0x7f030014;
+        public static final int dialg_listing=0x7f030015;
+        public static final int dialog_aroma=0x7f030016;
+        public static final int dialog_list=0x7f030017;
+        public static final int edt_user_info=0x7f030018;
+        public static final int experience_level=0x7f030019;
+        public static final int facebook_dialog=0x7f03001a;
+        public static final int find_add_beer=0x7f03001b;
+        public static final int forgot_password=0x7f03001c;
+        public static final int graph_beer_boozer=0x7f03001d;
+        public static final int graph_screen=0x7f03001e;
+        public static final int history=0x7f03001f;
+        public static final int home_screen=0x7f030020;
+        public static final int home_screen_2=0x7f030021;
+        public static final int image=0x7f030022;
+        public static final int information_page=0x7f030023;
+        public static final int layout_webview=0x7f030024;
+        public static final int login_screen=0x7f030025;
+        public static final int new_home=0x7f030026;
+        public static final int new_home_2=0x7f030027;
+        public static final int picker_dialog=0x7f030028;
+        public static final int registration_screen=0x7f030029;
+        public static final int show_user_info=0x7f03002a;
+        public static final int show_user_taste_profile=0x7f03002b;
+        public static final int social_networking_share=0x7f03002c;
+        public static final int splash=0x7f03002d;
+        public static final int terms_condition=0x7f03002e;
+        public static final int title_ame=0x7f03002f;
+        public static final int twitter_login=0x7f030030;
     }
     public static final class menu {
-        public static final int activity_main=0x7f060000;
+        public static final int activity_main=0x7f090000;
     }
     public static final class string {
-        public static final int add_beer=0x7f04001a;
-        public static final int additive=0x7f040013;
-        public static final int androidkey=0x7f040016;
-        public static final int app_name=0x7f040000;
-        public static final int aroma=0x7f04000b;
-        public static final int bitter=0x7f04000d;
-        public static final int booziness=0x7f040014;
-        public static final int confirm_password=0x7f04000a;
-        public static final int email=0x7f040009;
-        public static final int experience=0x7f04001c;
-        public static final int feel=0x7f040011;
-        public static final int first_name=0x7f040006;
-        public static final int forgot_password=0x7f040019;
-        public static final int hello_world=0x7f040002;
-        public static final int last_name=0x7f040007;
-        public static final int login=0x7f040018;
-        public static final int malt=0x7f04000e;
-        public static final int menu_settings=0x7f040001;
-        public static final int mouth=0x7f040010;
-        public static final int new_user=0x7f040005;
-        public static final int new_user_registration=0x7f040017;
-        public static final int pass_word=0x7f040004;
-        public static final int photo_post=0x7f040015;
-        public static final int sour=0x7f040012;
-        public static final int sweet=0x7f04000c;
-        public static final int user_name=0x7f040003;
-        public static final int yeast=0x7f04000f;
-        public static final int your_profile=0x7f04001b;
-        public static final int zip_code=0x7f040008;
+        public static final int add_beer=0x7f070033;
+        public static final int additive=0x7f07002c;
+        public static final int androidkey=0x7f07002f;
+        public static final int app_name=0x7f070019;
+        public static final int aroma=0x7f070024;
+        public static final int bitter=0x7f070026;
+        public static final int booziness=0x7f07002d;
+        public static final int com_facebook_choose_friends=0x7f07000f;
+        public static final int com_facebook_dialogloginactivity_ok_button=0x7f070000;
+        public static final int com_facebook_internet_permission_error_message=0x7f070013;
+        public static final int com_facebook_internet_permission_error_title=0x7f070012;
+        public static final int com_facebook_loading=0x7f070011;
+        public static final int com_facebook_loginview_cancel_action=0x7f070006;
+        public static final int com_facebook_loginview_log_in_button=0x7f070002;
+        public static final int com_facebook_loginview_log_out_action=0x7f070005;
+        public static final int com_facebook_loginview_log_out_button=0x7f070001;
+        public static final int com_facebook_loginview_logged_in_as=0x7f070003;
+        public static final int com_facebook_loginview_logged_in_using_facebook=0x7f070004;
+        public static final int com_facebook_logo_content_description=0x7f070007;
+        public static final int com_facebook_nearby=0x7f070010;
+        public static final int com_facebook_picker_done_button_text=0x7f07000e;
+        public static final int com_facebook_placepicker_subtitle_catetory_only_format=0x7f07000c;
+        public static final int com_facebook_placepicker_subtitle_format=0x7f07000b;
+        public static final int com_facebook_placepicker_subtitle_were_here_only_format=0x7f07000d;
+        public static final int com_facebook_requesterror_password_changed=0x7f070016;
+        public static final int com_facebook_requesterror_permissions=0x7f070018;
+        public static final int com_facebook_requesterror_reconnect=0x7f070017;
+        public static final int com_facebook_requesterror_relogin=0x7f070015;
+        public static final int com_facebook_requesterror_web_login=0x7f070014;
+        public static final int com_facebook_usersettingsfragment_log_in_button=0x7f070008;
+        public static final int com_facebook_usersettingsfragment_logged_in=0x7f070009;
+        public static final int com_facebook_usersettingsfragment_not_logged_in=0x7f07000a;
+        public static final int confirm_password=0x7f070023;
+        public static final int email=0x7f070022;
+        public static final int experience=0x7f070035;
+        public static final int feel=0x7f07002a;
+        public static final int first_name=0x7f07001f;
+        public static final int forgot_password=0x7f070032;
+        public static final int hello_world=0x7f07001b;
+        public static final int last_name=0x7f070020;
+        public static final int login=0x7f070031;
+        public static final int malt=0x7f070027;
+        public static final int menu_settings=0x7f07001a;
+        public static final int mouth=0x7f070029;
+        public static final int new_user=0x7f07001e;
+        public static final int new_user_registration=0x7f070030;
+        public static final int pass_word=0x7f07001d;
+        public static final int photo_post=0x7f07002e;
+        public static final int sour=0x7f07002b;
+        public static final int sweet=0x7f070025;
+        public static final int user_name=0x7f07001c;
+        public static final int yeast=0x7f070028;
+        public static final int your_profile=0x7f070034;
+        public static final int zip_code=0x7f070021;
     }
     public static final class style {
         /** 
@@ -458,11 +724,355 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f050001;
+        public static final int AppBaseTheme=0x7f080003;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f050002;
-        public static final int StarRatingBar=0x7f050000;
+        public static final int AppTheme=0x7f080004;
+        public static final int StarRatingBar=0x7f080002;
+        public static final int com_facebook_loginview_default_style=0x7f080000;
+        public static final int com_facebook_loginview_silver_style=0x7f080001;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a com_facebook_friend_picker_fragment.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #com_facebook_friend_picker_fragment_multi_select com.craftbeer:multi_select}</code></td><td></td></tr>
+           </table>
+           @see #com_facebook_friend_picker_fragment_multi_select
+         */
+        public static final int[] com_facebook_friend_picker_fragment = {
+            0x7f010007
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#multi_select}
+          attribute's value can be found in the {@link #com_facebook_friend_picker_fragment} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.craftbeer:multi_select
+        */
+        public static final int com_facebook_friend_picker_fragment_multi_select = 0;
+        /** Attributes that can be used with a com_facebook_login_view.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #com_facebook_login_view_confirm_logout com.craftbeer:confirm_logout}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_login_view_fetch_user_info com.craftbeer:fetch_user_info}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_login_view_login_text com.craftbeer:login_text}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_login_view_logout_text com.craftbeer:logout_text}</code></td><td></td></tr>
+           </table>
+           @see #com_facebook_login_view_confirm_logout
+           @see #com_facebook_login_view_fetch_user_info
+           @see #com_facebook_login_view_login_text
+           @see #com_facebook_login_view_logout_text
+         */
+        public static final int[] com_facebook_login_view = {
+            0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#confirm_logout}
+          attribute's value can be found in the {@link #com_facebook_login_view} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.craftbeer:confirm_logout
+        */
+        public static final int com_facebook_login_view_confirm_logout = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#fetch_user_info}
+          attribute's value can be found in the {@link #com_facebook_login_view} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.craftbeer:fetch_user_info
+        */
+        public static final int com_facebook_login_view_fetch_user_info = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#login_text}
+          attribute's value can be found in the {@link #com_facebook_login_view} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.craftbeer:login_text
+        */
+        public static final int com_facebook_login_view_login_text = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#logout_text}
+          attribute's value can be found in the {@link #com_facebook_login_view} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.craftbeer:logout_text
+        */
+        public static final int com_facebook_login_view_logout_text = 3;
+        /** Attributes that can be used with a com_facebook_picker_fragment.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #com_facebook_picker_fragment_done_button_background com.craftbeer:done_button_background}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_picker_fragment_done_button_text com.craftbeer:done_button_text}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_picker_fragment_extra_fields com.craftbeer:extra_fields}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_picker_fragment_show_pictures com.craftbeer:show_pictures}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_picker_fragment_show_title_bar com.craftbeer:show_title_bar}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_picker_fragment_title_bar_background com.craftbeer:title_bar_background}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_picker_fragment_title_text com.craftbeer:title_text}</code></td><td></td></tr>
+           </table>
+           @see #com_facebook_picker_fragment_done_button_background
+           @see #com_facebook_picker_fragment_done_button_text
+           @see #com_facebook_picker_fragment_extra_fields
+           @see #com_facebook_picker_fragment_show_pictures
+           @see #com_facebook_picker_fragment_show_title_bar
+           @see #com_facebook_picker_fragment_title_bar_background
+           @see #com_facebook_picker_fragment_title_text
+         */
+        public static final int[] com_facebook_picker_fragment = {
+            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
+            0x7f010004, 0x7f010005, 0x7f010006
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#done_button_background}
+          attribute's value can be found in the {@link #com_facebook_picker_fragment} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.craftbeer:done_button_background
+        */
+        public static final int com_facebook_picker_fragment_done_button_background = 6;
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#done_button_text}
+          attribute's value can be found in the {@link #com_facebook_picker_fragment} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.craftbeer:done_button_text
+        */
+        public static final int com_facebook_picker_fragment_done_button_text = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#extra_fields}
+          attribute's value can be found in the {@link #com_facebook_picker_fragment} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.craftbeer:extra_fields
+        */
+        public static final int com_facebook_picker_fragment_extra_fields = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#show_pictures}
+          attribute's value can be found in the {@link #com_facebook_picker_fragment} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.craftbeer:show_pictures
+        */
+        public static final int com_facebook_picker_fragment_show_pictures = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#show_title_bar}
+          attribute's value can be found in the {@link #com_facebook_picker_fragment} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.craftbeer:show_title_bar
+        */
+        public static final int com_facebook_picker_fragment_show_title_bar = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#title_bar_background}
+          attribute's value can be found in the {@link #com_facebook_picker_fragment} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.craftbeer:title_bar_background
+        */
+        public static final int com_facebook_picker_fragment_title_bar_background = 5;
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#title_text}
+          attribute's value can be found in the {@link #com_facebook_picker_fragment} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.craftbeer:title_text
+        */
+        public static final int com_facebook_picker_fragment_title_text = 3;
+        /** Attributes that can be used with a com_facebook_place_picker_fragment.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #com_facebook_place_picker_fragment_radius_in_meters com.craftbeer:radius_in_meters}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_place_picker_fragment_results_limit com.craftbeer:results_limit}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_place_picker_fragment_search_text com.craftbeer:search_text}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_place_picker_fragment_show_search_box com.craftbeer:show_search_box}</code></td><td></td></tr>
+           </table>
+           @see #com_facebook_place_picker_fragment_radius_in_meters
+           @see #com_facebook_place_picker_fragment_results_limit
+           @see #com_facebook_place_picker_fragment_search_text
+           @see #com_facebook_place_picker_fragment_show_search_box
+         */
+        public static final int[] com_facebook_place_picker_fragment = {
+            0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#radius_in_meters}
+          attribute's value can be found in the {@link #com_facebook_place_picker_fragment} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.craftbeer:radius_in_meters
+        */
+        public static final int com_facebook_place_picker_fragment_radius_in_meters = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#results_limit}
+          attribute's value can be found in the {@link #com_facebook_place_picker_fragment} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.craftbeer:results_limit
+        */
+        public static final int com_facebook_place_picker_fragment_results_limit = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#search_text}
+          attribute's value can be found in the {@link #com_facebook_place_picker_fragment} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.craftbeer:search_text
+        */
+        public static final int com_facebook_place_picker_fragment_search_text = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#show_search_box}
+          attribute's value can be found in the {@link #com_facebook_place_picker_fragment} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.craftbeer:show_search_box
+        */
+        public static final int com_facebook_place_picker_fragment_show_search_box = 3;
+        /** Attributes that can be used with a com_facebook_profile_picture_view.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #com_facebook_profile_picture_view_is_cropped com.craftbeer:is_cropped}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_profile_picture_view_preset_size com.craftbeer:preset_size}</code></td><td></td></tr>
+           </table>
+           @see #com_facebook_profile_picture_view_is_cropped
+           @see #com_facebook_profile_picture_view_preset_size
+         */
+        public static final int[] com_facebook_profile_picture_view = {
+            0x7f010010, 0x7f010011
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#is_cropped}
+          attribute's value can be found in the {@link #com_facebook_profile_picture_view} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.craftbeer:is_cropped
+        */
+        public static final int com_facebook_profile_picture_view_is_cropped = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.craftbeer.R.attr#preset_size}
+          attribute's value can be found in the {@link #com_facebook_profile_picture_view} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>small</code></td><td>-2</td><td> Keep in sync with constants in ProfilePictureView </td></tr>
+<tr><td><code>normal</code></td><td>-3</td><td></td></tr>
+<tr><td><code>large</code></td><td>-4</td><td></td></tr>
+</table>
+          @attr name com.craftbeer:preset_size
+        */
+        public static final int com_facebook_profile_picture_view_preset_size = 0;
+    };
 }
