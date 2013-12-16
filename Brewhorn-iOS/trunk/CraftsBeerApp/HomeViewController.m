@@ -70,7 +70,9 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 #pragma mark - uitextfiel delegate method
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self earchBeer:self];
@@ -285,10 +287,21 @@
     }
     
     viewImg.strimg=[NSString stringWithFormat:@"%@",[[arrayBeer objectAtIndex:indexPath.row]valueForKey:@"beerBottle"]];
+    
+    [[NSUserDefaults standardUserDefaults]setValue:[[arrayBeer objectAtIndex:indexPath.row] valueForKey:@"facebook"] forKey:@"Facebook"];
+    [[NSUserDefaults standardUserDefaults]setValue:[[arrayBeer objectAtIndex:indexPath.row] valueForKey:@"facebookurl"] forKey:@"FacebookURL"];
+    [[NSUserDefaults standardUserDefaults]setValue:[[arrayBeer objectAtIndex:indexPath.row] valueForKey:@"twitter"] forKey:@"Twitter"];
+    
+    NSLog(@"fb :%@",[[arrayBeer objectAtIndex:indexPath.row] valueForKey:@"facebook"]);
+    NSLog(@"fb url :%@",[[arrayBeer objectAtIndex:indexPath.row] valueForKey:@"facebookurl"]);
+    NSLog(@"twitter :%@",[[arrayBeer objectAtIndex:indexPath.row] valueForKey:@"twitter"]);
+    
     [self.navigationController pushViewController:viewImg animated:YES];
     [self emptyTable];
 }
+
 #pragma mark- AlertView delegate methods
+
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==1) {
