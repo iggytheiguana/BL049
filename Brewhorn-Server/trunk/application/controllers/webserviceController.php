@@ -619,7 +619,7 @@ class webserviceController extends CI_Controller {
     Function BreweryDBWebHooks(){
     
     	$activityName = 'BreweryDBWebHooks:';
-		log_message('debug', "{$activityName} beginning with POST data: " . implode_with_key($_POST,'>',','));
+		log_message('debug', "{$activityName} beginning with POST data: " . $this->webservicemodel->implode_with_key($_POST,'>',','));
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         	log_message('error', 'This must be accessed via POST');
@@ -673,7 +673,7 @@ class webserviceController extends CI_Controller {
                           if($result_allbeer['message'] == 'Request Successful'){
                               if($result_allbeer['data']){
                                   $beerdata = $result_allbeer['data'];
-                                  log_message('debug', "Successfully retrieved from url:{$url_beer} this data: ". implode_with_key($beerdata,'>',','));
+                                  log_message('debug', "Successfully retrieved from url:{$url_beer} this data: ". $this->webservicemodel->implode_with_key($beerdata,'>',','));
                                   $this->webservicemodel->InsertUpdateBeer($beerdata,$timestamp,$action,$apiKey);
                               }
                           }
@@ -690,7 +690,7 @@ class webserviceController extends CI_Controller {
                               if($result_allbeer['data']){
                               //update beer and userbeertable
                               $beerdata = $result_allbeer['data'];
-                              log_message('debug', "Successfully retrieved from url:{$url_beer} data: ". implode_with_key($beerdata,'>',','));
+                              log_message('debug', "Successfully retrieved from url:{$url_beer} data: ". $this->webservicemodel->implode_with_key($beerdata,'>',','));
                               $this->webservicemodel->InsertUpdateBeer($beerdata,$timestamp,$action,$apiKey);
                               }
                           }
@@ -713,7 +713,7 @@ class webserviceController extends CI_Controller {
                                       if(($subAction_typeAction == 'insert') || ($subAction_typeAction == 'edit')){
                                           //insert update case for beerbrewery table
                                           $beerdata = $result_allbeer['data'];
-                                          log_message('debug', "Successfully retrieved from url:{$url_beer} data:". implode_with_key($beerdata,'>',','));
+                                          log_message('debug', "Successfully retrieved from url:{$url_beer} data:". $this->webservicemodel->implode_with_key($beerdata,'>',','));
                                           $this->webservicemodel->InsertUpdateBeerBrewery($beerdata,$subAttributeId,$timestamp,$subAction_typeAction,$apiKey);
                                       }
                                    }
@@ -733,7 +733,7 @@ class webserviceController extends CI_Controller {
 
                                     //Insert update case for socialmediaacct table
                                     $beerdata = $result_socialaccount['data'];
-                                    log_message('debug', "Successfully retrieved from url:{$url_socialaccount} data:". implode_with_key($beerdata,'>',','));
+                                    log_message('debug', "Successfully retrieved from url:{$url_socialaccount} data:". $this->webservicemodel->implode_with_key($beerdata,'>',','));
                                     $this->webservicemodel->InsertUpdateSocialMediaAcct($beerdata,$subAttributeId,$subAction_typeAction,$timestamp,$apiKey);
                                   }
                                 }
@@ -743,7 +743,7 @@ class webserviceController extends CI_Controller {
 
                                       //Insert update case for socialmediaacct table
                                       $beerdata = $result_socialaccount['data'];
-                                      log_message('debug', "Successfully retrieved from url:{$url_socialaccount} data: ". implode_with_key($beerdata,'>',','));
+                                      log_message('debug', "Successfully retrieved from url:{$url_socialaccount} data: ". $this->webservicemodel->implode_with_key($beerdata,'>',','));
                                       $this->webservicemodel->DeleteSocialMediaAcct($beerdata,$subAttributeId);
                                     }
                                 }
@@ -757,7 +757,7 @@ class webserviceController extends CI_Controller {
                                     if($result_ingredient['message'] == 'Request Successful'){
                                         $ingredientdata = $result_ingredient['data'];
                                         //insert into beeringredient table
-                                        log_message('debug', "Successfully retrieved from url:{$url_ingredient} data: ". implode_with_key($ingredientdata,'>',','));
+                                        log_message('debug', "Successfully retrieved from url:{$url_ingredient} data: ". $this->webservicemodel->implode_with_key($ingredientdata,'>',','));
                                         $this->webservicemodel->InsertIngredient($ingredientdata,$attributeId,$subAttributeId,$timestamp);
                                     }
 
@@ -799,15 +799,9 @@ class webserviceController extends CI_Controller {
         }
     }
 
-    function implode_with_key($assoc, $inglue = '>', $outglue = ',') {
-		    $return = '';
-
-		    foreach ($assoc as $tk => $tv) {
-		        $return .= $outglue . $tk . $inglue . $tv;
-		    }
-
-		    return substr($return, strlen($outglue));
-	}
-
+    
+	function move_record(){
+        //$this->webservicemodel->move_record();
+    }
 
 }
