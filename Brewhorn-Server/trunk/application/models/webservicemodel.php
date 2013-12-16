@@ -217,11 +217,7 @@ class webservicemodel extends CI_Model {
 								"beerName"=>$beerName,
 								"beerStyle"=>$beerStyle,
 								"abv"=>$abv,
-								"ibu"=>$ibu,
-								"mood"=>$mood,
-								"venue"=>$venue,
-								"event"=>$event,
-								"hype"=>$hype,
+								"ibu"=>$ibu,								
 								"userId"=>$userId,
 								"createdon"=>timeStamp,
 								);
@@ -234,6 +230,11 @@ class webservicemodel extends CI_Model {
 					$this->db->insert('beerHistory',array("beerId"=>$beerId,"userId"=>$userId,"beerName"=>$beerName,"breweryName"=>$brewery,"createdon"=>timeStamp));
 				endif;
 				
+				//Check beerProfile if it is not exist create record in beerProfile and add userId,beerProfile,mood,venue,event,hype and createdon
+                $checkbeerProfile = $this->db->select('id')->where(array('beerId'=>$beerId,'userId'=>$userId))->from('beerProfile')->get()->num_rows();
+                if($checkbeerProfile == 0):
+                    $this->db->insert('beerProfile',array("beerId"=>$beerId,"userId"=>$userId,"mood"=>$mood,"venue"=>$venue,"event"=>$event,"hype"=>$hype,"createdon"=>timeStamp));
+                endif;
 				return json_encode(array("addUserBeer"=>$beerId));
 			else:
 				$validateBrewery = $this->db->select()->where('brewery',$brewery)->from('userBeer')->get()->num_rows();
@@ -245,11 +246,7 @@ class webservicemodel extends CI_Model {
 								"beerName"=>$beerName,
 								"beerStyle"=>$beerStyle,
 								"abv"=>$abv,
-								"ibu"=>$ibu,
-								"mood"=>$mood,
-								"venue"=>$venue,
-								"event"=>$event,
-								"hype"=>$hype,
+								"ibu"=>$ibu,								
 								"userId"=>$userId,
 								"createdon"=>timeStamp,
 								);
@@ -263,6 +260,12 @@ class webservicemodel extends CI_Model {
 						$this->db->insert('beerHistory',array("beerId"=>$beerId,"userId"=>$userId,"beerName"=>$beerName,"breweryName"=>$brewery,"createdon"=>timeStamp));
 					endif;
 					
+
+                    //Check beerProfile if it is not exist create record in beerProfile and add userId,beerProfile,mood,venue,event,hype and createdon
+                    $checkbeerProfile = $this->db->select('id')->where(array('beerId'=>$beerId,'userId'=>$userId))->from('beerProfile')->get()->num_rows();
+                    if($checkbeerProfile == 0):
+                        $this->db->insert('beerProfile',array("beerId"=>$beerId,"userId"=>$userId,"mood"=>$mood,"venue"=>$venue,"event"=>$event,"hype"=>$hype,"createdon"=>timeStamp));
+                    endif;
 					return json_encode(array("addUserBeer"=>$beerId));
 				endif;
 			endif;
@@ -288,14 +291,23 @@ class webservicemodel extends CI_Model {
 							"beerName"=>$beerName,
 							"beerStyle"=>$beerStyle,
 							"abv"=>$abv,
-							"ibu"=>$ibu,
-							"mood"=>$mood,
-							"venue"=>$venue,
-							"event"=>$event,
-							"hype"=>$hype,
+							"ibu"=>$ibu,							
 							);
 			$this->db->where('id',$beerId);
 			$this->db->update("userBeer",$userTaste);
+			//Check beerProfile if it is not exist update record in beerProfile and update mood,venue,event,hype.
+            $checkbeerProfile = $this->db->select('id')->where(array('beerId'=>$beerId,'userId'=>$userId))->from('beerProfile')->get()->num_rows();
+            if($checkbeerProfile > 0):
+                $updatebeerProfile = array(
+                                        "mood"=>$mood,
+					                    "venue"=>$venue,
+							            "event"=>$event,
+							            "hype"=>$hype,
+                                        );
+                $this->db->where(array('beerId'=>$beerId,'userId'=>$userId));
+			    $this->db->update("beerProfile",$updatebeerProfile);
+
+            endif;
 			return json_encode(array("editUserBeer"=>"1"));
 		else:
 			return json_encode(array("editUserBeer"=>"-3"));
@@ -310,22 +322,43 @@ class webservicemodel extends CI_Model {
 			// validate beer 
 			$validateBeer = $this->db->select()->where(array("id"=>$beerId,"userId"=>$userId))->from('userBeer')->get()->num_rows();
 			if($validateBeer > 0):
-				$beerProfile = array(
-									"beerId"=>$beerId,
-									"userId"=>$userId,
-									"aroma"=>$aroma,
-									"sweet"=>$sweet,
-									"bitter"=>$bitter,
-									"malt"=>$malt,
-									"yeast"=>$yeast,
-									"mouthFeel"=>$mouthFeel,
-									"sour"=>$sour,
-									"additive"=>$additive,
-									"booziness"=>$booziness,
-									"createdon"=>timeStamp,
-									);
-				$this->db->insert("beerProfile",$beerProfile);
-				
+                //Check beerProfile if it is not exist update record in beerProfile and update mood,venue,event,hype.
+                $checkbeerProfile = $this->db->select('id')->where(array('beerId'=>$beerId,'userId'=>$userId))->from('beerProfile')->get()->num_rows();
+                if($checkbeerProfile > 0):
+                    $updatebeerProfile = array(
+                                            "aroma"=>$aroma,
+									        "sweet"=>$sweet,
+									        "bitter"=>$bitter,
+									        "malt"=>$malt,
+									        "yeast"=>$yeast,
+									        "mouthFeel"=>$mouthFeel,
+									        "sour"=>$sour,
+									        "additive"=>$additive,
+									        "booziness"=>$booziness,
+                                            "createdon"=>timeStamp,
+                                            );
+                    $this->db->where(array('beerId'=>$beerId,'userId'=>$userId));
+    			    $this->db->update("beerProfile",$updatebeerProfile);
+
+                else:
+    				$beerProfile = array(
+    									"beerId"=>$beerId,
+    									"userId"=>$userId,
+    									"aroma"=>$aroma,
+    									"sweet"=>$sweet,
+    									"bitter"=>$bitter,
+    									"malt"=>$malt,
+    									"yeast"=>$yeast,
+    									"mouthFeel"=>$mouthFeel,
+    									"sour"=>$sour,
+    									"additive"=>$additive,
+    									"booziness"=>$booziness,
+    									"createdon"=>timeStamp,
+
+    									);
+    				$this->db->insert("beerProfile",$beerProfile);
+
+				endif;
 				
 				$beerProfileComment = array(
 									"beerId"=>$beerId,
@@ -471,14 +504,15 @@ class webservicemodel extends CI_Model {
 		if($validateBeer):
 			$validateBeerProfile = $this->db->select()->where('id',$beerId)->from('beerProfile')->get()->row_array();
 			if($validateBeerProfile):
-				$this->db->select('beerProfile.aroma,beerProfile.sweet,beerProfile.bitter,beerProfile.malt,beerProfile.yeast,beerProfile.mouthFeel,beerProfile.sour,beerProfile.additive,beerProfile.booziness,userBeer.brewery,userBeer.beerName,userBeer.beerStyle,userBeer.abv,userBeer.ibu,userBeer.mood,userBeer.venue,userBeer.event,userBeer.hype');
+				//$this->db->select('beerProfile.aroma,beerProfile.sweet,beerProfile.bitter,beerProfile.malt,beerProfile.yeast,beerProfile.mouthFeel,beerProfile.sour,beerProfile.additive,beerProfile.booziness,userBeer.brewery,userBeer.beerName,userBeer.beerStyle,userBeer.abv,userBeer.ibu,userBeer.mood,userBeer.venue,userBeer.event,userBeer.hype');
+				$this->db->select('beerProfile.aroma,beerProfile.sweet,beerProfile.bitter,beerProfile.malt,beerProfile.yeast,beerProfile.mouthFeel,beerProfile.sour,beerProfile.additive,beerProfile.booziness,beerProfile.mood,beerProfile.venue,beerProfile.event,beerProfile.hype,userBeer.brewery,userBeer.beerName,userBeer.beerStyle,userBeer.abv,userBeer.ibu');
 				$this->db->from('beerProfile');
 				$this->db->join('userBeer', 'userBeer.id = beerProfile.beerId', 'Left');
 				$this->db->where('userBeer.id', $beerId); 
 				$result = $this->db->get()->row_array();
 				return json_encode(array("getBeerProfile"=>$result));
 			else:
-				return json_encode(array("getBeerProfile"=>array("aroma"=>"","sweet"=>"","bitter"=>"","malt"=>"","yeast"=>"","mouthFeel"=>"","sour"=>"","additive"=>"","booziness"=>"","brewery"=>$validateBeer['brewery'],"beerName"=>$validateBeer['beerName'],"beerStyle"=>$validateBeer['beerStyle'],"abv"=>$validateBeer['abv'],"ibu"=>$validateBeer['ibu'],"mood"=>$validateBeer['mood'],"venue"=>$validateBeer['venue'],"event"=>$validateBeer['event'],"hype"=>$validateBeer['hype'])));
+				return json_encode(array("getBeerProfile"=>array("aroma"=>"","sweet"=>"","bitter"=>"","malt"=>"","yeast"=>"","mouthFeel"=>"","sour"=>"","additive"=>"","booziness"=>"","mood"=>"","venue"=>"","event"=>"","hype"=>"","brewery"=>$validateBeer['brewery'],"beerName"=>$validateBeer['beerName'],"beerStyle"=>$validateBeer['beerStyle'],"abv"=>$validateBeer['abv'],"ibu"=>$validateBeer['ibu'])));
 			endif;
 		else:
 			return json_encode(array("getBeerProfile"=>"-1"));
@@ -540,7 +574,7 @@ class webservicemodel extends CI_Model {
 				else:
 					$ibu = '';
 				endif;
-				if($beer['mood']):
+				/*if($beer['mood']):
 					$mood = $beer['mood'];
 				else:
 					$mood = '';
@@ -559,13 +593,13 @@ class webservicemodel extends CI_Model {
 					$hype = $beer['hype'];
 				else:
 					$hype = '';
-				endif;
+				endif;*/
 				
 				$validateBeerProfile = $this->db->select()->where('beerId',$beerId)->from('beerProfile')->get()->row_array();
 				//echo "<pre>";print_r($validateBeerProfile);
 				if($validateBeerProfile):
 				
-					$query = $this->db->query("select s.userId,s.brewery,s.beerName,s.beerStyle,s.abv,s.ibu,s.mood,s.venue,s.event,s.hype,bp.aroma,bp.sweet,bp.bitter,bp.malt,bp.yeast,bp.mouthFeel,bp.sour,bp.additive,bp.booziness from userBeer s left join beerProfile bp on s.id=bp.beerId where s.id=$beerId");
+					$query = $this->db->query("select s.userId,s.brewery,s.beerName,s.beerStyle,s.abv,s.ibu,bp.mood,bp.venue,bp.event,bp.hype,bp.aroma,bp.sweet,bp.bitter,bp.malt,bp.yeast,bp.mouthFeel,bp.sour,bp.additive,bp.booziness from userBeer s left join beerProfile bp on s.id=bp.beerId where s.id=$beerId");
 					$result = $query->row_array();
 					
 					/* if(($result['aroma'] ==($validTasteProfile['aroma'])) || ($result['aroma'] ==($validTasteProfile['aroma']+1)) || ($result['aroma'] ==($validTasteProfile['aroma']-1))):
@@ -770,9 +804,9 @@ class webservicemodel extends CI_Model {
 					
 					
 					
-					$bearArr[] = array("beerId"=>$beerId,"aroma"=>$result['aroma'],"sweet"=>$result['sweet'],"bitter"=>$result['bitter'],"malt"=>$result['malt'],"yeast"=>$result['yeast'],"mouthFeel"=>$result['mouthFeel'],"sour"=>$result['sour'],"additive"=>$result['additive'],"booziness"=>$result['booziness'],"brewery"=>$brewery,"beerName"=>$beerName,"beerStyle"=>$beerStyle,"abv"=>$abv,"ibu"=>$ibu,"mood"=>$mood,"venue"=>$venue,"event"=>$event,"hype"=>$hype,"tastePercentage"=>$tastePercentage,"beerBottle"=>$beerBottle,"facebook"=>$facebook,"facebookurl"=>$facebookurl,"twitter"=>$twitter);
+					$bearArr[] = array("beerId"=>$beerId,"aroma"=>$result['aroma'],"sweet"=>$result['sweet'],"bitter"=>$result['bitter'],"malt"=>$result['malt'],"yeast"=>$result['yeast'],"mouthFeel"=>$result['mouthFeel'],"sour"=>$result['sour'],"additive"=>$result['additive'],"booziness"=>$result['booziness'],"mood"=>$result['mood'],"venue"=>$result['venue'],"event"=>$result['event'],"hype"=>$result['hype'],"brewery"=>$brewery,"beerName"=>$beerName,"beerStyle"=>$beerStyle,"abv"=>$abv,"ibu"=>$ibu,"tastePercentage"=>$tastePercentage,"beerBottle"=>$beerBottle,"facebook"=>$facebook,"facebookurl"=>$facebookurl,"twitter"=>$twitter);
 				else:
-					$bearArr[] = array("beerId"=>$beerId,"aroma"=>"0","sweet"=>"0","bitter"=>"0","malt"=>"0","yeast"=>"0","mouthFeel"=>"0","sour"=>"0","additive"=>"0","booziness"=>"0","brewery"=>$brewery,"beerName"=>$beerName,"beerStyle"=>$beerStyle,"abv"=>$abv,"ibu"=>$ibu,"mood"=>$mood,"venue"=>$venue,"event"=>$event,"hype"=>$hype,"tastePercentage"=>0,"beerBottle"=>0,"facebook"=>"","facebookurl"=>"","twitter"=>"");
+					$bearArr[] = array("beerId"=>$beerId,"aroma"=>"0","sweet"=>"0","bitter"=>"0","malt"=>"0","yeast"=>"0","mouthFeel"=>"0","sour"=>"0","additive"=>"0","booziness"=>"0","mood"=>"","venue"=>"","event"=>"","hype"=>"","brewery"=>$brewery,"beerName"=>$beerName,"beerStyle"=>$beerStyle,"abv"=>$abv,"ibu"=>$ibu,"tastePercentage"=>0,"beerBottle"=>0,"facebook"=>"","facebookurl"=>"","twitter"=>"");
 				endif; 
 			endforeach;
 			//die;
@@ -864,7 +898,7 @@ class webservicemodel extends CI_Model {
 	/**************************************************************************************
 	*									Email To User									  *
 	**************************************************************************************/
-	
+
 	function sendUserEmail($email,$body,$subject){
 		// Header of Mail.
 		$headers = "From: " . 'Craft Beer' . "<" . 'pankaj.arora@netsmartz.net' . ">\n";
@@ -969,7 +1003,7 @@ class webservicemodel extends CI_Model {
 
         //create beer ingredient
         $url_ingredient =  'http://api.brewerydb.com/v2/beer/'.$beerdata['id'].'/ingredients/?key='.$apiKey.'&format=php';
-        $result_ingredient = $this->webservicemodel->get_web_page($url_ingredient);
+        $result_ingredient = $this->get_web_page($url_ingredient);
         if($result_ingredient['message'] == 'Request Successful'){
             if(isset($result_ingredient['data'])){
               $ingredients = $result_ingredient['data'];
@@ -999,7 +1033,7 @@ class webservicemodel extends CI_Model {
                 $update_breweryName['brewery'] = $insert_brewey['name'];
                 $this->db->where('id',$userBeerId);
   		        $this->db->update("userBeer",$update_breweryName);
-  		        log_message('debug', "{$activityName} updated userBeer record with id={$userBeerId} with data: " . implode_with_key($update_breweryName,'>',','));
+  		        log_message('debug', "{$activityName} updated userBeer record with id={$userBeerId} with data: " . $this->implode_with_key($update_breweryName,'>',','));
             }
         }else{
             $beerName  = trim($beerdata['name']);
@@ -1012,7 +1046,7 @@ class webservicemodel extends CI_Model {
                 $update_breweryName['brewery'] = $insert_brewey['name'];
                 $this->db->where('id',$userBeerId);
   		        $this->db->update("userBeer",$update_breweryName);
-  		        log_message('debug', "{$activityName} updated userBeer record with id={$userBeerId} with data: " . implode_with_key($update_breweryName,'>',','));
+  		        log_message('debug', "{$activityName} updated userBeer record with id={$userBeerId} with data: " . $this->implode_with_key($update_breweryName,'>',','));
 
 
                 $insert_beer['name'] = $beerdata['name'];
@@ -1029,7 +1063,7 @@ class webservicemodel extends CI_Model {
                 //insert intp beer table
                 $this->db->insert("beer",$insert_beer);
 
-                log_message('debug', "{$activityName} inserted Beer record with id={$userBeerId} with data: " . implode_with_key($insert_beer,'>',','));
+                log_message('debug', "{$activityName} inserted Beer record with id={$userBeerId} with data: " . $this->implode_with_key($insert_beer,'>',','));
 
                 if(isset($insert_brewey_all)){
                   foreach($insert_brewey_all AS $insert_beerbrewery_all ){
@@ -1037,7 +1071,7 @@ class webservicemodel extends CI_Model {
                       $insert_beerbrewery_all['masterBreweryId'] = $subAttributeId;
                       $this->db->insert("beerBrewery",$insert_beerbrewery_all);
 
-                      log_message('debug', "{$activityName} Inserted brewery record into BeerBrewery with value ".$this->webservicemodel->implode_with_key($insert_beerbrewery_all,'>',','));
+                      log_message('debug', "{$activityName} Inserted brewery record into BeerBrewery with value ".$this->implode_with_key($insert_beerbrewery_all,'>',','));
 
                   }
                 }
@@ -1053,7 +1087,7 @@ class webservicemodel extends CI_Model {
                         $insert_beersocialacc['beerId'] = $userBeerId;
                         $this->db->insert("socialMediaAcct",$insert_beersocialacc);
 
-                        log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->webservicemodel->implode_with_key($insert_beersocialacc,'>',','));
+                        log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->implode_with_key($insert_beersocialacc,'>',','));
 
                     }
                 }
@@ -1070,7 +1104,7 @@ class webservicemodel extends CI_Model {
                         $insert_beeringredient['beerId'] = $userBeerId;
                         $this->db->insert("beerIngredient",$insert_beeringredient);
 
-                        log_message('debug', "{$activityName} Inserted ingredient record into beerIngredient with value ".$this->webservicemodel->implode_with_key($insert_beeringredient,'>',','));
+                        log_message('debug', "{$activityName} Inserted ingredient record into beerIngredient with value ".$this->implode_with_key($insert_beeringredient,'>',','));
 
                     }
                 }
@@ -1087,13 +1121,13 @@ class webservicemodel extends CI_Model {
           $breweryId = $get_brewery['id'];
           $this->db->where('id',$breweryId);
           $this->db->update("beerBrewery",$insert_brewey);
-          log_message('debug', "{$activityName} updated beerBrewery record with id={$breweryId} with data: " . implode_with_key($insert_brewey,'>',','));
+          log_message('debug', "{$activityName} updated beerBrewery record with id={$breweryId} with data: " . $this->implode_with_key($insert_brewey,'>',','));
         }else{
           $insert_brewey['masterBreweryId'] = $subAttributeId;
           //$insert_brewey['dateCreated'] =  date("Y-m-d H:i:s", $timestamp);
           $insert_brewey['beerId'] = $userBeerId;
           $this->db->insert("beerBrewery",$insert_brewey);
-          log_message('debug', "{$activityName} inserted beerBrewery record with data: " . implode_with_key($insert_brewey,'>',','));
+          log_message('debug', "{$activityName} inserted beerBrewery record with data: " . $this->implode_with_key($insert_brewey,'>',','));
         }
 
         log_message('debug',"{$activityName} completed execution");
@@ -1116,7 +1150,7 @@ class webservicemodel extends CI_Model {
                 $ingredient_data['dateCreated'] = $ingredient['createDate'];
                 $this->db->insert("beerIngredient",$ingredient_data);
 
-                log_message('debug', "{$activityName} inserted beerIngredient record with data: " . implode_with_key($ingredient_data,'>',','));
+                log_message('debug', "{$activityName} inserted beerIngredient record with data: " . $this->implode_with_key($ingredient_data,'>',','));
             }
           }
         }
@@ -1182,7 +1216,7 @@ class webservicemodel extends CI_Model {
 
         //create beer ingredient
         $url_ingredient =  'http://api.brewerydb.com/v2/beer/'.$beerdata['id'].'/ingredients/?key='.$apiKey.'&format=php';
-        $result_ingredient = $this->webservicemodel->get_web_page($url_ingredient);
+        $result_ingredient = $this->get_web_page($url_ingredient);
         if($result_ingredient['message'] == 'Request Successful'){
             if(isset($result_ingredient['data'])){
               $ingredients = $result_ingredient['data'];
@@ -1210,7 +1244,7 @@ class webservicemodel extends CI_Model {
                 $socialacc_data['id'] = $subAttributeId;
                 $socialacc_data['beerId'] = $beerId ;
                 $this->db->insert("socialMediaAcct",$socialacc_data);
-                log_message('debug', "{$activityName} Inserted record into socialMediaAcct for beerId={$beerId} with values ".$this->webservicemodel->implode_with_key($socialacc_data,'>',','));
+                log_message('debug', "{$activityName} Inserted record into socialMediaAcct for beerId={$beerId} with values ".$this->implode_with_key($socialacc_data,'>',','));
 
             }
         }else{
@@ -1224,7 +1258,7 @@ class webservicemodel extends CI_Model {
                 $this->db->where('id',$beerId);
   		        $this->db->update("userBeer",$update_breweryName);
 
-  		        log_message('debug', "{$activityName} Updated userBeer record with id={$beerId} with values ".$this->webservicemodel->implode_with_key($update_breweryName,'>',','));
+  		        log_message('debug', "{$activityName} Updated userBeer record with id={$beerId} with values ".$this->implode_with_key($update_breweryName,'>',','));
 
 
                 $insert_beer['name'] = $beerdata['name'];
@@ -1241,13 +1275,13 @@ class webservicemodel extends CI_Model {
                 //insert intp beer table
                 $this->db->insert("beer",$insert_beer);
 
-                log_message('debug', "{$activityName} Inserted record into beer table with values ".$this->webservicemodel->implode_with_key($insert_beer,'>',','));
+                log_message('debug', "{$activityName} Inserted record into beer table with values ".$this->implode_with_key($insert_beer,'>',','));
 
                 if(isset($insert_brewey)){
                   foreach($insert_brewey AS $insert_beerbrewery ){
                       $insert_beerbrewery['beerId'] = $beerId;
                       $this->db->insert("beerBrewery",$insert_beerbrewery);
-                      log_message('debug', "{$activityName} Inserted brewery record into BeerBrewery with value ".$this->webservicemodel->implode_with_key($insert_beerbrewery,'>',','));
+                      log_message('debug', "{$activityName} Inserted brewery record into BeerBrewery with value ".$this->implode_with_key($insert_beerbrewery,'>',','));
                   }
                 }
                 else
@@ -1259,7 +1293,7 @@ class webservicemodel extends CI_Model {
                   foreach($socialacc_data_all AS $socialacc_beerdata_all ){
                         $socialacc_beerdata_all['beerId'] = $beerId;
                         $this->db->insert("socialMediaAcct",$socialacc_beerdata_all);
-                        log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->webservicemodel->implode_with_key($insert_beersocialacc,'>',','));
+                        log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->implode_with_key($insert_beersocialacc,'>',','));
                     }
                 }
                 else
@@ -1272,7 +1306,7 @@ class webservicemodel extends CI_Model {
                   foreach($insert_ingredient AS $insert_beeringredient ){
                         $insert_beeringredient['beerId'] = $beerId;
                         $this->db->insert("beerIngredient",$insert_beeringredient);
-                        log_message('debug', "{$activityName} Inserted ingredient record into beerIngredient with value ".$this->webservicemodel->implode_with_key($insert_beeringredient,'>',','));
+                        log_message('debug', "{$activityName} Inserted ingredient record into beerIngredient with value ".$this->implode_with_key($insert_beeringredient,'>',','));
 
                     }
                 }
@@ -1290,7 +1324,7 @@ class webservicemodel extends CI_Model {
                 $social_id = $get_socialacc['id'];
                 $this->db->where('id',$social_id);
   		        $this->db->update("socialMediaAcct",$socialacc_data);
-  		        log_message('debug', "{$activityName} Updated record in socialMediaAcct with id={$social_id} with values ".$this->webservicemodel->implode_with_key($socialacc_data,'>',','));
+  		        log_message('debug', "{$activityName} Updated record in socialMediaAcct with id={$social_id} with values ".$this->implode_with_key($socialacc_data,'>',','));
 
             }
       }
@@ -1344,6 +1378,12 @@ class webservicemodel extends CI_Model {
         $insert_beerProfile['sour'] = '0';
         $insert_beerProfile['additive'] = '0';
         $insert_beerProfile['booziness'] = '0';
+		/*New Code is added for beerProfile for mood,venue,event and hype*/
+        $insert_beerProfile['mood'] = '';
+        $insert_beerProfile['venue'] = '';
+        $insert_beerProfile['event'] = '';
+        $insert_beerProfile['hype'] = '';
+		/*New Code is added for beerProfile for mood,venue,event and hype*/
         $insert_beerProfile['createdon'] = $timestamp;
 
         //beer table data
@@ -1394,7 +1434,7 @@ class webservicemodel extends CI_Model {
 
         //create beer ingredient
         $url_ingredient =  'http://api.brewerydb.com/v2/beer/'.$beerdata['id'].'/ingredients/?key='.$apiKey.'&format=php';
-        $result_ingredient = $this->webservicemodel->get_web_page($url_ingredient);
+        $result_ingredient = $this->get_web_page($url_ingredient);
         if($result_ingredient['message'] == 'Request Successful'){
             if(isset($result_ingredient['data'])){
               $ingredients = $result_ingredient['data'];
@@ -1427,7 +1467,7 @@ class webservicemodel extends CI_Model {
             log_message('debug',"{$activityName} Inserted record in UserBeer with id={$beerId}, name=".$insert_userbeer['beerName'].",brewery=".$insert_userbeer['brewery']);
             $insert_beerProfile['beerId'] = $beerId;
             $this->db->insert("beerProfile",$insert_beerProfile);
-            log_message('debug', "{$activityName} Inserted record into BeerProfile with value ". $this->webservicemodel->implode_with_key($insert_beerProfile, '>',','));
+            log_message('debug', "{$activityName} Inserted record into BeerProfile with value ". $this->implode_with_key($insert_beerProfile, '>',','));
 
             $insert_beer['id'] = $beerId;
             $insert_beer['datecreated '] = $beerdata['createDate'];
@@ -1435,14 +1475,14 @@ class webservicemodel extends CI_Model {
             //insert intp beer table
             $this->db->insert("beer",$insert_beer);
 
-            log_message('debug', "{$activityName} Inserted record into Beer with value ".$this->webservicemodel->implode_with_key($insert_beer,'>', ','));
+            log_message('debug', "{$activityName} Inserted record into Beer with value ".$this->implode_with_key($insert_beer,'>', ','));
 
             if(isset($insert_brewey)){
               foreach($insert_brewey AS $insert_beerbrewery ){
                   $insert_beerbrewery['beerId'] = $beerId;
                   $this->db->insert("beerBrewery",$insert_beerbrewery);
 
-                  log_message('debug', "{$activityName} Inserted brewery record into BeerBrewery with value ".$this->webservicemodel->implode_with_key($insert_beerbrewery,'>',','));
+                  log_message('debug', "{$activityName} Inserted brewery record into BeerBrewery with value ".$this->implode_with_key($insert_beerbrewery,'>',','));
               }
             }
             else
@@ -1454,7 +1494,7 @@ class webservicemodel extends CI_Model {
               foreach($insert_socialacc AS $insert_beersocialacc ){
                     $insert_beersocialacc['beerId'] = $beerId;
                     $this->db->insert("socialMediaAcct",$insert_beersocialacc);
-                    log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->webservicemodel->implode_with_key($insert_beersocialacc,'>',','));
+                    log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->implode_with_key($insert_beersocialacc,'>',','));
                 }
             }
             else
@@ -1466,7 +1506,7 @@ class webservicemodel extends CI_Model {
               foreach($insert_ingredient AS $insert_beeringredient ){
                     $insert_beeringredient['beerId'] = $beerId;
                     $this->db->insert("beerIngredient",$insert_beeringredient);
-                    log_message('debug', "{$activityName} Inserted ingredient record into beerIngredient with value ".$this->webservicemodel->implode_with_key($insert_beeringredient,'>',','));
+                    log_message('debug', "{$activityName} Inserted ingredient record into beerIngredient with value ".$this->implode_with_key($insert_beeringredient,'>',','));
                 }
             }
             else
@@ -1486,12 +1526,12 @@ class webservicemodel extends CI_Model {
                 $this->db->where('id',$beerId);
   		        $this->db->update("userBeer",$insert_userbeer);
 
-  		        log_message('debug', "{$activityName} Updated record in userBeer for id={$beerId} with values ".$this->webservicemodel->implode_with_key($insert_userbeer,'>',','));
+  		        log_message('debug', "{$activityName} Updated record in userBeer for id={$beerId} with values ".$this->implode_with_key($insert_userbeer,'>',','));
 
                 $this->db->where('id',$beerId);
   		        $this->db->update("beer",$insert_beer);
 
-  		        log_message('debug', "{$activityName} Updated record in Beer for id={$beerId} with values ".$this->webservicemodel->implode_with_key($insert_beer, '>','.'));
+  		        log_message('debug', "{$activityName} Updated record in Beer for id={$beerId} with values ".$this->implode_with_key($insert_beer, '>','.'));
 
              }else{
 
@@ -1508,7 +1548,7 @@ class webservicemodel extends CI_Model {
                     $this->db->where('id',$beerId);
                     $this->db->update("userBeer",$insert_userbeer);
 
-                    log_message('debug', "{$activityName} Updated UserBeer record with values ".$this->webservicemodel->implode_with_key($insert_userbeer,'>',','));
+                    log_message('debug', "{$activityName} Updated UserBeer record with values ".$this->implode_with_key($insert_userbeer,'>',','));
 
                     //insert new beer
                     $insert_beer['id'] = $beerId;
@@ -1516,14 +1556,14 @@ class webservicemodel extends CI_Model {
                     $insert_beer['masterBeerId'] = $beerdata['id'];
                     //insert intp beer table
                     $this->db->insert("beer",$insert_beer);
-                    log_message('debug', "{$activityName} Inserted Beer record with values ".$this->webservicemodel->implode_with_key($insert_beer,'>',','));
+                    log_message('debug', "{$activityName} Inserted Beer record with values ".$this->implode_with_key($insert_beer,'>',','));
 
                     //insert new brewery
                     if(isset($insert_brewey)){
                       foreach($insert_brewey AS $insert_beerbrewery ){
                           $insert_beerbrewery['beerId'] = $beerId;
                           $this->db->insert("beerBrewery",$insert_beerbrewery);
-                          log_message('debug', "{$activityName} Inserted brewery record into BeerBrewery with value ".$this->webservicemodel->implode_with_key($insert_beerbrewery,'>',','));
+                          log_message('debug', "{$activityName} Inserted brewery record into BeerBrewery with value ".$this->implode_with_key($insert_beerbrewery,'>',','));
                       }
                     }
 
@@ -1532,7 +1572,7 @@ class webservicemodel extends CI_Model {
                       foreach($insert_socialacc AS $insert_beersocialacc ){
                           $insert_beersocialacc['beerId'] = $beerId;
                           $this->db->insert("socialMediaAcct",$insert_beersocialacc);
-                          log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->webservicemodel->implode_with_key($insert_beersocialacc,'>',','));
+                          log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->implode_with_key($insert_beersocialacc,'>',','));
                       }
                     }
 
@@ -1541,7 +1581,7 @@ class webservicemodel extends CI_Model {
                             $insert_beeringredient['beerId'] = $beerId;
                             $this->db->insert("beerIngredient",$insert_beeringredient);
 
-                            log_message('debug', "{$activityName} Inserted ingredient record into beerIngredient with value ".$this->webservicemodel->implode_with_key($insert_beeringredient,'>',','));
+                            log_message('debug', "{$activityName} Inserted ingredient record into beerIngredient with value ".$this->implode_with_key($insert_beeringredient,'>',','));
 
                         }
                     }
@@ -1554,7 +1594,7 @@ class webservicemodel extends CI_Model {
                     $insert_beerProfile['beerId'] = $beerId;
                     $this->db->insert("beerProfile",$insert_beerProfile);
 
-                    log_message('debug', "{$activityName} Inserted BeerProfile record with value ".$this->webservicemodel->implode_with_key($insert_beerProfile,'>',','));
+                    log_message('debug', "{$activityName} Inserted BeerProfile record with value ".$this->implode_with_key($insert_beerProfile,'>',','));
                 }
              }
         }
@@ -1585,4 +1625,12 @@ class webservicemodel extends CI_Model {
         return $array;
     }
 
+	function move_record(){
+      $this->db->query("update beerProfile temp1
+                        JOIN  userBeer
+                        ON (temp1.beerId =  userBeer.id)
+                        SET temp1.mood = userBeer.mood,temp1.venue = userBeer.venue ,temp1.event = userBeer.event ,temp1.hype = userBeer.hype"
+                        );
+      echo 'done';
+    }
 }
