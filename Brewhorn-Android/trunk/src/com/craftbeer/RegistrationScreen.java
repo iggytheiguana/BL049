@@ -211,11 +211,12 @@ public class RegistrationScreen extends Activity implements HttpListener {
 				} else if (_editZip.getText().toString().equalsIgnoreCase("")) {
 					Toast.makeText(RegistrationScreen.this,
 							"Enter Your Zip Code", Toast.LENGTH_SHORT).show();
-				} else if (!chkBoxTermsConditions.isChecked()) {
+				} /* else if (!chkBoxTermsConditions.isChecked()) {
 					Toast.makeText(RegistrationScreen.this,
 							"Please accept terms and conditions",
 							Toast.LENGTH_SHORT).show();
-				} else {
+				} */ 
+				else {
 					// hit for new user registration
 					String REGISTARTION_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><userRegistration><firstName><![CDATA["
 							+ _editUserFirstName.getText().toString().trim()
