@@ -502,7 +502,7 @@ class webservicemodel extends CI_Model {
 		log_message('info', "{$activityName} beerId={$beerId}");
 		$validateBeer = $this->db->select()->where('id',$beerId)->from('userBeer')->get()->row_array();
 		if($validateBeer):
-			$validateBeerProfile = $this->db->select()->where('id',$beerId)->from('beerProfile')->get()->row_array();
+			$validateBeerProfile = $this->db->select()->where('beerId',$beerId)->from('beerProfile')->get()->row_array();
 			if($validateBeerProfile):
 				//$this->db->select('beerProfile.aroma,beerProfile.sweet,beerProfile.bitter,beerProfile.malt,beerProfile.yeast,beerProfile.mouthFeel,beerProfile.sour,beerProfile.additive,beerProfile.booziness,userBeer.brewery,userBeer.beerName,userBeer.beerStyle,userBeer.abv,userBeer.ibu,userBeer.mood,userBeer.venue,userBeer.event,userBeer.hype');
 				$this->db->select('beerProfile.aroma,beerProfile.sweet,beerProfile.bitter,beerProfile.malt,beerProfile.yeast,beerProfile.mouthFeel,beerProfile.sour,beerProfile.additive,beerProfile.booziness,beerProfile.mood,beerProfile.venue,beerProfile.event,beerProfile.hype,userBeer.brewery,userBeer.beerName,userBeer.beerStyle,userBeer.abv,userBeer.ibu');
@@ -973,6 +973,7 @@ class webservicemodel extends CI_Model {
                   $insert_brewey['dateCreated'] =  $brewery['createDate'];
                 }
                 $insert_brewey_all[$i]['name'] = $brewery['name'];
+				$insert_brewey_all[$i]['masterBreweryId'] = $brewery['id'];
                 $insert_brewey_all[$i]['description'] = isset($brewery['description'])?$brewery['description']:'';
                 $insert_brewey_all[$i]['website'] = isset($brewery['website'])?$brewery['website']:'';
                 $insert_brewey_all[$i]['established'] = isset($brewery['established'])?$brewery['established']:'';
@@ -997,7 +998,34 @@ class webservicemodel extends CI_Model {
                 $insert_socialacc[$i]['handle'] = isset($socialAccount['handle'])?$socialAccount['handle']:'';
                 $insert_socialacc[$i]['handle'] = isset($socialAccount['handle'])?$socialAccount['handle']:'';
                 $i++;
+				$socialaccbeer_array[$socialAccount['id']] = $socialAccount['id'];
             }
+        }
+
+        //get socialMediaAccounts From brewery object
+        if($insert_brewey_all){
+            foreach($insert_brewey_all AS $available_brewery){
+                $brewery_id = $available_brewery['masterBreweryId'];
+                $brewery_social_url =  'http://api.brewerydb.com/v2/brewery/'.$brewery_id.'/?withSocialAccounts=Y&key='.$apiKey.'&format=php';
+                $result_brewery_socialdata = $this->get_web_page($brewery_social_url);
+                if($result_brewery_socialdata['message'] == 'Request Successful'){
+                    if(isset($result_brewery_socialdata['data']['socialAccounts'])){
+                        $socialaccount_brewery = $result_brewery_socialdata['data']['socialAccounts'];
+                        foreach($socialaccount_brewery AS $socialAccountBrewery){
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['id'] = $socialAccountBrewery['id'];
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['network'] = isset($socialAccountBrewery['socialMedia']['name'])?$socialAccountBrewery['socialMedia']['name']:'';
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['networkId'] = isset($socialAccountBrewery['socialMedia']['id'])?$socialAccountBrewery['socialMedia']['id']:'';
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['url'] = isset($socialAccountBrewery['link'])?$socialAccountBrewery['link']:'';
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['handle'] = isset($socialAccountBrewery['handle'])?$socialAccountBrewery['handle']:'';
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['handle'] = isset($socialAccountBrewery['handle'])?$socialAccountBrewery['handle']:'';
+                        }
+                    }
+                }
+            }
+        }
+        //remove social accounts from brewery which already exist in beer social accounts
+        if($insert_brewery_socialacc && $socialaccbeer_array){
+            $insert_brewery_socialacc = array_diff_key($insert_brewery_socialacc,$socialaccbeer_array);
         }
 
 
@@ -1068,7 +1096,7 @@ class webservicemodel extends CI_Model {
                 if(isset($insert_brewey_all)){
                   foreach($insert_brewey_all AS $insert_beerbrewery_all ){
                       $insert_beerbrewery_all['beerId'] = $userBeerId;
-                      $insert_beerbrewery_all['masterBreweryId'] = $subAttributeId;
+                      //$insert_beerbrewery_all['masterBreweryId'] = $subAttributeId;
                       $this->db->insert("beerBrewery",$insert_beerbrewery_all);
 
                       log_message('debug', "{$activityName} Inserted brewery record into BeerBrewery with value ".$this->implode_with_key($insert_beerbrewery_all,'>',','));
@@ -1096,7 +1124,19 @@ class webservicemodel extends CI_Model {
                 	log_message('debug', "{$activityName} Beer had no Social account data to insert into socialMediaAcct table");
 
                 }
+				//insert social accounts from brewery
+                if(isset($insert_brewery_socialacc)){
+                  foreach($insert_brewery_socialacc AS $insert_brewerysocialacc ){
+                        $insert_brewerysocialacc['beerId'] = $userBeerId;
+                        $this->db->insert("socialMediaAcct",$insert_brewerysocialacc);
+                        log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->implode_with_key($insert_brewerysocialacc,'>',','));
+                    }
+                }
+                else
+                {
+                	log_message('debug', "{$activityName} Brewery had no Social account data to insert into socialMediaAcct table");
 
+                }
 
                 //insert ingredients
                 if(isset($insert_ingredient)){
@@ -1211,9 +1251,36 @@ class webservicemodel extends CI_Model {
                 $socialacc_data_all[$i]['networkId'] = isset($socialAccount['socialMedia']['id'])?$socialAccount['socialMedia']['id']:'';
                 $socialacc_data_all[$i]['url'] = isset($socialAccount['link'])?$socialAccount['link']:'';
                 $socialacc_data_all[$i]['handle'] = isset($socialAccount['handle'])?$socialAccount['handle']:'';
+				$i++;
+                $socialaccbeer_array[$socialAccount['id']] = $socialAccount['id'];
             }
         }
 
+        //get socialMediaAccounts From brewery object
+        if($insert_brewey){
+            foreach($insert_brewey AS $available_brewery){
+                $brewery_id = $available_brewery['masterBreweryId'];
+                $brewery_social_url =  'http://api.brewerydb.com/v2/brewery/'.$brewery_id.'/?withSocialAccounts=Y&key='.$apiKey.'&format=php';
+                $result_brewery_socialdata = $this->get_web_page($brewery_social_url);
+                if($result_brewery_socialdata['message'] == 'Request Successful'){
+                    if(isset($result_brewery_socialdata['data']['socialAccounts'])){
+                        $socialaccount_brewery = $result_brewery_socialdata['data']['socialAccounts'];
+                        foreach($socialaccount_brewery AS $socialAccountBrewery){
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['id'] = $socialAccountBrewery['id'];
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['network'] = isset($socialAccountBrewery['socialMedia']['name'])?$socialAccountBrewery['socialMedia']['name']:'';
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['networkId'] = isset($socialAccountBrewery['socialMedia']['id'])?$socialAccountBrewery['socialMedia']['id']:'';
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['url'] = isset($socialAccountBrewery['link'])?$socialAccountBrewery['link']:'';
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['handle'] = isset($socialAccountBrewery['handle'])?$socialAccountBrewery['handle']:'';
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['handle'] = isset($socialAccountBrewery['handle'])?$socialAccountBrewery['handle']:'';
+                        }
+                    }
+                }
+            }
+        }
+        //remove social accounts from brewery which already exist in beer social accounts
+        if($insert_brewery_socialacc && $socialaccbeer_array){
+            $insert_brewery_socialacc = array_diff_key($insert_brewery_socialacc,$socialaccbeer_array);
+        }
         //create beer ingredient
         $url_ingredient =  'http://api.brewerydb.com/v2/beer/'.$beerdata['id'].'/ingredients/?key='.$apiKey.'&format=php';
         $result_ingredient = $this->get_web_page($url_ingredient);
@@ -1293,14 +1360,26 @@ class webservicemodel extends CI_Model {
                   foreach($socialacc_data_all AS $socialacc_beerdata_all ){
                         $socialacc_beerdata_all['beerId'] = $beerId;
                         $this->db->insert("socialMediaAcct",$socialacc_beerdata_all);
-                        log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->implode_with_key($insert_beersocialacc,'>',','));
+                        log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->implode_with_key($socialacc_beerdata_all,'>',','));
                     }
                 }
                 else
                 {
                 	log_message('debug', "{$activityName} Beer had no Social account data to insert into socialMediaAcct table");
                 }
+				//insert social accounts from brewery
+                if(isset($insert_brewery_socialacc)){
+                  foreach($insert_brewery_socialacc AS $insert_brewerysocialacc ){
+                        $insert_brewerysocialacc['beerId'] = $beerId;
+                        $this->db->insert("socialMediaAcct",$insert_brewerysocialacc);
+                        log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->implode_with_key($insert_brewerysocialacc,'>',','));
+                    }
+                }
+                else
+                {
+                	log_message('debug', "{$activityName} Brewery had no Social account data to insert into socialMediaAcct table");
 
+                }
                 //insert ingredients
                 if(isset($insert_ingredient)){
                   foreach($insert_ingredient AS $insert_beeringredient ){
@@ -1429,7 +1508,35 @@ class webservicemodel extends CI_Model {
                 $insert_socialacc[$i]['handle'] = isset($socialAccount['handle'])?$socialAccount['handle']:'';
                 $insert_socialacc[$i]['handle'] = isset($socialAccount['handle'])?$socialAccount['handle']:'';
                 $i++;
+				$socialaccbeer_array[$socialAccount['id']] = $socialAccount['id'];
             }
+        }
+        //get socialMediaAccounts From brewery object
+        if($insert_brewey){
+            $i = 0;
+            foreach($insert_brewey AS $available_brewery){
+                $brewery_id = $available_brewery['masterBreweryId'];
+                $brewery_social_url =  'http://api.brewerydb.com/v2/brewery/'.$brewery_id.'/?withSocialAccounts=Y&key='.$apiKey.'&format=php';
+                $result_brewery_socialdata = $this->get_web_page($brewery_social_url);
+                if($result_brewery_socialdata['message'] == 'Request Successful'){
+                    if(isset($result_brewery_socialdata['data']['socialAccounts'])){
+                        $socialaccount_brewery = $result_brewery_socialdata['data']['socialAccounts'];
+                        foreach($socialaccount_brewery AS $socialAccountBrewery){
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['id'] = $socialAccountBrewery['id'];
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['network'] = isset($socialAccountBrewery['socialMedia']['name'])?$socialAccountBrewery['socialMedia']['name']:'';
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['networkId'] = isset($socialAccountBrewery['socialMedia']['id'])?$socialAccountBrewery['socialMedia']['id']:'';
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['url'] = isset($socialAccountBrewery['link'])?$socialAccountBrewery['link']:'';
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['handle'] = isset($socialAccountBrewery['handle'])?$socialAccountBrewery['handle']:'';
+                            $insert_brewery_socialacc[$socialAccountBrewery['id']]['handle'] = isset($socialAccountBrewery['handle'])?$socialAccountBrewery['handle']:'';
+                            $i++;
+                        }
+                    }
+                }
+            }
+        }
+        //remove social accounts from brewery which already exist in beer social accounts
+        if($insert_brewery_socialacc && $socialaccbeer_array){
+            $insert_brewery_socialacc = array_diff_key($insert_brewery_socialacc,$socialaccbeer_array);
         }
 
         //create beer ingredient
@@ -1489,7 +1596,7 @@ class webservicemodel extends CI_Model {
             {
             	log_message('debug', "{$activityName} Beer had no Brewery data to insert into BeerBrewery table");
             }
-            //insert social accounts
+            //insert social accounts from beer
             if(isset($insert_socialacc)){
               foreach($insert_socialacc AS $insert_beersocialacc ){
                     $insert_beersocialacc['beerId'] = $beerId;
@@ -1501,6 +1608,20 @@ class webservicemodel extends CI_Model {
             {
             	log_message('debug', "{$activityName} Beer had no Social account data to insert into socialMediaAcct table");
             }
+
+            //insert social accounts from brewery
+            if(isset($insert_brewery_socialacc)){
+              foreach($insert_brewery_socialacc AS $insert_brewerysocialacc ){
+                    $insert_brewerysocialacc['beerId'] = $beerId;
+                    $this->db->insert("socialMediaAcct",$insert_brewerysocialacc);
+                    log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->implode_with_key($insert_brewerysocialacc,'>',','));
+                }
+            }
+            else
+            {
+            	log_message('debug', "{$activityName} Brewery had no Social account data to insert into socialMediaAcct table");
+            }
+
             //insert ingredients
             if(isset($insert_ingredient)){
               foreach($insert_ingredient AS $insert_beeringredient ){
@@ -1567,7 +1688,7 @@ class webservicemodel extends CI_Model {
                       }
                     }
 
-                    //insert new socialMediaAccount
+                    //insert new socialMediaAccount from beer
                     if(isset($insert_socialacc)){
                       foreach($insert_socialacc AS $insert_beersocialacc ){
                           $insert_beersocialacc['beerId'] = $beerId;
@@ -1576,6 +1697,14 @@ class webservicemodel extends CI_Model {
                       }
                     }
 
+					//insert social accounts from brewery
+                    if(isset($insert_brewery_socialacc)){
+                      foreach($insert_brewery_socialacc AS $insert_brewerysocialacc ){
+                            $insert_brewerysocialacc['beerId'] = $beerId;
+                            $this->db->insert("socialMediaAcct",$insert_brewerysocialacc);
+                            log_message('debug', "{$activityName} Inserted socialMedia record into socialMediaAcct with value ".$this->implode_with_key($insert_brewerysocialacc,'>',','));
+                        }
+                    }
                     if(isset($insert_ingredient)){
                       foreach($insert_ingredient AS $insert_beeringredient ){
                             $insert_beeringredient['beerId'] = $beerId;
