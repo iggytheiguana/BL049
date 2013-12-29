@@ -115,7 +115,7 @@ class webservicemodel extends CI_Model {
 			$password = base64_decode($checkUserName['password']);
 			
 			$body = 'Dear ' .$firstName. ' '.$lastName.',
-<br/><br/> Your password for Craft Beer Taste app is ' . $password . '<br/><br/>Thanks.<br>Craft Beer.';
+<br/><br/> Your password for BrewHorn is ' . $password . '<br/><br/>Thanks.<br>Craft Beer.';
 			$this->sendUserEmail($email,$body,$subject);
 			
 			return json_encode(array("forgotPassword"=>"1"));
@@ -130,7 +130,7 @@ class webservicemodel extends CI_Model {
 				$password = base64_decode($checkEmail['password']);
 				
 				$body = 'Dear ' .$firstName. ' '.$lastName.',
-	<br/><br/> Your password for Craft Beer Taste app is ' . $password . '<br/><br/>Thanks.<br>Craft Beer.';
+	<br/><br/> Your password for BrewHorn is ' . $password . '<br/><br/>Thanks.<br>Craft Beer.';
 				$this->sendUserEmail($email,$body,$subject);
 				
 				return json_encode(array("forgotPassword"=>"1"));
