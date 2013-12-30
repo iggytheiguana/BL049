@@ -192,7 +192,7 @@
           someTweetFb = strText1;
           someTweet=strText2;
     }
-    else if(![[[NSUserDefaults standardUserDefaults]valueForKey:@"Twitter"] isEqualToString:@""])
+    else if(![[[NSUserDefaults standardUserDefaults]valueForKey:@"Twitter"] isEqualToString:@""] && [[[NSUserDefaults standardUserDefaults]valueForKey:@"Facebook"] isEqualToString:@""])
     {
         NSString *strTwitter=[NSString stringWithFormat:@"@%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"Twitter"]];
         
@@ -633,80 +633,163 @@
 
 - (IBAction)shareOnFbAction:(id)sender
 {
-    accountStore = [[ACAccountStore alloc]init];
-    ACAccountType *facebookAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
-    
-    NSString *appId=@"589751437754650";
-  //  NSArray * permissions = @[@"publish_stream", @"publish_actions"];
-    
-    //    NSArray * permissions = @[@"publish_stream", @"publish_actions",@"email"];
-        NSArray * permissions = @[@"email"];
-    //  NSArray *permissions=[NSArray arrayWithObjects:@"email",@"user_location",@"user_hometown",@"user_birthday", nil];
-    NSMutableDictionary *options = [[NSMutableDictionary alloc]initWithObjectsAndKeys:appId,ACFacebookAppIdKey,permissions,ACFacebookPermissionsKey,ACFacebookAudienceFriends,ACFacebookAudienceKey, nil];
-    
-    [accountStore requestAccessToAccountsWithType:facebookAccountType options:options completion:^(BOOL granted , NSError *error)
-     {
-         if(granted)
-         {
-             [applicationDelegate hide_LoadingIndicator];
-             if(granted && error == nil)
-             {
-                 NSArray *accounts = [accountStore accountsWithAccountType:facebookAccountType];
-                 self.facebookAccount =[accounts lastObject];
-                 
-              //   NSDictionary *parameters=@{@"message": sender};
-             //    NSDictionary *parameters = @{@"message": sender , @"link": strURL};
-             
-                 NSMutableDictionary *parameters =[NSMutableDictionary dictionaryWithObjectsAndKeys:
-                  sender, @"message",
-                  strURL, @"link",
-                  nil];
-                 
-                 NSURL *feedURL = [NSURL URLWithString:@"https://graph.facebook.com/me/feed"];
-                 
-                 SLRequest *feedRequest = [SLRequest requestForServiceType:SLServiceTypeFacebook requestMethod:SLRequestMethodPOST URL:feedURL parameters:parameters];
-                 feedRequest.account=self.facebookAccount;
-                 [feedRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse , NSError *error)
-                  {
-                      if(responseData)
-                      {
-                          fb=YES;
-                          NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:&error];
-                          
-                          if(![[dict objectForKey:@"id"] length])
-                          {
-                              NSLog(@"%@",dict);
-                              [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Error while Facebook Sharing" waitUntilDone:YES];
-                          }
-                          else
-                          {
-                              NSLog(@"%@",dict);
-                              [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Post successfully updated on Facebook" waitUntilDone:YES];
-                          }
-                      }
-                      else
-                      {
-                          NSLog(@"Facebook Sharing Error is %@",[error localizedDescription]);
-                          [self performSelectorOnMainThread:@selector(alertPost:) withObject:[error localizedDescription] waitUntilDone:YES];
-                      }
-                  }];
-             }
-             else
-             {
-                 NSLog(@"Facebook Sharing Error is %@",[error localizedDescription]);
-                 [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Error while Facebook Sharing" waitUntilDone:YES];
-             }
-             
-             NSArray *accounts = [accountStore accountsWithAccountType:facebookAccountType];
-             self.facebookAccount = [accounts lastObject];
-         }
-         else
-         {
-             NSLog(@"Facebook Sharing Error is : %@",error.localizedDescription);
-             [self performSelectorOnMainThread:@selector(alertPost:) withObject:error.localizedDescription waitUntilDone:YES];
-         }
-     }];
+    if ([[[ACAccountStore alloc]init] accountTypeWithAccountTypeIdentifier:@"com.apple.facebook"] == nil)
+    {
+        NSLog(@"Cannot proceed, not facebook account type identifier");
+        return;
+      
+    }
+        self.accountStore = [[ACAccountStore alloc]init];
+        ACAccountType *facebookAccountType = [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
+        
+        if ((accountStore = [[ACAccountStore alloc] init]) && (facebookAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook] ) ){
+            
+            NSArray *fbAccounts = [self.accountStore accountsWithAccountType:facebookAccountType];
+            id account;
+            if (fbAccounts && [fbAccounts count] > 0 &&
+                           (account = [fbAccounts objectAtIndex:0])){
+                
+                [self.accountStore renewCredentialsForAccount:account completion:^(ACAccountCredentialRenewResult renewResult, NSError *error) {
+                   if (!error)
+                   {
+                        NSString *key = @"589751437754650";
+                        
+                        NSArray *arryPermission=[NSArray arrayWithObjects:@"email",@"publish_stream", @"publish_actions", nil];
+                        NSDictionary *dictFB = [NSDictionary dictionaryWithObjectsAndKeys:key,ACFacebookAppIdKey,arryPermission,ACFacebookPermissionsKey,ACFacebookAudienceEveryone,ACFacebookAudienceKey,nil,nil];
+                        
+                        [self.accountStore requestAccessToAccountsWithType:facebookAccountType options:dictFB completion:
+                                                ^(BOOL granted, NSError *e)
+                       {
+                           if (granted)
+                           {
+                               NSArray *accounts = [self.accountStore                                                                                                          accountsWithAccountType:facebookAccountType];
+                                                       facebookAccount = [accounts lastObject];
+                                                         
+                                NSMutableDictionary *parameters =[NSMutableDictionary dictionaryWithObjectsAndKeys:                                                sender, @"message",strURL, @"link",nil];
+                                                                                           
+                                  NSURL *feedURL = [NSURL URLWithString:@"https://graph.facebook.com/me/feed"];
+                                 SLRequest *feedRequest = [SLRequest requestForServiceType:SLServiceTypeFacebook requestMethod:SLRequestMethodPOST URL:feedURL parameters:parameters];
+                                                         
+                                  feedRequest.account = self.facebookAccount;
+                                    [feedRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error)
+                                     {
+                                       if (responseData)
+                                       {
+                                            NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:&error];
+                                                    
+                                            if (![[dict objectForKey:@"id"] length])
+                                            {
+                                                NSLog(@"%@",dict);
+                                                [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Error while Facebook Sharing" waitUntilDone:YES];
+                                            }
+                                            else
+                                            {
+                                              NSLog(@"%@",dict);
+                                                [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Post successfully updated on Facebook" waitUntilDone:YES];
+                                            }
+                                       }
+                                       else
+                                       {
+                                         NSLog(@"Facebook Sharing Error is %@",[error localizedDescription]);
+                                         [self performSelectorOnMainThread:@selector(alertPost:) withObject:[error localizedDescription] waitUntilDone:YES];
+                                        }
+                                 }];
+                              }
+                               else
+                               {
+                                  NSLog(@"Facebook Sharing Error is : %@",error.localizedDescription);
+                                   [self performSelectorOnMainThread:@selector(alertPost:) withObject:error.localizedDescription waitUntilDone:YES];
+                                }
+                             }];
+                        }
+                    }];
+                }
+            else
+            {
+//                [UIAlertView showInfo:@"Error while facebook sharing" WithTitle:@"alert" Delegate:self];
+                NSLog(@"error");
+                [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Error" waitUntilDone:YES];
+            }
+        }
+       
 }
+
+//- (IBAction)shareOnFbAction:(id)sender
+//{
+//    accountStore = [[ACAccountStore alloc]init];
+//    ACAccountType *facebookAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
+//    
+//    NSString *appId=@"589751437754650";
+//  //  NSArray * permissions = @[@"publish_stream", @"publish_actions"];
+//    
+//    //    NSArray * permissions = @[@"publish_stream", @"publish_actions",@"email"];
+//        NSArray * permissions = @[@"email"];
+//    //  NSArray *permissions=[NSArray arrayWithObjects:@"email",@"user_location",@"user_hometown",@"user_birthday", nil];
+//    NSMutableDictionary *options = [[NSMutableDictionary alloc]initWithObjectsAndKeys:appId,ACFacebookAppIdKey,permissions,ACFacebookPermissionsKey,ACFacebookAudienceFriends,ACFacebookAudienceKey, nil];
+//    
+//    [accountStore requestAccessToAccountsWithType:facebookAccountType options:options completion:^(BOOL granted , NSError *error)
+//     {
+//         if(granted)
+//         {
+//             [applicationDelegate hide_LoadingIndicator];
+//             if(granted && error == nil)
+//             {
+//                 NSArray *accounts = [accountStore accountsWithAccountType:facebookAccountType];
+//                 self.facebookAccount =[accounts lastObject];
+//                 
+//              //   NSDictionary *parameters=@{@"message": sender};
+//             //    NSDictionary *parameters = @{@"message": sender , @"link": strURL};
+//             
+//                 NSMutableDictionary *parameters =[NSMutableDictionary dictionaryWithObjectsAndKeys:
+//                  sender, @"message",
+//                  strURL, @"link",
+//                  nil];
+//                 
+//                 NSURL *feedURL = [NSURL URLWithString:@"https://graph.facebook.com/me/feed"];
+//                 
+//                 SLRequest *feedRequest = [SLRequest requestForServiceType:SLServiceTypeFacebook requestMethod:SLRequestMethodPOST URL:feedURL parameters:parameters];
+//                 feedRequest.account=self.facebookAccount;
+//                 [feedRequest performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse , NSError *error)
+//                  {
+//                      if(responseData)
+//                      {
+//                          fb=YES;
+//                          NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:&error];
+//                          
+//                          if(![[dict objectForKey:@"id"] length])
+//                          {
+//                              NSLog(@"%@",dict);
+//                              [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Error while Facebook Sharing" waitUntilDone:YES];
+//                          }
+//                          else
+//                          {
+//                              NSLog(@"%@",dict);
+//                              [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Post successfully updated on Facebook" waitUntilDone:YES];
+//                          }
+//                      }
+//                      else
+//                      {
+//                          NSLog(@"Facebook Sharing Error is %@",[error localizedDescription]);
+//                          [self performSelectorOnMainThread:@selector(alertPost:) withObject:[error localizedDescription] waitUntilDone:YES];
+//                      }
+//                  }];
+//             }
+//             else
+//             {
+//                 NSLog(@"Facebook Sharing Error is %@",[error localizedDescription]);
+//                 [self performSelectorOnMainThread:@selector(alertPost:) withObject:@"Error while Facebook Sharing" waitUntilDone:YES];
+//             }
+//             
+//             NSArray *accounts = [accountStore accountsWithAccountType:facebookAccountType];
+//             self.facebookAccount = [accounts lastObject];
+//         }
+//         else
+//         {
+//             NSLog(@"Facebook Sharing Error is : %@",error.localizedDescription);
+//             [self performSelectorOnMainThread:@selector(alertPost:) withObject:error.localizedDescription waitUntilDone:YES];
+//         }
+//     }];
+//}
 
 -(void)shareOnTwitter :(NSString *)text
 {
