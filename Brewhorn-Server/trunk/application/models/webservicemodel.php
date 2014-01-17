@@ -1024,7 +1024,7 @@ class webservicemodel extends CI_Model {
             }
         }
         //remove social accounts from brewery which already exist in beer social accounts
-        if($insert_brewery_socialacc && $socialaccbeer_array){
+        if((isset($insert_brewery_socialacc)) && (isset($socialaccbeer_array))){
             $insert_brewery_socialacc = array_diff_key($insert_brewery_socialacc,$socialaccbeer_array);
         }
 
@@ -1278,7 +1278,7 @@ class webservicemodel extends CI_Model {
             }
         }
         //remove social accounts from brewery which already exist in beer social accounts
-        if($insert_brewery_socialacc && $socialaccbeer_array){
+        if((isset($insert_brewery_socialacc)) && (isset($socialaccbeer_array))){
             $insert_brewery_socialacc = array_diff_key($insert_brewery_socialacc,$socialaccbeer_array);
         }
         //create beer ingredient
@@ -1535,7 +1535,7 @@ class webservicemodel extends CI_Model {
             }
         }
         //remove social accounts from brewery which already exist in beer social accounts
-        if($insert_brewery_socialacc && $socialaccbeer_array){
+        if((isset($insert_brewery_socialacc)) && (isset($socialaccbeer_array))){
             $insert_brewery_socialacc = array_diff_key($insert_brewery_socialacc,$socialaccbeer_array);
         }
 
