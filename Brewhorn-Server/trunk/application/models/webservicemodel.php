@@ -519,6 +519,28 @@ class webservicemodel extends CI_Model {
 		endif;
 	}
 	
+	Function doesBeerStyleHaveMeanProfile($beerStyle)
+	{
+		$activityName = "doesBeerStyleHaveMeanProfile:";
+
+		log_message('info',"{$activityName} attempting to find mean style for {$beerStyle}");
+
+		$numResults = $this->db->select()->where('beerStyle', $beerStyle)->from('beerStyleMeanProfile')->get()->num_rows();
+
+		if ($numResults > 0)
+		{
+			log_message('info',"{$activityName} Found a mean style profile for $beerStyle");
+			return true;
+		}
+		else
+		{
+			log_message('info',"{$activityName} No mean style profile found for $beerStyle");
+			return false;
+		}
+
+
+	}
+
 	/***
 	 **
 	 **	Function to search beer either with brewery name or beer name
@@ -599,58 +621,28 @@ class webservicemodel extends CI_Model {
 				//echo "<pre>";print_r($validateBeerProfile);
 				if($validateBeerProfile):
 				
-					$query = $this->db->query("select s.userId,s.brewery,s.beerName,s.beerStyle,s.abv,s.ibu,bp.mood,bp.venue,bp.event,bp.hype,bp.aroma,bp.sweet,bp.bitter,bp.malt,bp.yeast,bp.mouthFeel,bp.sour,bp.additive,bp.booziness from userBeer s left join beerProfile bp on s.id=bp.beerId where s.id=$beerId");
-					$result = $query->row_array();
-					
-					/* if(($result['aroma'] ==($validTasteProfile['aroma'])) || ($result['aroma'] ==($validTasteProfile['aroma']+1)) || ($result['aroma'] ==($validTasteProfile['aroma']-1))):
+					if ($beerStyle != '' && $this->doesBeerStyleHaveMeanProfile($beerStyle))
+					{
+						log_message("info","{$activityName} found mean style profile for {$beerStyle}");
+
+						//$query = $this->db->query("select '$beerName' as beerName,'' as mood, '' as venue, '' as event, '' as hype,bp.aroma,bp.sweet,bp.bitter,bp.malt,bp.yeast,bp.mouthFeel,bp.sour,bp.additive,bp.booziness from beerStyleMeanProfile bp where bp.beerStyle='$beerStyle'");
 						
-						$myTaste = $myTaste +1;
-					endif;
-					if(($result['sweet'] ==($validTasteProfile['sweet'])) || ($result['sweet'] ==($validTasteProfile['sweet']+1)) || ($result['sweet'] ==($validTasteProfile['sweet']-1))):
-						$myTaste = $myTaste +1;
-					endif;
-					if(($result['bitter'] ==($validTasteProfile['bitter'])) || ($result['bitter'] ==($validTasteProfile['bitter']+1)) || ($result['bitter'] ==($validTasteProfile['bitter']-1))):
-						
-						$myTaste = $myTaste +1;
-					endif;
-					if(($result['malt'] ==($validTasteProfile['malt'])) || ($result['malt'] ==($validTasteProfile['malt']+1)) || ($result['malt'] ==($validTasteProfile['malt']-1))):
-						$myTaste = $myTaste +1;
-					endif;
+						$query = $this->db->query("select s.userId, s.brewery, s.beerName, s.beerStyle,s.abv,s.ibu,'' as mood, '' as venue, '' as event, '' as hype,bp.aroma,bp.sweet,bp.bitter,bp.malt,bp.yeast,bp.mouthFeel,bp.sour,bp.additive,bp.booziness from userBeer s left join beerStyleMeanProfile bp on BINARY s.beerStyle  = BINARY bp.beerStyle where s.id=$beerId");
+
+						$result = $query -> row_array();
+
+						log_message('info', "{$activityName} mean profile result:".serialize($result));
+
+
+					}
+					else
+					{
+
+						$query = $this->db->query("select s.userId,s.brewery,s.beerName,s.beerStyle,s.abv,s.ibu,bp.mood,bp.venue,bp.event,bp.hype,bp.aroma,bp.sweet,bp.bitter,bp.malt,bp.yeast,bp.mouthFeel,bp.sour,bp.additive,bp.booziness from userBeer s left join beerProfile bp on s.id=bp.beerId where s.id=$beerId");
+						$result = $query->row_array();
+						log_message('info',"{$activityName} beer profile lookup result:".serialize($result));
+					}
 					
-					if($result['yeast'] != 0):
-						if(($result['yeast'] ==($validTasteProfile['yeast'])) || ($result['yeast'] ==($validTasteProfile['yeast']+1)) || ($result['yeast'] ==($validTasteProfile['yeast']-1))):
-							$myTaste = $myTaste +1;
-						endif;
-					else:	
-						$total = $total - 1;
-					endif;
-					if(($result['mouthFeel'] ==($validTasteProfile['mouthFeel'])) || ($result['mouthFeel'] ==($validTasteProfile['mouthFeel']+1)) || ($result['mouthFeel'] ==($validTasteProfile['mouthFeel']-1))):
-						$myTaste = $myTaste +1;
-					endif;
-					
-					if($result['sour'] != 0):
-						if(($result['sour'] ==($validTasteProfile['sour'])) || ($result['sour'] ==($validTasteProfile['sour']+1)) || ($result['sour'] ==($validTasteProfile['sour']-1))):
-							$myTaste = $myTaste +1;
-						endif;
-					else:
-						$total = $total - 1;
-					endif;
-					
-					if($result['additive'] != 0):
-						if(($result['additive'] ==($validTasteProfile['additive'])) || ($result['additive'] ==($validTasteProfile['additive']+1)) || ($result['additive'] ==($validTasteProfile['additive']-1))):
-							$myTaste = $myTaste +1;
-						endif;
-					else:
-						$total = $total - 1;
-					endif;
-					
-					if($result['booziness'] != 0):
-						if(($result['booziness'] ==($validTasteProfile['booziness'])) || ($result['booziness'] ==($validTasteProfile['booziness']+1)) || ($result['booziness'] ==($validTasteProfile['booziness']-1))):
-							$myTaste = $myTaste +1;
-						endif;
-					else:
-						$total = $total - 1;
-					endif; */
 					if($result['aroma'] ==$validTasteProfile['aroma'] ):
 						$myTaste = $myTaste +1;
 					elseif(($result['aroma'] ==($validTasteProfile['aroma']+1)) || ($result['aroma'] ==($validTasteProfile['aroma']-1))):
